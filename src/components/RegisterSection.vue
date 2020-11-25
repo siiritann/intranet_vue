@@ -65,6 +65,9 @@
 </template>
 
 <script>
+import Welcome from "@/views/Welcome";
+import router from "@/router";
+
 function emptyFields(ids) {
   for (let id of ids) {
     document.querySelector('#' + id).value = '';
@@ -92,6 +95,7 @@ function validateEmail(email) {
   }
   return false;
 }
+let response1 = "";
 
 let register = function(username, email, password, passwordrepeat) {
   clearInvalid();
@@ -121,7 +125,7 @@ let register = function(username, email, password, passwordrepeat) {
   }
   console.log('Valid');
   //console.log(this.email);
-  let url = 'http://localhost:8080/createuser';
+  let url = 'http://localhost:8080/user/create';
   let body = {
     username,
     email,
@@ -130,19 +134,39 @@ let register = function(username, email, password, passwordrepeat) {
 
   this.$http.post(url, body).then((response) => {
     console.log(response.data);
-    emptyFields([
-      'usernameinput',
-      'emailinput',
-      'passwordinput',
-      'passwordinputrepeat',
-    ]);
-  });
+    response1 = response.data;
+    // emptyFields([
+    //   'usernameinput',
+    //   'emailinput',
+    //   'passwordinput',
+    //   'passwordinputrepeat',
+    // ]);
+  }) // TODO REDIRECT
+  .then(
+      console.log(response1)
+  )
+  .then(
+      function (response1) {
+        const id = response1;
+        console.log(id);
+        // location.href = 'localhost:8081/#/welcome/' + response;
+        router.push({name: 'Welcome', params: {id: '2'}}); // TÖÖTAB
+        // router.push({path: 'Welcome/${response1}'});
+            // {path: 'Welcome/${response}'});
+            // {name: 'Welcome', params:{id:response}});
+      }
+  );
+// SIIMU EXAMPLE
+//     addEvent(clientId): void {
+//       this.$router.push({path: `event/${clientId}`});
+// }
+
 };
 
 export default {
   name: 'RegisterSection',
   methods: {
-    register,
+    register
   },
   props: {
     msg: String,
@@ -154,11 +178,7 @@ export default {
       password: '',
       email: '',
       passwordrepeat: '',
-      /*
-      email: '',
-      resultList: [],
-      a: 5,
-      b: 1,*/
+      response1: ''
     };
   },
 };
