@@ -1,21 +1,10 @@
 <template>
   <div class="hello text-center">
-    <h1 class="main-heading display-3 pt-5">{{ msg }}</h1>
+    <h1 class="main-heading display-3 pt-5 mb-5">{{ msg }}</h1>
 
-    <div class="create-user-div row justify-content-center">
-      <div class="col-4 user-creation-card p-3">
-        <p style="color:black">TEST USER CREATION FORM</p>
-        <div class="form-group">
-          <label for="emailinput">Username</label>
-          <input
-            v-model="username"
-            type="text"
-            class="form-control"
-            id="usernameinput"
-            placeholder="Username"
-            aria-describedby="usernameHelp"
-          />
-        </div>
+    <div class="create-user-div row justify-content-center mx-3">
+      <div class="col-lg-3 col-md-4 col-sm-6 user-creation-card p-3">
+        <h3>Login</h3>
         <div class="form-group">
           <label for="emailinput">Email</label>
           <input
@@ -23,29 +12,32 @@
             type="email"
             class="form-control"
             id="emailinput"
-            placeholder="Email"
+            placeholder="name@email.com"
             aria-describedby="emailHelp"
+            required
           />
         </div>
         <div class="form-group">
-          <label for="passwordinput">Password</label>
+          <label for="passwordinput">Password*</label>
           <input
             v-model="password"
             type="password"
             class="form-control"
             id="passwordinput"
+            required
           />
         </div>
         <div class="py-3">
           <button
             id="createuser"
             type="submit"
-            v-on:click="postFunction(username, email, password)"
-            class="btn btn-primary"
+            v-on:click="login(email, password)"
+            class="btn btn-outline-primary shadow-sm btn-lg"
           >
-            Submit
+            Login
           </button>
         </div>
+        <div><a href="/#/register" class="default-link">Register</a></div>
       </div>
     </div>
   </div>
@@ -60,7 +52,7 @@ let testFunction = function(username, email, password) {
   console.log(password);
 };
 
-let postFunction = function(username, email, password) {
+let login = function(username, email, password) {
   console.log(username);
   console.log(email);
   console.log(password);
@@ -77,25 +69,11 @@ let postFunction = function(username, email, password) {
   });
 };
 
-/*
-let registerFunction = function() {
-  this.$http
-    .get('http://localhost:8080/test/register', {
-      params: {
-        email: this.email,
-      },
-    })
-    .then((response) => {
-      this.resultList = response.data;
-    });
-  this.email = 'asd';
-};*/
-
 export default {
-  name: 'Welcomepage',
+  name: 'LoginSection',
   methods: {
     testFunction,
-    postFunction,
+    login,
   },
   props: {
     msg: String,

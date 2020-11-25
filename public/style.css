@@ -1,3 +1,50 @@
 body {
   position: relative;
+  font-family: 'Poppins', sans-serif;
+}
+html,
+body {
+  overflow-x: hidden !important;
+}
+
+.brand {
+  position: absolute;
+  top: 1vh;
+  left: 8vw;
+  text-decoration: none;
+  color: #00a2ff;
+  font-weight: bold;
+  font-size: 26px;
+  transition: 0.1s;
+}
+.brand:visited {
+  color: #00a2ff;
+  text-decoration: none;
+}
+.brand:hover {
+  color: #00a2ff;
+  filter: brightness(110%);
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.text-black {
+  color: #000 !important;
+}
+
+.default-link {
+  text-decoration: none;
+}
+
+.link-default:hover {
+  cursor: pointer;
+}
+
+.invalid-input {
+  border: 2px solid red;
+  transition: 0.2s;
+}
+input {
+  transition: 0.2s;
 }
