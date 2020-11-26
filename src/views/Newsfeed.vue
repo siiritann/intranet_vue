@@ -43,6 +43,7 @@
             <h5 class="modal-title" id="create_post_label">Post creation</h5>
           </div>
           <div class="modal-body">
+           <input v-model="posting.username" placeholder="Insert id">
            <input v-model="posting.heading" placeholder="Insert heading">
             <br>
             <br>
@@ -74,9 +75,8 @@ function getListOfPosts() {
 }
 
 // posting.userId = this.$route.params.id
-let posting;
-posting.userId = 4
-function createPost() {
+
+/*function createPost(posting) {
   fetch('http://localhost:8080/posting/create',
       {
         method: 'POST',
@@ -86,9 +86,15 @@ function createPost() {
         body: posting
       })
       .then(result => result.json())
+} */
 // Kontrolli yle see sama post funktsioon, userId on puudu
 // Loe sisse header ja postituse v2ljad
-}
+
+let createPost = function(){
+  let url = 'http://localhost:8080/posting/create';
+  this.$http.post(url, this.posting)
+      .then(this.result)};
+
 
 import Brand from '@/components/Brand.vue';
 
