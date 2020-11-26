@@ -10,15 +10,20 @@
       <div class="col-lg-6 col-md-4 col-sm-6 user-creation-card p-3">
         <div style="text-align: left">
           Latest posts:
+          <br>
+          <br>
           <div id="post_list" >
-<!--               v-for="row in posts">-->
-            <div>
-              {{resultList.username}} {{resultList.date}}
+               <div v-for="list in resultList">
+            <div class="userpost">
+              {{list.username}} {{list.date}}
             <br>
-              {{resultList.heading}}
+              <h5>{{list.heading}}</h5>
+
+              {{list.body}}
               <br>
-              {{resultList.body}}
+              <br>
             </div>
+               </div>
         </div>
     </div>
   </div>
