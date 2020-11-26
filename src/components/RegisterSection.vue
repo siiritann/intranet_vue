@@ -1,5 +1,5 @@
 <template>
-  <div class="registerhello text-center">
+  <div class="registerhello text-center mb-3">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ msg }}</h1>
 
     <div class="create-user-div row justify-content-center mx-3">
@@ -7,53 +7,53 @@
         <div class="form-group">
           <label for="emailinput">Username*</label>
           <input
-              v-model="username"
-              type="text"
-              class="form-control"
-              id="usernameinput"
-              placeholder="username"
-              aria-describedby="usernameHelp"
-              required
+            v-model="username"
+            type="text"
+            class="form-control"
+            id="usernameinput"
+            placeholder="username"
+            aria-describedby="usernameHelp"
+            required
           />
         </div>
         <div class="form-group">
           <label for="emailinput">Email*</label>
           <input
-              v-model="email"
-              type="email"
-              class="form-control"
-              id="emailinput"
-              placeholder="name@email.com"
-              aria-describedby="emailHelp"
-              required
+            v-model="email"
+            type="email"
+            class="form-control"
+            id="emailinput"
+            placeholder="name@email.com"
+            aria-describedby="emailHelp"
+            required
           />
         </div>
         <div class="form-group">
           <label for="passwordinput">Password*</label>
           <input
-              v-model="password"
-              type="password"
-              class="form-control"
-              id="passwordinput"
-              required
+            v-model="password"
+            type="password"
+            class="form-control"
+            id="passwordinput"
+            required
           />
         </div>
         <div class="form-group">
           <label for="passwordinputrepeat">Repeat Password*</label>
           <input
-              v-model="passwordrepeat"
-              type="password"
-              class="form-control"
-              id="passwordinputrepeat"
-              required
+            v-model="passwordrepeat"
+            type="password"
+            class="form-control"
+            id="passwordinputrepeat"
+            required
           />
         </div>
         <div class="py-3">
           <button
-              id="createuser"
-              type="submit"
-              v-on:click="register(username, email, password, passwordrepeat)"
-              class="btn btn-outline-primary shadow-sm btn-lg"
+            id="createuser"
+            type="submit"
+            v-on:click="register(username, email, password, passwordrepeat)"
+            class="btn btn-outline-primary shadow-sm btn-lg"
           >
             Register
           </button>
@@ -65,8 +65,8 @@
 </template>
 
 <script>
-import Welcome from "@/views/Welcome";
-import router from "@/router";
+import Welcome from '@/views/Welcome';
+import router from '@/router';
 
 function emptyFields(ids) {
   for (let id of ids) {
@@ -83,23 +83,23 @@ function clearInvalid() {
   document.querySelector('#emailinput').classList.remove('invalid-input');
   document.querySelector('#passwordinput').classList.remove('invalid-input');
   document
-      .querySelector('#passwordinputrepeat')
-      .classList.remove('invalid-input');
+    .querySelector('#passwordinputrepeat')
+    .classList.remove('invalid-input');
 }
 
 /* CHECK VALIDITY OF EMAIL */
 function validateEmail(email) {
   if (
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-          email
-      )
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+      email
+    )
   ) {
     return true;
   }
   return false;
 }
 
-let register = function (username, email, password, passwordrepeat) {
+let register = function(username, email, password, passwordrepeat) {
   clearInvalid();
   let invalid = false;
   if (username === '') {
@@ -143,19 +143,19 @@ let register = function (username, email, password, passwordrepeat) {
       'passwordinputrepeat',
     ]);
     const id = response.data;
-    router.push({name: 'Welcome', params: {id}});
-  })
+    router.push({ name: 'Welcome', params: { id } });
+  });
 };
 
 export default {
   name: 'RegisterSection',
   methods: {
-    register
+    register,
   },
   props: {
     msg: String,
   },
-  data: function () {
+  data: function() {
     return {
       user: {},
       username: '',
