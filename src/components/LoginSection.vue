@@ -6,14 +6,14 @@
       <div class="col-lg-3 col-md-4 col-sm-6 user-creation-card p-3">
         <h3>Login</h3>
         <div class="form-group">
-          <label for="emailinput">Email</label>
+          <label for="usernameinput">Username</label>
           <input
-            v-model="email"
-            type="email"
+            v-model="username"
+            type="text"
             class="form-control"
-            id="emailinput"
-            placeholder="name@email.com"
-            aria-describedby="emailHelp"
+            id="usernameinput"
+            placeholder="username"
+            aria-describedby="usernameHelp"
             required
           />
         </div>
@@ -31,7 +31,7 @@
           <button
             id="createuser"
             type="submit"
-            v-on:click="login(email, password)"
+            v-on:click="login(username, password)"
             class="btn btn-outline-primary shadow-sm btn-lg"
           >
             Login
@@ -44,35 +44,31 @@
 </template>
 
 <script>
-console.log('hey');
-
-let testFunction = function(username, email, password) {
-  console.log(username);
-  console.log(email);
-  console.log(password);
+let redirect = function() {
+  //this.$http.post('/welcome');
 };
 
-let login = function(username, email, password) {
+let login = function(username, password) {
   console.log(username);
-  console.log(email);
   console.log(password);
-  //console.log(this.email);
-  let url = 'http://localhost:8080/createuser';
+  let url = 'http://localhost:8080/user/login';
   let body = {
     username,
-    email,
     password,
   };
 
   this.$http.post(url, body).then((response) => {
-    console.log(response.data);
+    if (response.status == '200') {
+      let token = response.data;
+      localStorage.setItem('user-token', token);
+      this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+    }
   });
 };
 
 export default {
   name: 'LoginSection',
   methods: {
-    testFunction,
     login,
   },
   props: {
@@ -80,15 +76,8 @@ export default {
   },
   data: function() {
     return {
-      user: {},
       username: '',
       password: '',
-      email: '',
-      /*
-      email: '',
-      resultList: [],
-      a: 5,
-      b: 1,*/
     };
   },
 };
