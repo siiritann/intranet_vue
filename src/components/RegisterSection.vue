@@ -7,53 +7,53 @@
         <div class="form-group">
           <label for="emailinput">Username*</label>
           <input
-            v-model="username"
-            type="text"
-            class="form-control"
-            id="usernameinput"
-            placeholder="username"
-            aria-describedby="usernameHelp"
-            required
+              v-model="username"
+              type="text"
+              class="form-control"
+              id="usernameinput"
+              placeholder="username"
+              aria-describedby="usernameHelp"
+              required
           />
         </div>
         <div class="form-group">
           <label for="emailinput">Email*</label>
           <input
-            v-model="email"
-            type="email"
-            class="form-control"
-            id="emailinput"
-            placeholder="name@email.com"
-            aria-describedby="emailHelp"
-            required
+              v-model="email"
+              type="email"
+              class="form-control"
+              id="emailinput"
+              placeholder="name@email.com"
+              aria-describedby="emailHelp"
+              required
           />
         </div>
         <div class="form-group">
           <label for="passwordinput">Password*</label>
           <input
-            v-model="password"
-            type="password"
-            class="form-control"
-            id="passwordinput"
-            required
+              v-model="password"
+              type="password"
+              class="form-control"
+              id="passwordinput"
+              required
           />
         </div>
         <div class="form-group">
           <label for="passwordinputrepeat">Repeat Password*</label>
           <input
-            v-model="passwordrepeat"
-            type="password"
-            class="form-control"
-            id="passwordinputrepeat"
-            required
+              v-model="passwordrepeat"
+              type="password"
+              class="form-control"
+              id="passwordinputrepeat"
+              required
           />
         </div>
         <div class="py-3">
           <button
-            id="createuser"
-            type="submit"
-            v-on:click="register(username, email, password, passwordrepeat)"
-            class="btn btn-outline-primary shadow-sm btn-lg"
+              id="createuser"
+              type="submit"
+              v-on:click="register(username, email, password, passwordrepeat)"
+              class="btn btn-outline-primary shadow-sm btn-lg"
           >
             Register
           </button>
@@ -65,35 +65,41 @@
 </template>
 
 <script>
+import Welcome from "@/views/Welcome";
+import router from "@/router";
+
 function emptyFields(ids) {
   for (let id of ids) {
     document.querySelector('#' + id).value = '';
   }
 }
+
 function invalidate(id) {
   document.querySelector('#' + id).classList.add('invalid-input');
 }
+
 function clearInvalid() {
   document.querySelector('#usernameinput').classList.remove('invalid-input');
   document.querySelector('#emailinput').classList.remove('invalid-input');
   document.querySelector('#passwordinput').classList.remove('invalid-input');
   document
-    .querySelector('#passwordinputrepeat')
-    .classList.remove('invalid-input');
+      .querySelector('#passwordinputrepeat')
+      .classList.remove('invalid-input');
 }
+
 /* CHECK VALIDITY OF EMAIL */
 function validateEmail(email) {
   if (
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-      email
-    )
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+          email
+      )
   ) {
     return true;
   }
   return false;
 }
 
-let register = function(username, email, password, passwordrepeat) {
+let register = function (username, email, password, passwordrepeat) {
   clearInvalid();
   let invalid = false;
   if (username === '') {
@@ -121,7 +127,7 @@ let register = function(username, email, password, passwordrepeat) {
   }
   console.log('Valid');
   //console.log(this.email);
-  let url = 'http://localhost:8080/createuser';
+  let url = 'http://localhost:8080/user/create';
   let body = {
     username,
     email,
@@ -136,29 +142,26 @@ let register = function(username, email, password, passwordrepeat) {
       'passwordinput',
       'passwordinputrepeat',
     ]);
-  });
+    const id = response.data;
+    router.push({name: 'Welcome', params: {id}});
+  })
 };
 
 export default {
   name: 'RegisterSection',
   methods: {
-    register,
+    register
   },
   props: {
     msg: String,
   },
-  data: function() {
+  data: function () {
     return {
       user: {},
       username: '',
       password: '',
       email: '',
       passwordrepeat: '',
-      /*
-      email: '',
-      resultList: [],
-      a: 5,
-      b: 1,*/
     };
   },
 };
