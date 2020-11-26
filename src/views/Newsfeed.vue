@@ -7,12 +7,18 @@
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ "Newsfeed" }}</h1>
     <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-4 col-sm-6 text-left"></div>
       <div class="col-lg-4 col-md-4 col-sm-6 text-left">
         <h2>Latest posts:</h2>
+        <br>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-6 p-3" style="text-align: left">
+        <button>Create a post</button>
       </div>
     </div>
 
-    <div class="create-user-div row justify-content-center mx-3" v-for="list in resultList">
+    <div class="newsfeed-div row justify-content-center mx-3" v-for="list in resultList">
+
       <div class="col-lg-4 col-md-4 col-sm-6 user-creation-card p-3" style="text-align: left">
 
             <div class="userpost">
@@ -24,6 +30,7 @@
               <br>
             </div>
       </div>
+
     </div>
 
   </div>
