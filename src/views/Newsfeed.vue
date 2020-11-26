@@ -7,13 +7,14 @@
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ "Newsfeed" }}</h1>
     <div class="create-user-div row justify-content-center mx-3">
-      <div class="col-lg-6 col-md-4 col-sm-6 user-creation-card p-3">
-        <div style="text-align: left">
-          Latest posts:
+      <div>
+        <h2>Latest posts:</h2>
+      </div>
+      <div id="post_list" >
+        <div v-for="list in resultList">
           <br>
-          <br>
-          <div id="post_list" >
-               <div v-for="list in resultList">
+      <div class="col-lg-6 col-md-4 col-sm-6 user-creation-card p-3" style="text-align: left">
+
             <div class="userpost">
               {{list.username}} {{list.date}}
             <br>
@@ -26,7 +27,6 @@
                </div>
         </div>
     </div>
-  </div>
   </div>
   </div>
   </div>
@@ -64,3 +64,5 @@ export default {
   },
   };
 </script>
+<style>
+</style>
