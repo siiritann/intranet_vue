@@ -10,8 +10,18 @@
       <div class="col-lg-6 col-md-4 col-sm-6 user-creation-card p-3">
         <div style="text-align: left">
           Latest posts:
+          <div id="post_list" >
+<!--               v-for="row in posts">-->
+            <div>
+              {{resultList.username}} {{resultList.date}}
+            <br>
+              {{resultList.heading}}
+              <br>
+              {{resultList.body}}
+            </div>
         </div>
     </div>
+  </div>
   </div>
   </div>
   </div>
@@ -19,16 +29,33 @@
 
 <script>
 
+function getListOfPosts() {
+  fetch('http://localhost:8080/posting/list')
+      .then(result => result.json())
+      .then((posts) => {
+        console.log(posts);
+        this.resultList = posts;
+      });
 
-// @ is an alias to /src
-import RegisterSection from '@/components/RegisterSection.vue';
+}
+
 import Brand from '@/components/Brand.vue';
-import UserProfile from "@/components/UserProfile.vue";
 
 export default {
   name: 'Newsfeed',
   components: {
     Brand
   },
-};
+  methods: {
+    getListOfPosts
+  },
+  data: function () {
+    return {
+      resultList: {}
+    }
+  },
+  mounted: function (){
+    this.getListOfPosts();
+  },
+  };
 </script>
