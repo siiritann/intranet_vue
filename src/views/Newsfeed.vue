@@ -13,8 +13,8 @@
         <br>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-6 p-3" style="text-align: left">
-        <button>Get posts by</button>
-        <input id="username" type="text" placeholder="Enter username">
+        <button v-on:click="getUserPosts()">Get posts by</button>
+        <input id="post_username" type="text" placeholder="Enter username">
         <br>
         <button type="button" data-toggle="modal" data-target="#create_post">Create a post</button>
       </div>
@@ -36,14 +36,14 @@
       </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="create_post" data-keyboard="false" tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
+    <div class="modal fade" id="create_post" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="create_post_label">Post creation</h5>
           </div>
           <div class="modal-body">
-           <input v-model="posting.username" placeholder="Insert id">
+           <input v-model="posting.username" placeholder="Insert username">
            <input v-model="posting.heading" placeholder="Insert heading">
             <br>
             <br>
@@ -51,7 +51,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">Disregard</button>
-            <button v-on:click="createPost(posting)" id="posting_post" type="button">Post</button>
+            <button v-on:click="createPost(posting), reloadPage()" id="posting_post" type="button">Post</button>
           </div>
         </div>
       </div>
@@ -71,29 +71,29 @@ function getListOfPosts() {
         console.log(posts);
         this.resultList = posts;
       });
-
 }
+
+function getUserPosts() {
+  // USERID HARDCODED!
+  fetch('http://localhost:8080/posting/user/' + 6)
+      .then(result => result.json())
+      .then((posts) => {
+        console.log(posts);
+        this.resultList = posts;
+      });
+}
+
+
 
 // posting.userId = this.$route.params.id
 
-/*function createPost(posting) {
-  fetch('http://localhost:8080/posting/create',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: posting
-      })
-      .then(result => result.json())
-} */
-// Kontrolli yle see sama post funktsioon, userId on puudu
-// Loe sisse header ja postituse v2ljad
 
 let createPost = function(){
+  // USERNAME HARDCODED!
   let url = 'http://localhost:8080/posting/create';
   this.$http.post(url, this.posting)
-      .then(this.result)};
+      .then(this.result)
+};
 
 
 import Brand from '@/components/Brand.vue';
@@ -105,7 +105,11 @@ export default {
   },
   methods: {
     getListOfPosts,
-    createPost
+    createPost,
+    getUserPosts,
+    reloadPage(){
+      window.location.reload()
+    }
   },
   data: function () {
     return {
