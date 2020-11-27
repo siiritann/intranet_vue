@@ -6,20 +6,13 @@
   </div>
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ "Newsfeed" }}</h1>
-    <div class="row justify-content-center">
-      <div class="col-lg-3 col-md-3 col-sm-4 p-3 text-left"></div>
-      <div class="col-lg-5 col-md-5 col-sm-8 p-3 text-left">
-        <h2>Latest posts:</h2>
-        <br>
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-6 p-3" style="text-align: left">
 
+    <div class="row justify-content-center">
+      <div class="col-lg-3 col-md-3 col-sm-4 p-3 d-none d-md-block" style="text-align: left">
       </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-3 col-md-3 col-sm-4 p-3" style="text-align: left">
-      </div>
-        <div class="col-lg-5 col-md-5 col-sm-8 p-3" style="text-align: left">
+        <div class="col-lg-5 col-md-5 col-sm-8 p-3 order-2 order-md-1" style="text-align: left">
+          <h2>Latest posts:</h2>
+          <br>
           <div class="newsfeed-div justify-content-center mx-3" v-for="list in resultList">
           <div class="user-creation-card p-3 mb-3" style="text-align: left">
 
@@ -34,26 +27,29 @@
         </div>
         </div>
       </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 p-3" style="text-align: left">
-          <!--          <button v-on:click="getUserPosts()">Get posts by</button>-->
-          <!--          <input id="post_username" type="text" placeholder="Enter username">-->
+        <div class="col-lg-4 col-md-4 col-sm-6 p-3 order-1 order-md-2" style="text-align: left">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <button class="btn btn-outline-secondary" type="button" v-on:click="getUserPosts()" id="button-addon1">Get posts by</button>
+              <button class="btn btn-outline-secondary" type="button" v-on:click="getUserPosts()"
+                      id="button-addon1">Get posts by</button>
             </div>
-            <input type="text" class="form-control" placeholder="Enter username" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            <input type="text" class="form-control" placeholder="Enter username"
+                   aria-label="Example text with button addon" aria-describedby="button-addon1">
           </div>
           <div>
-            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#create_post">Create a post</button>
+            <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
+                    data-target="#create_post">Create a post</button>
           </div>
+          <!--<br>
           <div>
-            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#create_post">Delete my post</button>
-          </div>
+            <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
+                    data-target="#delete_post">Delete my post</button>
+          </div>-->
         </div>
     </div>
 
 
-    <!-- Modal -->
+    <!-- Modal for create post -->
     <div class="modal fade" id="create_post" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -74,10 +70,35 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal for delete post -->
+    <div class="modal fade" id="delete_post" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="delete_post_label">Check the posts you wish to delete</h5>
+          </div>
+          <div class="modal-body">
+            <input v-model="posting.username" placeholder="Insert username">
+            <input v-model="posting.heading" placeholder="Insert heading">
+            <br>
+            <br>
+            <textarea v-model="posting.body" placeholder="Insert text"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal">Disregard</button>
+            <button v-on:click="deletePost(posting), reloadPage()" id="posting_delete" type="button">Delete</button>
+          </div>
+        </div>
+      </div>
     </div>
-    </div>
+  </div>
+  </div>
 
 
+
+  </div>
+  </div>
 </template>
 
 <script>
