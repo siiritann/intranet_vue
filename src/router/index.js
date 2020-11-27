@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Welcome from '../views/Welcome.vue'
+import Newsfeed from '../views/Newsfeed.vue'
 
 Vue.use(VueRouter)
 
@@ -31,6 +32,11 @@ const routes = [
     path: '/welcome/:id',
     name: 'Welcome',
     component: Welcome
+  },
+  {
+    path: '/newsfeed',
+    name: 'Newsfeed',
+    component: Newsfeed
   }
 ]
 
