@@ -22,7 +22,7 @@
 
     <div class="newsfeed-div row justify-content-center mx-3" v-for="list in resultList">
 
-      <div class="col-lg-4 col-md-4 col-sm-6 user-creation-card p-3" style="text-align: left">
+      <div class="col-lg-4 col-md-4 col-sm-6 user-creation-card p-3 mb-3" style="text-align: left">
 
             <div class="userpost">
               {{list.username}} {{list.date}}
