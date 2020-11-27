@@ -62,6 +62,7 @@ let login = function(username, password) {
       let token = response.data;
       localStorage.setItem('user-token', token);
       this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      console.log('Login success');
     }
   });
 };
