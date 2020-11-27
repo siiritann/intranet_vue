@@ -7,36 +7,51 @@
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ "Newsfeed" }}</h1>
     <div class="row justify-content-center">
-      <div class="col-lg-4 col-md-4 col-sm-6 text-left"></div>
-      <div class="col-lg-4 col-md-4 col-sm-6 text-left">
+      <div class="col-lg-3 col-md-3 col-sm-4 p-3 text-left"></div>
+      <div class="col-lg-5 col-md-5 col-sm-8 p-3 text-left">
         <h2>Latest posts:</h2>
         <br>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-6 p-3" style="text-align: left">
-        <div class="row justify-content-center">
-          <div class="col-4"><button v-on:click="getUserPosts()">Get posts by</button></div>
-          <div class="col-4"><input id="post_username" type="text" placeholder="Enter username"></div>
-          <div class="col-4"></div>
 
-        </div>
-        <button type="button" data-toggle="modal" data-target="#create_post">Create a post</button>
       </div>
     </div>
+    <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-4 p-3" style="text-align: left">
+      </div>
+        <div class="col-lg-5 col-md-5 col-sm-8 p-3" style="text-align: left">
+          <div class="newsfeed-div justify-content-center mx-3" v-for="list in resultList">
+          <div class="user-creation-card p-3 mb-3" style="text-align: left">
 
-    <div class="newsfeed-div row justify-content-center mx-3" v-for="list in resultList">
-
-      <div class="col-lg-4 col-md-4 col-sm-6 user-creation-card p-3 mb-3" style="text-align: left">
-
-            <div class="userpost">
-              {{list.username}} {{list.date}}
-            <br>
-              <h5>{{list.heading}}</h5>
-              {{list.body}}
+              <div class="userpost">
+                {{list.username}} {{list.date}}
               <br>
-              <br>
+                <h5>{{list.heading}}</h5>
+                {{list.body}}
+                <br>
+                <br>
+              </div>
+        </div>
+        </div>
+      </div>
+        <div class="col-lg-4 col-md-4 col-sm-6 p-3" style="text-align: left">
+          <!--          <button v-on:click="getUserPosts()">Get posts by</button>-->
+          <!--          <input id="post_username" type="text" placeholder="Enter username">-->
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-outline-secondary" type="button" v-on:click="getUserPosts()" id="button-addon1">Get posts by</button>
             </div>
-      </div>
-      </div>
+            <input type="text" class="form-control" placeholder="Enter username" aria-label="Example text with button addon" aria-describedby="button-addon1">
+          </div>
+          <div>
+            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#create_post">Create a post</button>
+          </div>
+          <div>
+            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#create_post">Delete my post</button>
+          </div>
+        </div>
+    </div>
+
 
     <!-- Modal -->
     <div class="modal fade" id="create_post" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
