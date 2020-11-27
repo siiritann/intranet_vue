@@ -41,8 +41,15 @@
                 type="button"
                 data-toggle="modal"
                 data-target="#update_user"
-                class="btn btn-outline-primary shadow-sm btn-lg float-right">
+                class="btn btn-outline-primary shadow-sm btn-lg float-right btn-lg">
               Modify
+            </button>
+            <button
+                type="button"
+                data-toggle="modal"
+                data-target="#change_pw"
+                class="btn btn-outline-primary shadow-sm btn-lg float-left btn-outline-warning">
+              Change password
             </button>
           </div>
         </div>
@@ -50,7 +57,7 @@
     </div>
 
 
-    <!-- Modal -->
+    <!-- Modal user modify -->
     <div class="modal fade" id="update_user" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="update_user_label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -78,6 +85,35 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal change pw -->
+    <div class="modal fade" id="change_pw" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="update_user_label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="update_pw_label">Change password</h5>
+          </div>
+          <div class="modal-body">
+            <label for="currentPw">Enter your current password </label>
+            <input id="currentPw" v-model="currentPassword" type="password" ><br><br>
+
+            <label for="newPw">Enter new password </label>
+            <input id="newPw" v-model="newpassword" type="password" ><br><br>
+
+<!--            <label for="passwordrepeat">Repeat new password </label>-->
+<!--            <input id="passwordrepeat" v-model="passwordrepeat" type="password"><br><br>-->
+            <br>
+            <br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal">Cancel</button>
+            <button v-on:click="updatePassword(currentPassword, newpassword), reloadPage()" type="button">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </template>
 <script>
@@ -99,6 +135,22 @@ let updateUser = function () {
       .then(this.result)
 }
 
+let updatePassword = function (currentPassword, newpassword){
+  let url = 'http://localhost:8080/user/update/password';
+  let a = parseInt(document.querySelector("#userId2").innerHTML.trim());
+  console.log(a);
+  let body = {
+    currentPassword,
+    newpassword,
+    a
+  };
+
+  this.$http.put(url, body).then((response) => {
+    console.log(response.data);
+    });
+}
+
+
 export default {
   name: 'UserProfile',
   methods: {
@@ -107,6 +159,7 @@ export default {
     reloadPage(){
       window.location.reload()
     },
+    updatePassword
   },
   props: {
     msg: String,
@@ -116,6 +169,8 @@ export default {
     return {
       resultList: {},
       updatedUser: {},
+      currentPassword: '',
+      newpassword: ''
     };
   },
   mounted: function () {
