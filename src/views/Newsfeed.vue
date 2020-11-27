@@ -13,9 +13,12 @@
         <br>
       </div>
       <div class="col-lg-4 col-md-4 col-sm-6 p-3" style="text-align: left">
-        <button v-on:click="getUserPosts()">Get posts by</button>
-        <input id="post_username" type="text" placeholder="Enter username">
-        <br>
+        <div class="row justify-content-center">
+          <div class="col-4"><button v-on:click="getUserPosts()">Get posts by</button></div>
+          <div class="col-4"><input id="post_username" type="text" placeholder="Enter username"></div>
+          <div class="col-4"></div>
+
+        </div>
         <button type="button" data-toggle="modal" data-target="#create_post">Create a post</button>
       </div>
     </div>
