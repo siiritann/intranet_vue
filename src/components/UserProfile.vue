@@ -2,55 +2,123 @@
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ msg }}</h1>
     <div class="create-user-div row justify-content-center mx-3">
-      <div class="col-lg-3 col-md-4 col-sm-6 user-creation-card p-3">
+      <div class="col-lg-6 col-md-8 col-sm-10 user-creation-card p-3">
         <div>
-          <h3 id="clientId">Your clientId is {{ this.$route.params.id }} </h3>
-          <h4>This is your profile</h4>
-          <table id="profileTable" border="1" style="margin-left: auto; margin-right: auto">
-            <tr>
-              <th> Username </th>
-              <th> Password </th>
-              <th> Email </th>
-            </tr>
-            <tr>
-              <td>{{ resultList.username }}</td>
-              <td>{{ resultList.password }}</td>
-              <td>{{ resultList.email }}</td>
-            </tr>
-          </table >
+          <div class="py-2">
+            <h5>Your clientId is <span id="userId2">{{ this.$route.params.id }}</span> </h5>
+          </div>
+          <div>
+          </div>
+          <div class="row">
+            <div><p> {{ userdata.id }}</p></div>
+            <div class="col-12 col-sm-6">
+              <p><strong>Username</strong></p>
+              <p>{{ userdata.username }}</p>
+            </div>
+            <div class="col-12 col-sm-6">
+              <p><strong> E-mail</strong></p>
+              <p>{{ userdata.email }}</p>
+            </div>
+            <div class="col-12 col-sm-6">
+              <p><strong> First name </strong></p>
+              <p>{{ userdata.firstName }}</p>
+            </div>
+            <div class="col-12 col-sm-6">
+              <p><strong> Last name </strong></p>
+              <p>{{ userdata.lastName }}</p>
+            </div>
+            <div class="col-12 col-sm-6">
+              <p><strong> Birthday </strong></p>
+              <p>{{ userdata.birthDate }}</p>
+            </div>
+            <div class="col-12 col-sm-6">
+              <p><strong>Phone </strong></p>
+              <p>{{ userdata.phone }}</p>
+            </div>
+          </div>
+          <div class="py-2">
+            <button
+                type="button"
+                data-toggle="modal"
+                data-target="#update_user"
+                class="btn btn-outline-primary shadow-sm btn-lg float-right">
+              Modify
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="update_user" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="update_user_label" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="update_user_label">Update your profile</h5>
+          </div>
+          <div class="modal-body">
+            <label for="email">E-mail </label>
+            <input id="email" v-model="userdata.email" ><br><br>
+            <label for="firstName">First name </label>
+            <input id="firstName" v-model="userdata.firstName" ><br><br>
+            <label for="lastName">Last name </label>
+            <input id="lastName" v-model="userdata.lastName" ><br><br>
+            <label for="birthday">Birthday </label>
+            <input id="birthday" v-model="userdata.birthDate" ><br><br>
+            <label for="phone">Phone </label>
+            <input id="phone" v-model="userdata.phone" ><br><br>
+            <br>
+            <br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal">Cancel</button>
+            <button v-on:click="updateUser(userdata), reloadPage()" type="button">Save</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
-
-// TODO 1 - GET THIS USER PROFILE
+import router from "@/router";
 
 function getUserInfo() {
   fetch('http://localhost:8080/user/view/' + this.$route.params.id)
       .then(result => result.json())
       .then((user) => {
-            console.log(user);
-            this.resultList = user;
-        });
+        console.log(user);
+        this.resultList2 = user;
+      });
+}
+
+let updateUser = function () {
+  let url = 'http://localhost:8080/user/update';
+  this.userdata.id = parseInt(document.querySelector("#userId2").innerHTML.trim());
+  this.$http.put(url, this.userdata)
+      .then(this.result)
 }
 
 export default {
   name: 'UserProfile',
   methods: {
-    getUserInfo
+    getUserInfo,
+    updateUser,
+    reloadPage(){
+      window.location.reload()
+    },
   },
   props: {
     msg: String,
+    userdata: {}
   },
   data: function () {
     return {
-      resultList: {}
+      resultList: {},
+      updatedUser: {},
     };
   },
-  mounted: function (){
+  mounted: function () {
     this.getUserInfo();
   },
 };
