@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    <!--<Navbar />-->
     <Brand />
+    <Navbar />
+    <LoginModal />
+    <RegisterModal />
     <LoginSection msg="Welcome to intraNet" />
   </div>
 </template>
@@ -10,14 +12,18 @@
 // @ is an alias to /src
 import LoginSection from '@/components/LoginSection.vue';
 import Brand from '@/components/Brand.vue';
-/*import Navbar from '@/components/Navbar.vue';*/
+import Navbar from '@/components/Navbar.vue';
+import LoginModal from '@/components/LoginModal.vue';
+import RegisterModal from '@/components/RegisterModal.vue';
 
 export default {
   name: 'Login',
   components: {
     LoginSection,
     Brand,
-    /*Navbar,*/
+    Navbar,
+    LoginModal,
+    RegisterModal,
   },
 };
 </script>
