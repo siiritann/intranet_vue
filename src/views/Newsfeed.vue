@@ -56,12 +56,6 @@
                     data-target="#create_post">Create a post</button>
           </div>
 
-<!--          <button  class="btn btn-outline-secondary" v-on:click="buttonVisibility(list.username)">Edit/Delete posts</button>-->
-          <!--<br>
-          <div>
-            <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
-                    data-target="#delete_post">Delete my post</button>
-          </div>-->
         </div>
     </div>
 
