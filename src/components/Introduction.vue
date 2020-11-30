@@ -68,7 +68,7 @@ let login = function(username, password) {
 };
 
 export default {
-  name: 'LoginSection',
+  name: 'Introduction',
   methods: {
     login,
   },

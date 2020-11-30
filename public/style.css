@@ -53,7 +53,7 @@ body {
 
 .brand {
   position: absolute;
-  top: 1.5vh;
+  top: 7px;
   left: 8vw;
   text-decoration: none;
   color: #00a2ff;
@@ -63,7 +63,7 @@ body {
 }
 .nav-login {
   position: absolute;
-  top: 1.5vh;
+  top: 11px;
   left: 85vw;
   text-decoration: none;
   color: #404040;
@@ -73,7 +73,7 @@ body {
 }
 .nav-register {
   position: absolute;
-  top: 1.5vh;
+  top: 11px;
   text-decoration: none;
   color: #404040;
   font-weight: bold;

@@ -27,11 +27,11 @@
       class="nav-register d-none d-sm-block"
       >Register</a
     >
-    <router-link
-      to="/logout"
+    <a
+      v-on:click="logout()"
       v-if="this.$token != null"
       class="nav-login d-none d-sm-block"
-      >Logout</router-link
+      >Logout</a
     >
     <div
       v-on:click="toggleSideNav()"
@@ -68,8 +68,8 @@
           >Newsfeed</router-link
         >
       </div>
-      <div v-if="this.$token != null" class="mt-1">
-        <router-link to="/logout" class="nav-login-side">Logout</router-link>
+      <div v-on:click="logout()" v-if="this.$token != null" class="mt-1">
+        <a class="nav-login-side">Logout</a>
       </div>
     </div>
   </div>
@@ -83,10 +83,16 @@ const toggleSideNav = () => {
   document.querySelector('#side-nav').classList.toggle('side-nav-open');
 };
 
+const logout = () => {
+  localStorage.removeItem('user-token');
+  window.location.href = 'http://localhost:8081/';
+};
+
 export default {
   name: 'Navbar',
   methods: {
     toggleSideNav,
+    logout,
   },
   props: {
     token,
@@ -183,7 +189,8 @@ export default {
   font-size: 26px;
   transition: 0.1s;
 }
-.nav-login-side {
+.nav-login-side,
+.nav-login-side:visited {
   text-decoration: none;
   color: #404040;
   font-weight: bold;
@@ -193,10 +200,6 @@ export default {
 
 .brand-side:visited {
   color: #404040;
-  text-decoration: none;
-}
-.nav-login-side:visited {
-  color: #6e6e6e;
   text-decoration: none;
 }
 .brand-side:hover {
