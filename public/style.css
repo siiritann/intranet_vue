@@ -26,6 +26,10 @@ body {
   overflow-x: hidden !important;
 }
 
+.bg-brand-theme {
+  background-color: #00a2ff;
+}
+
 .home {
   min-height: 100vh;
 }
@@ -34,6 +38,10 @@ body {
   color: #000;
   font-weight: 500;
   padding-top: 5vh;
+}
+
+.cute-borders {
+  border-radius: 10px;
 }
 
 .user-creation-card {
@@ -45,7 +53,7 @@ body {
 
 .brand {
   position: absolute;
-  top: 1vh;
+  top: 7px;
   left: 8vw;
   text-decoration: none;
   color: #00a2ff;
@@ -53,13 +61,45 @@ body {
   font-size: 26px;
   transition: 0.1s;
 }
+.nav-login {
+  position: absolute;
+  top: 11px;
+  left: 85vw;
+  text-decoration: none;
+  color: #404040;
+  font-weight: bold;
+  font-size: 22px;
+  transition: 0.1s;
+}
+.nav-register {
+  position: absolute;
+  top: 11px;
+  text-decoration: none;
+  color: #404040;
+  font-weight: bold;
+  font-size: 22px;
+  transition: 0.1s;
+}
+
 .brand:visited {
   color: #00a2ff;
+  text-decoration: none;
+}
+.nav-login:visited,
+.nav-register:visited {
+  color: #404040;
   text-decoration: none;
 }
 .brand:hover {
   color: #00a2ff;
   filter: brightness(110%);
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.1s;
+}
+.nav-login:hover,
+.nav-register:hover {
+  color: #6e6e6e;
   text-decoration: none;
   cursor: pointer;
   transition: 0.1s;
@@ -102,9 +142,9 @@ input {
 
 .nav-link,
 .nav-link:visited {
-  font-size: 20px;
+  font-size: 22px;
   color: #404040;
-  margin-top: 8px;
+  margin-top: 3px;
   font-weight: bold;
   text-decoration: none;
   transition: 0.2s;
@@ -115,4 +155,28 @@ input {
   text-decoration: none;
   filter: brightness(125%);
   transition: 0.2s;
+}
+
+@media (min-width: 576px) {
+  .nav-register {
+    left: 65vw;
+  }
+}
+
+@media (min-width: 768px) {
+  .nav-register {
+    left: 70vw;
+  }
+}
+
+@media (min-width: 992px) {
+  .nav-register {
+    left: 70vw;
+  }
+}
+
+@media (min-width: 1200px) {
+  .nav-register {
+    left: 70vw;
+  }
 }

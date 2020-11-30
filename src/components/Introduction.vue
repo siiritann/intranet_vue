@@ -11,7 +11,7 @@
             v-model="username"
             type="text"
             class="form-control"
-            id="usernameinput"
+            id="usernameinput2"
             placeholder="username"
             aria-describedby="usernameHelp"
             required
@@ -23,13 +23,13 @@
             v-model="password"
             type="password"
             class="form-control"
-            id="passwordinput"
+            id="passwordinput2"
             required
           />
         </div>
         <div class="py-3">
           <button
-            id="createuser"
+            id="createuser2"
             type="submit"
             v-on:click="login(username, password)"
             class="btn btn-outline-primary shadow-sm btn-lg"
@@ -68,7 +68,7 @@ let login = function(username, password) {
 };
 
 export default {
-  name: 'LoginSection',
+  name: 'Introduction',
   methods: {
     login,
   },
