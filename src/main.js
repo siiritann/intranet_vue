@@ -10,7 +10,6 @@ const token = localStorage.getItem('user-token')
 Vue.prototype.$token = token;
 if (token) {
   axios.defaults.headers.common['Authorization'] = "Bearer " + token
-  console.log(axios.defaults.headers.common['Authorization'])
 }
 
 new Vue({

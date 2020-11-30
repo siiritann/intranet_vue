@@ -73,8 +73,8 @@ let login = function(username, password) {
       this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
       document.getElementById('closeLoginModal').click();
       console.log('Login success');
-      // REDIRECT TO USER PAGE OR NEWSFEED (NEED TO RETRIEVE USER DATA ALONG WITH THE TOKEN FROM THE SERVER)
-      //router.push({ name: 'Welcome', params: { id } });
+
+      //router.push({ name: 'Welcome', params: { id } }); // PUUDUB ID (SIIRI PEAB TEGEMA 'WELCOME' URL'I KAS ILMA PARAMITA VÕI PEAB TOKENIST ID VÄLJA HÄKKIMA)
     }
   });
 };
