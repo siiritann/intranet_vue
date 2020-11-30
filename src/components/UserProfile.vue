@@ -98,16 +98,13 @@
             <input id="currentPw" v-model="currentPassword" type="password" ><br><br>
 
             <label for="newPw">Enter new password </label>
-            <input id="newPw" v-model="newpassword" type="password" ><br><br>
-
-<!--            <label for="passwordrepeat">Repeat new password </label>-->
-<!--            <input id="passwordrepeat" v-model="passwordrepeat" type="password"><br><br>-->
+            <input id="newPw" v-model="newPassword" type="password" ><br><br>
             <br>
             <br>
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">Cancel</button>
-            <button v-on:click="updatePassword(currentPassword, newpassword), reloadPage()" type="button">Save</button>
+            <button v-on:click="updatePassword(currentPassword, newPassword), reloadPage()" type="button">Save</button>
           </div>
         </div>
       </div>
@@ -123,7 +120,6 @@ function getUserInfo() {
   fetch('http://localhost:8080/user/view/' + this.$route.params.id)
       .then(result => result.json())
       .then((user) => {
-        console.log(user);
         this.resultList2 = user;
       });
 }
@@ -135,15 +131,15 @@ let updateUser = function () {
       .then(this.result)
 }
 
-let updatePassword = function (currentPassword, newpassword){
+let updatePassword = function (currentPassword, newPassword){
   let url = 'http://localhost:8080/user/update/password';
-  let a = parseInt(document.querySelector("#userId2").innerHTML.trim());
-  console.log(a);
+  let id = parseInt(document.querySelector("#userId2").innerHTML.trim());
   let body = {
     currentPassword,
-    newpassword,
-    a
+    newPassword,
+    id
   };
+  console.log(body);
 
   this.$http.put(url, body).then((response) => {
     console.log(response.data);
@@ -170,7 +166,7 @@ export default {
       resultList: {},
       updatedUser: {},
       currentPassword: '',
-      newpassword: ''
+      newPassword: ''
     };
   },
   mounted: function () {
