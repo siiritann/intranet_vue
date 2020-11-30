@@ -24,9 +24,12 @@
                   <div class="btn-group-sm" role="group"  v-if="list.username == 'Saskia'" style="text-align: right">
                     <button id="edit_button"
                             class="btn btn-outline-secondary button-sm"
-                            v-on:click="editPost()">
+                            v-on:click="editPost(list.id)">
                             Edit</button>
-                    <button id="delete_button" v-on:click="deletePost(list.id); reloadPage()" class="btn btn-outline-secondary">Delete</button>
+                    <button id="delete_button"
+                            class="btn btn-outline-secondary"
+                            v-on:click="deletePost(list.id)">
+                            Delete</button>
                   </div>
 
                 </div>
@@ -45,7 +48,7 @@
               <button class="btn btn-outline-secondary" type="button" v-on:click="getUserPosts()"
                       id="button-addon1">Get posts by</button>
             </div>
-            <input type="text" class="form-control" placeholder="Enter username"
+            <input type="text" class="form-control" placeholder="Enter username" id="get_user_posts"
                    aria-label="Example text with button addon" aria-describedby="button-addon1">
           </div>
           <div>
@@ -93,61 +96,40 @@
 <script>
 
 function getListOfPosts() {
-  fetch('http://localhost:8080/posting/list')
-      .then(result => result.json())
-      .then((posts) => {
-        console.log(posts);
-        this.resultList = posts;
-      });
+  let url = 'http://localhost:8080/posting/list';
+  this.$http.get(url)
+      .then(this.showResponse)
+}
+
+let showResponse = function(response) {
+  this.resultList = response.data;
 }
 
 function getUserPosts() {
-  // USERID HARDCODED!
-  fetch('http://localhost:8080/posting/user/' + 6)
-      .then(result => result.json())
-      .then((posts) => {
-        console.log(posts);
-        this.resultList = posts;
-
-      });
+  let username = document.getElementById("get_user_posts").value;
+  console.log(username)
+  let url = 'http://localhost:8080/posting/user/' + username;
+  this.$http.get(url)
+      .then(this.showResponse)
 }
 
-function editPost(){
-  // USERNAME HARDCODED!
-  // NO EDIT FUNC IN BE
-  let url = 'http://localhost:8080/posting/create';
-  this.$http.post(url, this.posting)
-      .then(this.result)
-}
-
-function deletePost(id) {
-
-  fetch('http://localhost:8080/posting/delete/' + id, {
-    method: 'DELETE',
-    headers:{'Content-Type': 'application/json'}
-
-  })
-      .then(result => result.json())
-      .then((msg) => {
-        console.log(msg);
-        this.resultList = msg;
-
-      });
-}
-
+function editPost(id){
 //   // USERNAME HARDCODED!
 //   // NO EDIT FUNC IN BE
-//   console.log(lists.id);
-//   let url = 'http://localhost:8080/posting/delete';
-//   let config = {
-//     params:{
-//     }
-//   }
-//   // BODY EI TOHI OLLA
-//   this.$http.delete(url, config, lists)
+//   let url1 = 'http://localhost:8080/posting/update/' + id;
+//   this.$http.post(url, this.posting)
 //       .then(this.result)
-// }
+//   let url2 = 'http://localhost:8080/posting/update/' + id;
+//   this.$http.post(url, this.posting)
+//       .then(this.result)
+}
 
+function deletePost(id){
+
+  let url = 'http://localhost:8080/posting/delete/' + id;
+  this.$http.delete(url)
+      .then(this.post)
+}
 
 let createPost = function(){
   // USERNAME HARDCODED!
@@ -168,8 +150,9 @@ export default {
     getListOfPosts,
     createPost,
     getUserPosts,
-    editPost,
     deletePost,
+    editPost,
+    showResponse,
     reloadPage(){
       window.location.reload()
     }
@@ -179,7 +162,8 @@ export default {
       resultList: {},
       posting: {},
       postUser: "",
-      lists: {}
+      lists: {},
+      result:[]
     }
   },
   mounted: function (){
