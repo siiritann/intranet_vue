@@ -17,7 +17,19 @@
           <div class="user-creation-card p-3 mb-3" style="text-align: left">
 
               <div class="userpost">
+                <div class="row">
+                  <div class="col-sm">
                 {{list.username}} {{list.date}}
+                  </div>
+                  <div class="btn-group-sm" role="group"  v-if="list.username == 'Saskia'" style="text-align: right">
+                    <button id="edit_button"
+                            class="btn btn-outline-secondary button-sm"
+                            v-on:click="editPost()">
+                            Edit</button>
+                    <button id="delete_button" v-on:click="deletePost(list.id); reloadPage()" class="btn btn-outline-secondary">Delete</button>
+                  </div>
+
+                </div>
               <br>
                 <h5>{{list.heading}}</h5>
                 {{list.body}}
@@ -40,6 +52,8 @@
             <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
                     data-target="#create_post">Create a post</button>
           </div>
+
+<!--          <button  class="btn btn-outline-secondary" v-on:click="buttonVisibility(list.username)">Edit/Delete posts</button>-->
           <!--<br>
           <div>
             <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
@@ -65,40 +79,15 @@
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">Disregard</button>
-            <button v-on:click="createPost(posting), reloadPage()" id="posting_post" type="button">Post</button>
+            <button v-on:click="createPost(posting); reloadPage()" id="posting_post" type="button">Post</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal for delete post -->
-    <div class="modal fade" id="delete_post" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="delete_post_label">Check the posts you wish to delete</h5>
-          </div>
-          <div class="modal-body">
-            <input v-model="posting.username" placeholder="Insert username">
-            <input v-model="posting.heading" placeholder="Insert heading">
-            <br>
-            <br>
-            <textarea v-model="posting.body" placeholder="Insert text"></textarea>
-          </div>
-          <div class="modal-footer">
-            <button type="button" data-dismiss="modal">Disregard</button>
-            <button v-on:click="deletePost(posting), reloadPage()" id="posting_delete" type="button">Delete</button>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
   </div>
 
-
-
-  </div>
-  </div>
 </template>
 
 <script>
@@ -119,12 +108,45 @@ function getUserPosts() {
       .then((posts) => {
         console.log(posts);
         this.resultList = posts;
+
       });
 }
 
+function editPost(){
+  // USERNAME HARDCODED!
+  // NO EDIT FUNC IN BE
+  let url = 'http://localhost:8080/posting/create';
+  this.$http.post(url, this.posting)
+      .then(this.result)
+}
 
+function deletePost(id) {
 
-// posting.userId = this.$route.params.id
+  fetch('http://localhost:8080/posting/delete/' + id, {
+    method: 'DELETE',
+    headers:{'Content-Type': 'application/json'}
+
+  })
+      .then(result => result.json())
+      .then((msg) => {
+        console.log(msg);
+        this.resultList = msg;
+
+      });
+}
+
+//   // USERNAME HARDCODED!
+//   // NO EDIT FUNC IN BE
+//   console.log(lists.id);
+//   let url = 'http://localhost:8080/posting/delete';
+//   let config = {
+//     params:{
+//     }
+//   }
+//   // BODY EI TOHI OLLA
+//   this.$http.delete(url, config, lists)
+//       .then(this.result)
+// }
 
 
 let createPost = function(){
@@ -146,6 +168,8 @@ export default {
     getListOfPosts,
     createPost,
     getUserPosts,
+    editPost,
+    deletePost,
     reloadPage(){
       window.location.reload()
     }
@@ -153,7 +177,9 @@ export default {
   data: function () {
     return {
       resultList: {},
-      posting: {}
+      posting: {},
+      postUser: "",
+      lists: {}
     }
   },
   mounted: function (){
