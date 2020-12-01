@@ -21,10 +21,12 @@
                 {{list.username}} {{list.date}}
                   </div>
                   <div class="btn-group-sm" role="group"  v-if="list.username == 'Saskia'" style="text-align: right">
-                    <button id="edit_button"
+                    <button id=""
                             class="btn btn-outline-secondary button-sm"
-                            v-on:click="editPost(list.id)">
-                            Edit</button>
+                            data-toggle="modal"
+                            data-target="#start_editing"
+                            v-on:click="setEditModal(list.id)"
+                            >Edit</button>
                     <button id="delete_button"
                             class="btn btn-outline-secondary"
                             v-on:click="deletePost(list.id)">
@@ -34,7 +36,7 @@
                 </div>
               <br>
                 <h5>{{list.heading}}</h5>
-                {{list.body}}
+                <p :id="'body-' + list.id">{{list.body}}</p>
                 <br>
                 <br>
               </div>
@@ -58,6 +60,28 @@
         </div>
     </div>
 
+    <!-- Modal for edit post -->
+    <div class="modal fade" id="start_editing" data-backdrop="static"
+         data-keyboard="false" tabindex="-1" aria-labelledby="create_post_label"
+         aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="start_editing_label">Post editing</h5>
+          </div>
+          <div class="modal-body">
+            <input id="old_heading" v-model="editPosting.heading" placeholder="Insert heading">
+            <br>
+            <br>
+            <textarea id="old_body" v-model="editPosting.body" placeholder="Insert text"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal">Disregard</button>
+            <button v-on:click="editPost(editPosting)" data-dismiss="modal" id="edit_post" type="button">Post</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Modal for create post -->
     <div class="modal fade" id="create_post" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
@@ -75,7 +99,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">Disregard</button>
-            <button v-on:click="createPost(posting); reloadPage()" id="posting_post" type="button">Post</button>
+            <button v-on:click="createPost(posting)" data-dismiss="modal" id="posting_post" type="button">Post</button>
           </div>
         </div>
       </div>
@@ -90,17 +114,13 @@
 
 function getListOfPosts() {
   let url = 'http://localhost:8080/posting/list';
-  // console.log(this.$http)
   this.$http.get(url)
       .then(this.showResponse)
 }
 
 let showResponse = function(response) {
   this.resultList = response.data;
-
-
 }
-
 
 function getUserPosts() {
   let username = document.getElementById("get_user_posts").value
@@ -114,6 +134,14 @@ function getUserPosts() {
   }
 }
 
+function setEditModal(id){
+  let url = 'http://localhost:8080/posting/view/' + id;
+  this.$http.get(url)
+      .then(this.showResponse)
+  document.getElementById("old_heading").innerHTML = this.showResponse.heading
+  document.getElementById("old_body").innerHTML = this.showResponse.body
+}
+
 function editPost(id){
 //   // USERNAME HARDCODED!
 //   let url1 = 'http://localhost:8080/posting/update/' + id;
@@ -125,7 +153,6 @@ function editPost(id){
 }
 
 function deletePost(id){
-
   let url = 'http://localhost:8080/posting/delete/' + id;
   this.$http.delete(url)
       .then(this.post)
@@ -133,6 +160,7 @@ function deletePost(id){
 
 let createPost = function(){
   // USERNAME HARDCODED!
+  console.log("in here")
   let url = 'http://localhost:8080/posting/create';
   this.$http.post(url, this.posting)
       .then(this.result)
@@ -181,13 +209,13 @@ export default {
     return {
       resultList: {},
       posting: {},
+      editPosting: {},
       postUser: "",
       lists: {},
       result:[]
     }
   },
   mounted: function (){
-    // console.log(this.$http)
     this.getListOfPosts();
     this.initPostsQuery()
   },
