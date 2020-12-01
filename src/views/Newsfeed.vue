@@ -1,8 +1,7 @@
 <template>
   <div class="home">
   <div >
-    <Brand />
-<!--    <UserProfile msg="Welcome to newsfeed" />-->
+    <Navbar />
   </div>
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ "Newsfeed" }}</h1>
@@ -91,25 +90,32 @@
 
 function getListOfPosts() {
   let url = 'http://localhost:8080/posting/list';
+  // console.log(this.$http)
   this.$http.get(url)
       .then(this.showResponse)
 }
 
 let showResponse = function(response) {
   this.resultList = response.data;
+
+
 }
 
+
 function getUserPosts() {
-  let username = document.getElementById("get_user_posts").value;
+  let username = document.getElementById("get_user_posts").value
   console.log(username)
-  let url = 'http://localhost:8080/posting/user/' + username;
-  this.$http.get(url)
-      .then(this.showResponse)
+  if(username === ""){
+    this.getListOfPosts()
+  } else {
+    let url = 'http://localhost:8080/posting/user/' + username;
+    this.$http.get(url)
+        .then(this.showResponse)
+  }
 }
 
 function editPost(id){
 //   // USERNAME HARDCODED!
-//   // NO EDIT FUNC IN BE
 //   let url1 = 'http://localhost:8080/posting/update/' + id;
 //   this.$http.post(url, this.posting)
 //       .then(this.result)
@@ -132,13 +138,31 @@ let createPost = function(){
       .then(this.result)
 };
 
+// Timer for 'get user posts'
+let typeTimeout = null;
+let startTimer = function() {
+  typeTimeout = window.setTimeout(() => {
+    this.getUserPosts()
+  }, 1000)
+}
 
-import Brand from '@/components/Brand.vue';
+// Event listener for get user posts input
+console.log(document.getElementById("get_user_posts"))
+let initPostsQuery = function(){
+  document.getElementById("get_user_posts").addEventListener("input", () => {
+    clearTimeout(typeTimeout)
+    this.startTimer()
+  })
+}
+
+
+
+import Navbar from '@/components/Navbar.vue';
 
 export default {
   name: 'Newsfeed',
   components: {
-    Brand
+    Navbar
   },
   methods: {
     getListOfPosts,
@@ -147,6 +171,8 @@ export default {
     deletePost,
     editPost,
     showResponse,
+    initPostsQuery,
+    startTimer,
     reloadPage(){
       window.location.reload()
     }
@@ -161,7 +187,9 @@ export default {
     }
   },
   mounted: function (){
+    // console.log(this.$http)
     this.getListOfPosts();
+    this.initPostsQuery()
   },
   };
 </script>
