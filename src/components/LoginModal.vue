@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import router from "@/router";
+
 let login = function(username, password) {
   let url = 'http://localhost:8080/user/login';
   let body = {
@@ -71,10 +73,9 @@ let login = function(username, password) {
       localStorage.setItem('user-token', token);
       this.$token = token;
       this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      console.log(this.$http.defaults.headers.common['Authorization']);
       document.getElementById('closeLoginModal').click();
-      console.log('Login success');
-
-      //router.push({ name: 'Welcome', params: { id } }); // PUUDUB ID (SIIRI PEAB TEGEMA 'WELCOME' URL'I KAS ILMA PARAMITA VÕI PEAB TOKENIST ID VÄLJA HÄKKIMA)
+      router.push({ name: 'Welcome' });
     }
   });
 };

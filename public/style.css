@@ -23,6 +23,7 @@ body {
 }
 html,
 body {
+  padding-right: 0 !important;
   overflow-x: hidden !important;
 }
 
@@ -161,17 +162,49 @@ input {
   .nav-register {
     left: 65vw;
   }
+
+  .introduction-content-account {
+    margin-top: -10%;
+  }
+  .introduction-content-users {
+    margin-top: 15%;
+  }
+  .introduction-content-postings {
+    margin-top: 6%;
+  }
 }
 
 @media (min-width: 768px) {
   .nav-register {
     left: 70vw;
   }
+  .introduction-content-account {
+    margin-top: 5%;
+  }
+  .introduction-content-users {
+    margin-top: 23%;
+  }
+  .introduction-content-postings {
+    margin-top: 15%;
+  }
 }
 
 @media (min-width: 992px) {
   .nav-register {
     left: 70vw;
+  }
+  .introduction-content-users {
+    margin-top: 50%;
+    transform: translateY(-100%);
+  }
+  .introduction-content-account {
+    margin-top: 10%;
+  }
+  .introduction-content-postings {
+    margin-top: 15%;
+  }
+  .introduction-content-messages {
+    margin-top: 15%;
   }
 }
 

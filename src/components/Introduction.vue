@@ -1,87 +1,107 @@
 <template>
-  <div class="hello text-center">
-    <h1 class="main-heading display-3 pt-5 mb-5">{{ msg }}</h1>
-
-    <div class="create-user-div row justify-content-center mx-3">
-      <div class="col-lg-3 col-md-4 col-sm-6 user-creation-card p-3">
-        <h3>Login</h3>
-        <div class="form-group">
-          <label for="usernameinput">Username</label>
-          <input
-            v-model="username"
-            type="text"
-            class="form-control"
-            id="usernameinput2"
-            placeholder="username"
-            aria-describedby="usernameHelp"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="passwordinput">Password*</label>
-          <input
-            v-model="password"
-            type="password"
-            class="form-control"
-            id="passwordinput2"
-            required
-          />
-        </div>
-        <div class="py-3">
+  <div class="container">
+    <h1 class="display-5 my-5">{{ msg }}</h1>
+    <!--Intro section 1 : Users-->
+    <div class="row my-5 introduction-div">
+      <div class="col-12 order-2 order-sm-1 col-sm-6">
+        <img class="introduction-image" src="../assets/team.svg" alt="" />
+      </div>
+      <div
+        class="introduction-col col-12 order-1 order-sm-2 col-sm-6 my-5 my-sm-0"
+      >
+        <div class="introduction-content introduction-content-users">
+          <p>Join our growing community!</p>
           <button
-            id="createuser2"
-            type="submit"
-            v-on:click="login(username, password)"
-            class="btn btn-outline-primary shadow-sm btn-lg"
+            class="btn btn-outline-primary"
+            data-toggle="modal"
+            data-target="#loginmodal"
           >
-            Login
+            Get started
           </button>
         </div>
-        <div><a href="/#/register" class="default-link">Register</a></div>
+      </div>
+    </div>
+    <!--Intro section 2 : Account -->
+    <div class="row my-5 introduction-div">
+      <div class="col-12 col-sm-6">
+        <div
+          class="introduction-content introduction-content-account mb-5 mb-sm-0"
+        >
+          <p>Customize your account</p>
+          <button
+            class="btn btn-outline-primary"
+            data-toggle="modal"
+            data-target="#loginmodal"
+          >
+            Join now
+          </button>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6">
+        <img class="introduction-image" src="../assets/mis.svg" alt="" />
+      </div>
+    </div>
+    <!--Intro section 3 : Postings-->
+    <div class="row my-5 introduction-div">
+      <div class="col-12 order-2 order-sm-1 col-sm-6">
+        <img class="introduction-image" src="../assets/postings.svg" alt="" />
+      </div>
+      <div class="col-12 order-1 order-sm-2 col-sm-6">
+        <div
+          class="introduction-content introduction-content-postings mb-5 mb-sm-0"
+        >
+          <p>Participate in posting feed!</p>
+          <button
+            class="btn btn-outline-primary"
+            data-toggle="modal"
+            data-target="#loginmodal"
+          >
+            Find out more
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--Intro section 4 : Messages -->
+    <div class="row my-5 introduction-div">
+      <div class="col-12 col-sm-6">
+        <div
+          class="introduction-content introduction-content-messages mb-5 mb-sm-0"
+        >
+          <p>Be in touch using live messages!</p>
+          <button
+            class="btn btn-outline-primary"
+            data-toggle="modal"
+            data-target="#loginmodal"
+          >
+            Sign up
+          </button>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6">
+        <img class="introduction-image" src="../assets/mis2.svg" alt="" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-let redirect = function() {
-  //this.$http.post('/welcome');
-};
-
-let login = function(username, password) {
-  console.log(username);
-  console.log(password);
-  let url = 'http://localhost:8080/user/login';
-  let body = {
-    username,
-    password,
-  };
-
-  this.$http.post(url, body).then((response) => {
-    if (response.status == '200') {
-      let token = response.data;
-      localStorage.setItem('user-token', token);
-      this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-      console.log('Login success');
-    }
-  });
-};
-
 export default {
   name: 'Introduction',
-  methods: {
-    login,
-  },
   props: {
-    msg: String,
-  },
-  data: function() {
-    return {
-      username: '',
-      password: '',
-    };
-  },
+    msg: '',
+  }
 };
 </script>
+<style>
+.introduction-image {
+  width: 70%;
+}
+.introduction-content p {
+  font-size: 25px;
+}
+.introduction-div {
+  margin-bottom: 150px !important;
+}
+</style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
