@@ -72,12 +72,13 @@
           <div class="modal-body">
             <input id="old_heading" v-model="editPosting.heading" placeholder="Insert heading">
             <br>
+            {{editPosting}}
             <br>
             <textarea id="old_body" v-model="editPosting.body" placeholder="Insert text"></textarea>
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">Disregard</button>
-            <button v-on:click="editPost(editPosting)" data-dismiss="modal" id="edit_post" type="button">Post</button>
+            <button v-on:click="editPost(list.id)" data-dismiss="modal" id="edit_post" type="button">Post</button>
           </div>
         </div>
       </div>
@@ -99,7 +100,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">Disregard</button>
-            <button v-on:click="createPost(posting); getListOfPosts()" data-dismiss="modal" id="posting_post" type="button">Post</button>
+            <button v-on:click="createPost()" data-dismiss="modal" id="posting_post" type="button">Post</button>
           </div>
         </div>
       </div>
@@ -119,13 +120,11 @@ function getUsername() {
   this.$http.get(url).then(result => {
     if(result.status === 200){
       this.user = result.data
-      console.log("got 200")
     } else {
       alert("Server Error")
     }
   })
 }
-
 
 function getListOfPosts() {
   console.log("in get posts")
@@ -140,6 +139,7 @@ let showResponse = function(response) {
 
 function getUserPosts() {
 
+
   let username = document.getElementById("get_user_posts").value
   console.log(username)
   if(username === ""){
@@ -152,14 +152,16 @@ function getUserPosts() {
 }
 
 let createPost = function(){
+
   console.log("in create")
   console.log(this.posting.username)
   this.posting.username = this.user.username
   console.log(this.posting.username)
+
   let url = 'http://localhost:8080/posting/create';
   this.$http.post(url, this.posting)
-      .then(this.result)
-      .then(this.getListOfPosts())
+      .then(() => {this.result
+        this.getListOfPosts()})
 
 };
 
@@ -168,21 +170,22 @@ function setEditModal(id){
   this.$http.get(url)
     .then(result => {
       this.oldPost = result.data
-      console.log(this.oldPost)
-      console.log(this.oldPost.heading)
-      console.log(this.oldPost.body)
-  document.getElementById("old_heading").value = this.oldPost.heading
-  document.getElementById("old_body").value = this.oldPost.body
+      this.editPosting.heading = this.oldPost.heading
+      this.editPosting.body = this.oldPost.body
+
     })
 }
 
 function editPost(id){
-//   // USERNAME HARDCODED!
-  let url1 = 'http://localhost:8080/posting/update/' + id;
-  this.$http.post(url, this.editPosting)
+  console.log(this.editPosting)
+  console.log(id)
+  console.log("inside edit post")
+  this.editPosting.id = id;
+  let url1 = 'http://localhost:8080/posting/update/';
+  this.$http.post(url1, this.editPosting)
       .then(this.result)
 //   let url2 = 'http://localhost:8080/posting/update/' + id;
-//   this.$http.post(url, this.posting)
+//   this.$http.post(url2, this.posting)
 //       .then(this.result)
 }
 
@@ -190,7 +193,8 @@ function deletePost(id){
   console.log("in delete")
   let url = 'http://localhost:8080/posting/delete/' + id;
   this.$http.delete(url)
-      .then(this.post).then(this.getListOfPosts())
+      .then(() => {this.result
+        this.getListOfPosts()})
 }
 
 
@@ -237,7 +241,7 @@ export default {
       resultList: {},
       user: {},
       posting: {},
-      editPosting: {},
+      editPosting: {heading: "", body: ""},
       postUser: "",
       lists: {},
       result:[],
