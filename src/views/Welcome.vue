@@ -1,4 +1,3 @@
-// this is a copy of Register.vue
 <template>
   <div class="registerhello text-center mb-3">
     <div class="home">
