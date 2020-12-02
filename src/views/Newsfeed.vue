@@ -84,14 +84,14 @@
     </div>
 
     <!-- Modal for create post -->
-    <div class="modal fade" id="create_post" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
+    <div class="modal fade" id="create_post" data-backdrop="static" data-keyboard="false"
+         tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="create_post_label">Post creation</h5>
           </div>
           <div class="modal-body">
-           <input v-model="posting.username" placeholder="Insert username">
            <input v-model="posting.heading" placeholder="Insert heading">
             <br>
             <br>
@@ -155,6 +155,9 @@ function getUserPosts() {
 let createPost = function(){
   // USERNAME HARDCODED!
   console.log("in create")
+  console.log(this.posting.username)
+  this.posting.username = this.user.username
+  console.log(this.posting.username)
   let url = 'http://localhost:8080/posting/create';
   this.$http.post(url, this.posting)
       .then(this.result)
@@ -221,7 +224,6 @@ export default {
     deletePost,
     editPost,
     showResponse,
-    // showResponse2,
     initPostsQuery,
     startTimer,
     getUsername
@@ -234,9 +236,7 @@ export default {
       editPosting: {},
       postUser: "",
       lists: {},
-      result:[],
-      // loginUsername: "",
-      // loginId: ""
+      result:[]
     }
   },
   mounted: function (){
