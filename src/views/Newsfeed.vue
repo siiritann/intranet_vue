@@ -119,7 +119,6 @@ function getUsername() {
   this.$http.get(url).then(result => {
     if(result.status === 200){
       this.user = result.data
-      console.log(this.user)
       console.log("got 200")
     } else {
       alert("Server Error")
@@ -153,7 +152,6 @@ function getUserPosts() {
 }
 
 let createPost = function(){
-  // USERNAME HARDCODED!
   console.log("in create")
   console.log(this.posting.username)
   this.posting.username = this.user.username
@@ -168,16 +166,21 @@ let createPost = function(){
 function setEditModal(id){
   let url = 'http://localhost:8080/posting/view/' + id;
   this.$http.get(url)
-      .then(this.showResponse)
-  document.getElementById("old_heading").innerHTML = this.showResponse.heading
-  document.getElementById("old_body").innerHTML = this.showResponse.body
+    .then(result => {
+      this.oldPost = result.data
+      console.log(this.oldPost)
+      console.log(this.oldPost.heading)
+      console.log(this.oldPost.body)
+  document.getElementById("old_heading").value = this.oldPost.heading
+  document.getElementById("old_body").value = this.oldPost.body
+    })
 }
 
 function editPost(id){
 //   // USERNAME HARDCODED!
-//   let url1 = 'http://localhost:8080/posting/update/' + id;
-//   this.$http.post(url, this.posting)
-//       .then(this.result)
+  let url1 = 'http://localhost:8080/posting/update/' + id;
+  this.$http.post(url, this.editPosting)
+      .then(this.result)
 //   let url2 = 'http://localhost:8080/posting/update/' + id;
 //   this.$http.post(url, this.posting)
 //       .then(this.result)
@@ -226,7 +229,8 @@ export default {
     showResponse,
     initPostsQuery,
     startTimer,
-    getUsername
+    getUsername,
+    setEditModal
   },
   data: function () {
     return {
@@ -236,7 +240,8 @@ export default {
       editPosting: {},
       postUser: "",
       lists: {},
-      result:[]
+      result:[],
+      oldPost: {}
     }
   },
   mounted: function (){
