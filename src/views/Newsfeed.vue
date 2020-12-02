@@ -11,8 +11,6 @@
       </div>
         <div class="col-lg-5 col-md-5 col-sm-8 p-3 order-2 order-md-1" style="text-align: left">
           <h2>Latest posts:</h2>
-          {{username}}
-          {{user.username}}
           <br>
           <div class="newsfeed-div justify-content-center mx-3" v-for="list in resultList">
           <div class="user-creation-card p-3 mb-3" style="text-align: left">
@@ -22,7 +20,7 @@
                   <div class="col-sm">
                 {{list.username}} {{list.date}}
                   </div>
-                  <div class="btn-group-sm" role="group"  v-if="list.username === loginUsername" style="text-align: right">
+                  <div class="btn-group-sm" role="group"  v-if="list.username === user.username" style="text-align: right">
                     <button id=""
                             class="btn btn-outline-secondary button-sm"
                             data-toggle="modal"
@@ -114,30 +112,21 @@
 
 <script>
 
-let showResponse2 = function(response) {
-  this.user = response.data;
-}
-let loginUsername = "";
-let loginId = "";
 
 function getUsername() {
   console.log("inside get username")
   let url = 'http://localhost:8080/user/view/basic';
   this.$http.get(url).then(result => {
     if(result.status === 200){
-      loginUsername = result.data.username
-      loginId = result.data.id
+      this.user = result.data
+      console.log(this.user)
       console.log("got 200")
     } else {
       alert("Server Error")
     }
   })
-      /*.then(this.showResponse2)
-    console.log(this.showResponse2.data.username)
-    console.log(this.showResponse2.data.id)*/
-
 }
-console.log(loginId, loginUsername)
+
 
 function getListOfPosts() {
   console.log("in get posts")
@@ -232,7 +221,7 @@ export default {
     deletePost,
     editPost,
     showResponse,
-    showResponse2,
+    // showResponse2,
     initPostsQuery,
     startTimer,
     getUsername
@@ -246,8 +235,8 @@ export default {
       postUser: "",
       lists: {},
       result:[],
-      loginUsername: "",
-      loginId: ""
+      // loginUsername: "",
+      // loginId: ""
     }
   },
   mounted: function (){
