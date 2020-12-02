@@ -89,8 +89,7 @@ export default {
   name: 'Introduction',
   props: {
     msg: '',
-  },
-  data: function() {},
+  }
 };
 </script>
 <style>
