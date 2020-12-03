@@ -66,6 +66,11 @@
                    autocomplete="off"
                  @input="filterUsers"
                    >
+          <div v-if="filteredUsers">
+            <ul class="w-48 bg-gray-200 text-black">
+              <li v-for="filteredUser in filteredUsers" class="py-2 border-b cursor-pointer" @click="setUser(filteredUser)">{{filteredUser}}</li>
+            </ul>
+          </div>
           <div>
             <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
                     data-target="#create_post">Create a post</button>
@@ -157,6 +162,9 @@ function filterUsers(){
   console.log(this.usersList)
   console.log(this.filteredUsers)
 
+}
+function setUser(user){
+  this.get_posts_input = user
 }
 
 function getListOfPosts() {
@@ -267,7 +275,8 @@ export default {
     setEditModal,
     getAllUsers,
     filterUsers,
-    showUsers
+    showUsers,
+    setUser
   },
   data: function () {
     return {
@@ -281,7 +290,8 @@ export default {
       result: [],
       oldPost: {},
       get_posts_input: "",
-      filteredUsers: []
+      filteredUsers: [],
+
     }
   },
   mounted: function (){
