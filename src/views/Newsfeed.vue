@@ -1,8 +1,7 @@
 <template>
   <div class="home">
   <div >
-    <Brand />
-<!--    <UserProfile msg="Welcome to newsfeed" />-->
+    <Navbar />
   </div>
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ "Newsfeed" }}</h1>
@@ -16,26 +15,28 @@
           <div class="newsfeed-div justify-content-center mx-3" v-for="list in resultList">
           <div class="user-creation-card p-3 mb-3" style="text-align: left">
 
-              <div class="userpost">
+              <div id="all_posts" class="userpost">
                 <div class="row">
                   <div class="col-sm">
                 {{list.username}} {{list.date}}
                   </div>
-                  <div class="btn-group-sm" role="group"  v-if="list.username == 'Saskia'" style="text-align: right">
-                    <button id="edit_button"
+                  <div class="btn-group-sm" role="group"  v-if="list.username === user.username" style="text-align: right">
+                    <button id=""
                             class="btn btn-outline-secondary button-sm"
-                            v-on:click="editPost(list.id)">
-                            Edit</button>
+                            data-toggle="modal"
+                            data-target="#start_editing"
+                            v-on:click="setEditModal(list.id)"
+                            >Edit</button>
                     <button id="delete_button"
                             class="btn btn-outline-secondary"
-                            v-on:click="deletePost(list.id)">
+                            v-on:click="deletePost(list.id); getListOfPosts()">
                             Delete</button>
                   </div>
 
                 </div>
               <br>
                 <h5>{{list.heading}}</h5>
-                {{list.body}}
+                <p :id="'body-' + list.id">{{list.body}}</p>
                 <br>
                 <br>
               </div>
@@ -59,16 +60,38 @@
         </div>
     </div>
 
+    <!-- Modal for edit post -->
+    <div class="modal fade" id="start_editing" data-backdrop="static"
+         data-keyboard="false" tabindex="-1" aria-labelledby="create_post_label"
+         aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="start_editing_label">Post editing</h5>
+          </div>
+          <div class="modal-body">
+            <input id="old_heading" v-model="editPosting.heading" placeholder="Insert heading">
+            <br>
+            <br>
+            <textarea id="old_body" v-model="editPosting.body" placeholder="Insert text"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal">Disregard</button>
+            <button v-on:click="editPost()" data-dismiss="modal" id="edit_post" type="button">Post</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Modal for create post -->
-    <div class="modal fade" id="create_post" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
+    <div class="modal fade" id="create_post" data-backdrop="static" data-keyboard="false"
+         tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="create_post_label">Post creation</h5>
           </div>
           <div class="modal-body">
-           <input v-model="posting.username" placeholder="Insert username">
            <input v-model="posting.heading" placeholder="Insert heading">
             <br>
             <br>
@@ -76,7 +99,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">Disregard</button>
-            <button v-on:click="createPost(posting); reloadPage()" id="posting_post" type="button">Post</button>
+            <button v-on:click="createPost()" data-dismiss="modal" id="posting_post" type="button">Post</button>
           </div>
         </div>
       </div>
@@ -89,7 +112,21 @@
 
 <script>
 
+
+function getUsername() {
+  console.log("inside get username")
+  let url = 'http://localhost:8080/user/view/basic';
+  this.$http.get(url).then(result => {
+    if(result.status === 200){
+      this.user = result.data
+    } else {
+      alert("Server Error")
+    }
+  })
+}
+
 function getListOfPosts() {
+  console.log("in get posts")
   let url = 'http://localhost:8080/posting/list';
   this.$http.get(url)
       .then(this.showResponse)
@@ -100,45 +137,90 @@ let showResponse = function(response) {
 }
 
 function getUserPosts() {
-  let username = document.getElementById("get_user_posts").value;
+
+
+  let username = document.getElementById("get_user_posts").value
   console.log(username)
-  let url = 'http://localhost:8080/posting/user/' + username;
-  this.$http.get(url)
-      .then(this.showResponse)
-}
-
-function editPost(id){
-//   // USERNAME HARDCODED!
-//   // NO EDIT FUNC IN BE
-//   let url1 = 'http://localhost:8080/posting/update/' + id;
-//   this.$http.post(url, this.posting)
-//       .then(this.result)
-//   let url2 = 'http://localhost:8080/posting/update/' + id;
-//   this.$http.post(url, this.posting)
-//       .then(this.result)
-}
-
-function deletePost(id){
-
-  let url = 'http://localhost:8080/posting/delete/' + id;
-  this.$http.delete(url)
-      .then(this.post)
+  if(username === ""){
+    this.getListOfPosts()
+  } else {
+    let url = 'http://localhost:8080/posting/user/' + username;
+    this.$http.get(url)
+        .then(this.showResponse)
+  }
 }
 
 let createPost = function(){
-  // USERNAME HARDCODED!
+
+  console.log("in create")
+  console.log(this.posting.username)
+  this.posting.username = this.user.username
+  console.log(this.posting.username)
+
   let url = 'http://localhost:8080/posting/create';
   this.$http.post(url, this.posting)
-      .then(this.result)
+      .then(() => {this.result
+        this.getListOfPosts()})
+
 };
 
+function setEditModal(id){
+  let url = 'http://localhost:8080/posting/view/' + id;
+  this.$http.get(url)
+    .then(result => {
+      this.oldPost = result.data
+      this.editPosting.id = this.oldPost.id
+      this.editPosting.username = this.oldPost.username
+      this.editPosting.heading = this.oldPost.heading
+      this.editPosting.body = this.oldPost.body
+    })
+}
 
-import Brand from '@/components/Brand.vue';
+function editPost(){
+
+  console.log(JSON.stringify(this.editPosting))
+  console.log(this.editPosting.id)
+  console.log("inside edit post")
+  let url1 = 'http://localhost:8080/posting/update';
+  this.$http.put(url1, this.editPosting)
+      .then(() => {this.result
+        this.getListOfPosts()})
+}
+
+function deletePost(id){
+  console.log("in delete")
+  let url = 'http://localhost:8080/posting/delete/' + id;
+  this.$http.delete(url)
+      .then(() => {this.result
+        this.getListOfPosts()})
+}
+
+
+// Timer for 'get user posts'
+let typeTimeout = null;
+let startTimer = function() {
+  typeTimeout = window.setTimeout(() => {
+    this.getUserPosts()
+  }, 1000)
+}
+
+// Event listener for get user posts input
+console.log(document.getElementById("get_user_posts"))
+let initPostsQuery = function(){
+  document.getElementById("get_user_posts").addEventListener("input", () => {
+    clearTimeout(typeTimeout)
+    this.startTimer()
+  })
+}
+
+
+
+import Navbar from '@/components/Navbar.vue';
 
 export default {
   name: 'Newsfeed',
   components: {
-    Brand
+    Navbar
   },
   methods: {
     getListOfPosts,
@@ -147,21 +229,28 @@ export default {
     deletePost,
     editPost,
     showResponse,
-    reloadPage(){
-      window.location.reload()
-    }
+    initPostsQuery,
+    startTimer,
+    getUsername,
+    setEditModal
   },
   data: function () {
     return {
       resultList: {},
+      user: {},
       posting: {},
+      editPosting: {heading: "", body: ""},
       postUser: "",
       lists: {},
-      result:[]
+      result:[],
+      oldPost: {}
     }
   },
   mounted: function (){
+    this.getUsername();
     this.getListOfPosts();
+    this.initPostsQuery();
+
   },
   };
 </script>
