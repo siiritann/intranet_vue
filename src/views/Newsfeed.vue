@@ -46,12 +46,26 @@
         <div class="col-lg-4 col-md-4 col-sm-6 p-3 order-1 order-md-2" style="text-align: left">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <button class="btn btn-outline-secondary" type="button" v-on:click="getUserPosts()"
+              <button class="btn btn-outline-secondary" type="button" v-on:click="getAllUsers()"
                       id="button-addon1">Get posts by</button>
+
             </div>
-            <input type="text" class="form-control" placeholder="Enter username" id="get_user_posts"
-                   aria-label="Example text with button addon" aria-describedby="button-addon1">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Enter username"
+                   id="get_user_posts"
+                   aria-label="Example text with button addon"
+                   aria-describedby="button-addon1"
+                   >
           </div>
+          <input type="text"
+                   class="form-control"
+                   placeholder="Tryout input"
+                   v-model="get_posts_input"
+                   aria-label="Example text with button addon"
+                   aria-describedby="button-addon1"
+                   autocomplete="off"
+                   >
           <div>
             <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
                     data-target="#create_post">Create a post</button>
@@ -125,6 +139,22 @@ function getUsername() {
   })
 }
 
+function getAllUsers(){
+  console.log("in get all users")
+  let url = 'http://localhost:8080/user/list';
+  this.$http.get(url)
+      .then(this.showUsers)
+}
+let showUsers = function(response) {
+  this.usersList = response.data;
+  console.log("showUsers")
+  console.log(this.usersList)
+}
+
+function filterUsers(){
+
+}
+
 function getListOfPosts() {
   console.log("in get posts")
   let url = 'http://localhost:8080/posting/list';
@@ -137,7 +167,6 @@ let showResponse = function(response) {
 }
 
 function getUserPosts() {
-
 
   let username = document.getElementById("get_user_posts").value
   console.log(username)
@@ -214,7 +243,6 @@ let initPostsQuery = function(){
 }
 
 
-
 import Navbar from '@/components/Navbar.vue';
 
 export default {
@@ -232,24 +260,29 @@ export default {
     initPostsQuery,
     startTimer,
     getUsername,
-    setEditModal
+    setEditModal,
+    getAllUsers,
+    filterUsers
   },
   data: function () {
     return {
       resultList: {},
+      usersList: {},
       user: {},
       posting: {},
       editPosting: {heading: "", body: ""},
       postUser: "",
       lists: {},
-      result:[],
-      oldPost: {}
+      result: [],
+      oldPost: {},
+      get_posts_input: ""
     }
   },
   mounted: function (){
     this.getUsername();
     this.getListOfPosts();
     this.initPostsQuery();
+    this.getAllUsers();
 
   },
   };
