@@ -72,13 +72,12 @@
           <div class="modal-body">
             <input id="old_heading" v-model="editPosting.heading" placeholder="Insert heading">
             <br>
-            {{editPosting}}
             <br>
             <textarea id="old_body" v-model="editPosting.body" placeholder="Insert text"></textarea>
           </div>
           <div class="modal-footer">
             <button type="button" data-dismiss="modal">Disregard</button>
-            <button v-on:click="editPost(list.id)" data-dismiss="modal" id="edit_post" type="button">Post</button>
+            <button v-on:click="editPost()" data-dismiss="modal" id="edit_post" type="button">Post</button>
           </div>
         </div>
       </div>
@@ -170,23 +169,22 @@ function setEditModal(id){
   this.$http.get(url)
     .then(result => {
       this.oldPost = result.data
+      this.editPosting.id = this.oldPost.id
+      this.editPosting.username = this.oldPost.username
       this.editPosting.heading = this.oldPost.heading
       this.editPosting.body = this.oldPost.body
-
     })
 }
 
-function editPost(id){
-  console.log(this.editPosting)
-  console.log(id)
+function editPost(){
+
+  console.log(JSON.stringify(this.editPosting))
+  console.log(this.editPosting.id)
   console.log("inside edit post")
-  this.editPosting.id = id;
-  let url1 = 'http://localhost:8080/posting/update/';
-  this.$http.post(url1, this.editPosting)
-      .then(this.result)
-//   let url2 = 'http://localhost:8080/posting/update/' + id;
-//   this.$http.post(url2, this.posting)
-//       .then(this.result)
+  let url1 = 'http://localhost:8080/posting/update';
+  this.$http.put(url1, this.editPosting)
+      .then(() => {this.result
+        this.getListOfPosts()})
 }
 
 function deletePost(id){
