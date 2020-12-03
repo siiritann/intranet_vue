@@ -32,7 +32,6 @@
                             v-on:click="deletePost(list.id); getListOfPosts()">
                             Delete</button>
                   </div>
-
                 </div>
               <br>
                 <h5>{{list.heading}}</h5>
@@ -46,9 +45,9 @@
         <div class="col-lg-4 col-md-4 col-sm-6 p-3 order-1 order-md-2" style="text-align: left">
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <button class="btn btn-outline-secondary" type="button" v-on:click="getAllUsers()"
-                      id="button-addon1">Get posts by</button>
-
+<!--              <button class="btn btn-outline-secondary" type="button" v-on:click="getAllUsers()"-->
+<!--                      id="button-addon1">Get posts by</button>-->
+              {{usersList}}
             </div>
             <input type="text"
                    class="form-control"
@@ -65,6 +64,7 @@
                    aria-label="Example text with button addon"
                    aria-describedby="button-addon1"
                    autocomplete="off"
+                 @input="filterUsers"
                    >
           <div>
             <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
@@ -141,17 +141,21 @@ function getUsername() {
 
 function getAllUsers(){
   console.log("in get all users")
-  let url = 'http://localhost:8080/user/list';
+  let url = 'http://localhost:8080/user/list/usernames';
   this.$http.get(url)
       .then(this.showUsers)
 }
 let showUsers = function(response) {
   this.usersList = response.data;
-  console.log("showUsers")
-  console.log(this.usersList)
 }
 
 function filterUsers(){
+  this.filteredUsers = this.usersList.filter(get_posts_input => {
+    return get_posts_input.toLowerCase().startsWith(this.get_posts_input.toLowerCase());
+  })
+  console.log(this.get_posts_input)
+  console.log(this.usersList)
+  console.log(this.filteredUsers)
 
 }
 
@@ -262,12 +266,13 @@ export default {
     getUsername,
     setEditModal,
     getAllUsers,
-    filterUsers
+    filterUsers,
+    showUsers
   },
   data: function () {
     return {
       resultList: {},
-      usersList: {},
+      usersList: [],
       user: {},
       posting: {},
       editPosting: {heading: "", body: ""},
@@ -275,7 +280,8 @@ export default {
       lists: {},
       result: [],
       oldPost: {},
-      get_posts_input: ""
+      get_posts_input: "",
+      filteredUsers: []
     }
   },
   mounted: function (){
