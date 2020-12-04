@@ -32,7 +32,6 @@
                             v-on:click="deletePost(list.id); getListOfPosts()">
                             Delete</button>
                   </div>
-
                 </div>
               <br>
                 <h5>{{list.heading}}</h5>
@@ -44,19 +43,38 @@
         </div>
       </div>
         <div class="col-lg-4 col-md-4 col-sm-6 p-3 order-1 order-md-2" style="text-align: left">
-          <div class="input-group mb-3">
-            <div class="input-group-prepend">
-              <button class="btn btn-outline-secondary" type="button" v-on:click="getUserPosts()"
-                      id="button-addon1">Get posts by</button>
-            </div>
-            <input type="text" class="form-control" placeholder="Enter username" id="get_user_posts"
-                   aria-label="Example text with button addon" aria-describedby="button-addon1">
-          </div>
           <div>
             <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
                     data-target="#create_post">Create a post</button>
-          </div>
 
+          </div>
+          <div class="input-group mb-3">
+
+<!--            I might yet need this -->
+<!--            <div class="input-group-prepend">-->
+<!--              -->
+<!--              <button class="btn btn-outline-secondary" type="button" v-on:click="getAllUsers()"-->
+<!--                      id="button-addon1">Get posts by</button>-->
+<!--            </div>-->
+
+            <!--TODO There are 2 cliches - if input is erased, the list stays. Also some lag with post reload after choosing a name. -->
+            <input type="text"
+                   class="form-control"
+                   placeholder="Enter username to search user posts"
+                   id="get_user_posts"
+                   v-model="get_posts_input"
+                   aria-label="Example text with button addon"
+                   aria-describedby="button-addon1"
+                   autocomplete="off"
+                   @input="filterUsers"
+                   @focus="modal = true"
+                   >
+          </div>
+          <div v-if="filteredUsers && modal">
+            <ul class="w-48 bg-gray-800 text-black">
+              <li v-for="filteredUser in filteredUsers" class="py-2 border-b cursor-pointer" @click="setUser(filteredUser)">{{filteredUser}}</li>
+            </ul>
+          </div>
         </div>
     </div>
 
@@ -115,7 +133,7 @@
 
 function getUsername() {
   console.log("inside get username")
-  let url = 'http://localhost:8080/user/view/basic';
+  let url = this.$server + '/user/view/basic';
   this.$http.get(url).then(result => {
     if(result.status === 200){
       this.user = result.data
@@ -125,9 +143,39 @@ function getUsername() {
   })
 }
 
+function getAllUsers(){
+  console.log("in get all users")
+  let url = this.$server + '/user/list/usernames';
+  this.$http.get(url)
+      .then(this.showUsers)
+}
+let showUsers = function(response) {
+  this.usersList = response.data;
+}
+
+function filterUsers(){
+  //I might yet need this
+  // if(this.get_posts_input.length == 0){
+  //   this.filteredUsers = this.usersList;
+  // }
+  this.filteredUsers = this.usersList.filter(get_posts_input => {
+    return get_posts_input.toLowerCase().startsWith(this.get_posts_input.toLowerCase());
+  })
+  console.log(this.get_posts_input)
+  console.log(this.usersList)
+  console.log(this.filteredUsers)
+
+}
+
+function setUser(user){
+  this.get_posts_input = user;
+  this.modal = false;
+  this.getUserPosts()
+}
+
 function getListOfPosts() {
   console.log("in get posts")
-  let url = 'http://localhost:8080/posting/list';
+  let url = this.$server + '/posting/list';
   this.$http.get(url)
       .then(this.showResponse)
 }
@@ -138,13 +186,12 @@ let showResponse = function(response) {
 
 function getUserPosts() {
 
-
   let username = document.getElementById("get_user_posts").value
   console.log(username)
   if(username === ""){
     this.getListOfPosts()
   } else {
-    let url = 'http://localhost:8080/posting/user/' + username;
+    let url = this.$server + '/posting/user/' + username;
     this.$http.get(url)
         .then(this.showResponse)
   }
@@ -157,7 +204,7 @@ let createPost = function(){
   this.posting.username = this.user.username
   console.log(this.posting.username)
 
-  let url = 'http://localhost:8080/posting/create';
+  let url = this.$server + '/posting/create';
   this.$http.post(url, this.posting)
       .then(() => {this.result
         this.getListOfPosts()})
@@ -165,7 +212,7 @@ let createPost = function(){
 };
 
 function setEditModal(id){
-  let url = 'http://localhost:8080/posting/view/' + id;
+  let url = this.$server + '/posting/view/' + id;
   this.$http.get(url)
     .then(result => {
       this.oldPost = result.data
@@ -181,7 +228,7 @@ function editPost(){
   console.log(JSON.stringify(this.editPosting))
   console.log(this.editPosting.id)
   console.log("inside edit post")
-  let url1 = 'http://localhost:8080/posting/update';
+  let url1 = this.$server + '/posting/update';
   this.$http.put(url1, this.editPosting)
       .then(() => {this.result
         this.getListOfPosts()})
@@ -189,7 +236,7 @@ function editPost(){
 
 function deletePost(id){
   console.log("in delete")
-  let url = 'http://localhost:8080/posting/delete/' + id;
+  let url = this.$server + '/posting/delete/' + id;
   this.$http.delete(url)
       .then(() => {this.result
         this.getListOfPosts()})
@@ -214,7 +261,6 @@ let initPostsQuery = function(){
 }
 
 
-
 import Navbar from '@/components/Navbar.vue';
 
 export default {
@@ -232,24 +278,34 @@ export default {
     initPostsQuery,
     startTimer,
     getUsername,
-    setEditModal
+    setEditModal,
+    getAllUsers,
+    filterUsers,
+    showUsers,
+    setUser
   },
   data: function () {
     return {
       resultList: {},
+      usersList: [],
       user: {},
       posting: {},
       editPosting: {heading: "", body: ""},
       postUser: "",
       lists: {},
-      result:[],
-      oldPost: {}
+      result: [],
+      oldPost: {},
+      get_posts_input: "",
+      filteredUsers: [],
+      modal: false,
     }
   },
   mounted: function (){
     this.getUsername();
     this.getListOfPosts();
     this.initPostsQuery();
+    this.getAllUsers();
+    this.filterUsers();
 
   },
   };

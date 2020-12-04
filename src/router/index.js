@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import Welcome from '../views/Welcome.vue'
 import Newsfeed from '../views/Newsfeed.vue'
 
+
 Vue.use(VueRouter)
 
 const routes = [
