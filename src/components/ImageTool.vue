@@ -5,7 +5,7 @@
         <!--UPLOAD-->
         <div class="col-8 col-sm-6 col-md-5 col-lg-4 text-center">
           <div id="image-container" class="text-center">
-            <img v-auth-image="this.$server + '/user/image/1'" class="img-fluid">
+            <img v-auth-image="this.$server + '/user/image'" class="img-fluid">
           </div>
           <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
             <div class="dropbox mt-1">
