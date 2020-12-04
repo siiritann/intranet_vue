@@ -61,7 +61,7 @@
 import router from "@/router";
 
 let login = function(username, password) {
-  let url = 'http://localhost:8080/user/login';
+  let url = this.$server + 'user/login';
   let body = {
     username,
     password,
