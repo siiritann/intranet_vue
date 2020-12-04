@@ -168,8 +168,8 @@ let register = function(username, email, password, passwordrepeat) {
             'Bearer ' + token;
           document.getElementById('closeRegisterModal').click();
           console.log('Login success');
-          // REDIRECT TO USER PAGE (NEED TO RETRIEVE USER DATA ALONG WITH THE TOKEN FROM THE SERVER)
-          router.push({ name: 'Welcome', params: { id } });
+          window.location.href = 'http://localhost:8081/#/welcome';
+          location.reload();
         }
       });
   });
