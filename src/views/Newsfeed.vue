@@ -154,6 +154,7 @@ let showUsers = function(response) {
 }
 
 function filterUsers(){
+  //I might yet need this
   // if(this.get_posts_input.length == 0){
   //   this.filteredUsers = this.usersList;
   // }
@@ -165,6 +166,7 @@ function filterUsers(){
   console.log(this.filteredUsers)
 
 }
+
 function setUser(user){
   this.get_posts_input = user;
   this.modal = false;
