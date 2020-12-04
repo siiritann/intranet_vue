@@ -2,11 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
+import VueAuthImage from 'vue-auth-image'
 
+Vue.use(VueAuthImage)
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
-Vue.prototype.$server = "http://localhost:8080/"
-Vue.prototype.$host = "http://localhost:8081/"
+Vue.prototype.$server = "http://localhost:8080"
+Vue.prototype.$host = "http://localhost:8081"
 
 const token = localStorage.getItem('user-token')
 Vue.prototype.$token = token;

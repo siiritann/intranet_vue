@@ -1,20 +1,26 @@
 <template>
   <div id="app">
-    <div class="container">
-      <!--UPLOAD-->
-      <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-        <h1>Upload images</h1>
-        <div class="dropbox">
-          <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files);"
-            accept="image/*" class="input-file">
-            <p v-if="isInitial">
-              Drag your file(s) here to begin<br> or click to browse
-            </p>
-            <p v-if="isSaving">
-              Uploading files...
-            </p>
+    <div class="container image-tool mb-3">
+      <div class="row justify-content-center">
+        <!--UPLOAD-->
+        <div class="col-8 col-sm-6 col-md-5 col-lg-4 text-center">
+          <div id="image-container" class="text-center">
+            <img v-auth-image="this.$server + '/user/image/1'" class="img-fluid">
+          </div>
+          <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
+            <div class="dropbox mt-1">
+              <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files);"
+                accept="image/*" class="input-file">
+                <p v-if="isInitial">
+                  Upload image
+                </p>
+                <p v-if="isSaving">
+                  Uploading files...
+                </p>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -24,10 +30,8 @@ import { upload } from '../js/file-upload.service';
 
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 
-
-
 export default {
-  name: 'FileUploder',
+  name: 'ImageTool',
   data() {
       return {
         uploadedFiles: [],
@@ -95,31 +99,64 @@ export default {
 </script>
 <style>
   .dropbox {
-    outline: 2px dashed grey; /* the dash box */
-    outline-offset: -10px;
     background: lightcyan;
     color: dimgray;
-    padding: 10px 10px;
-    min-height: 200px; /* minimum height */
+    padding: 0;
+    height: 50px; /* minimum height */
     position: relative;
     cursor: pointer;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5); 
+    box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5);
   }
 
   .input-file {
     opacity: 0; /* invisible but it's there! */
     width: 100%;
-    height: 200px;
+    height: 50px;
+    top: 0;
+    left: 0;
     position: absolute;
+    cursor: pointer;
+  }
+  .input-file:hover {
+    cursor: pointer;
+  }
+    input[type=file]::-webkit-file-upload-button {
+    cursor: pointer;
+  }
+
+  input[type=file]::file-selector-button {
+    cursor: pointer;
+  }
+
+  input[type=file]::-webkit-file-upload-button:hover {
+    cursor: pointer;
+  }
+  
+  input[type=file]::file-selector-button:hover {
     cursor: pointer;
   }
 
   .dropbox:hover {
     background: lightblue; /* when mouse over to the drop zone, change color */
+    cursor: pointer;
   }
 
   .dropbox p {
     font-size: 1.2em;
     text-align: center;
-    padding: 50px 0;
+    padding: 0;
+    padding-top: 10px;
+  }
+
+  .dropbox-p:hover {
+    cursor: pointer;
+  }
+
+  #image-container img{
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5); 
+    box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5);
   }
 </style>

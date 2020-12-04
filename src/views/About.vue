@@ -1,19 +1,16 @@
 <template>
   <div class="about">
     <h1>Intranet test</h1>
-    <FileUploader/>
-
-    <div id="sample-image-container">
-      <img src=/>
-    </div>
+    <ImageTool/>
+    
   </div>
 </template>
 <script>
-import FileUploader from "@/components/FileUploader.vue";
+import ImageTool from "@/components/ImageTool.vue";
 export default {
   name: 'About',
   components: {
-    FileUploader,
+    ImageTool,
   },
 };
 </script>
