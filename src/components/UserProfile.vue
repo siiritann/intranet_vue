@@ -220,6 +220,7 @@ let deleteUser = function () {
       .then(result => {
         localStorage.removeItem('user-token');
         router.push({name: 'Login'});
+        location.reload();
       })
 }
 
