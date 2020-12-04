@@ -26,7 +26,8 @@
       data-toggle="modal"
       data-target="#registermodal"
       class="nav-register d-none d-sm-block"
-      >Register</a
+      v-on:click="clearModal()"
+    >Register</a
     >
     <a
       v-on:click="logout()"
@@ -50,8 +51,8 @@
         <a class="brand-side">intraNet</a>
       </div>
       <div v-if="this.$token == null">
-        <a data-toggle="modal" data-target="#loginmodal" class="nav-login-side"
-          >Register</a
+        <a data-toggle="modal" data-target="#loginmodal" class="nav-login-side" v-on:click="clearModal()"
+        >Register</a
         >
       </div>
       <div v-if="this.$token == null">
@@ -80,8 +81,15 @@
 import router from '@/router';
 
 const clearModal = () => {
+  // For LoginModal
   document.querySelector("#usernameinput").value = '';
   document.querySelector("#passwordinput").value = '';
+
+  // For RegisterModal
+  document.querySelector("#usernameInputReg").value = '';
+  document.querySelector("#passwordInputReg").value = '';
+  document.querySelector("#passwordInputRepeatReg").value = '';
+  document.querySelector("#emailInputReg").value = '';
 
 }
 

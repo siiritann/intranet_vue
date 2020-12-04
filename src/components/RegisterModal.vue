@@ -139,6 +139,9 @@ let register = function(username, email, password, passwordrepeat) {
     invalidate('passwordInputRepeatReg');
     invalid = true;
   }
+  if (invalid){
+    return console.log("Invalid");
+  }
   let url = this.$server + '/user/create';
   let body = {
     username,
