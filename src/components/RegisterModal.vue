@@ -64,9 +64,13 @@
             id="closeRegisterModal"
             class="btn moda-close-btn btn-secondary"
             data-dismiss="modal"
+            v-on:click="closeModal()"
           >
             Close
           </button>
+        </div>
+        <div id="registerFailedMessage" v-if="registerFailed" class="mx-1 py-2 alert alert-danger">
+          Register failed
         </div>
       </div>
     </div>
@@ -76,13 +80,14 @@
 <script>
 import Welcome from '@/views/Welcome';
 import router from '@/router';
-/*
-let registerModal = new bootstrap.Modal(
-  document.getElementById('registermodal'),
-  {
-    keyboard: false,
-  }
-);*/
+
+let closeModal = function(){
+  this.registerFailed = false;
+  this.username = '';
+  this.password = '';
+  this.email = '';
+  this.passwordrepeat = '';
+}
 
 function emptyFields(ids) {
   for (let id of ids) {
@@ -134,9 +139,6 @@ let register = function(username, email, password, passwordrepeat) {
     invalidate('passwordInputRepeatReg');
     invalid = true;
   }
-  if (invalid) {
-    return console.log('Inavlid');
-  }
   let url = 'http://localhost:8080/user/create';
   let body = {
     username,
@@ -154,31 +156,36 @@ let register = function(username, email, password, passwordrepeat) {
     ]);
     const id = response.data;
 
-    this.$http
-      .post('http://localhost:8080/user/login', {
-        username,
-        password,
+        this.$http
+            .post('http://localhost:8080/user/login', {
+              username,
+              password,
+            })
+            .then((response) => {
+              if (response.status == '200') {
+                let token = response.data;
+                localStorage.setItem('user-token', token);
+                this.$token = token;
+                this.$http.defaults.headers.common['Authorization'] =
+                    'Bearer ' + token;
+                document.getElementById('closeRegisterModal').click();
+                console.log('Login success');
+                window.location.href = 'http://localhost:8081/#/welcome';
+                location.reload();
+              }
+            });
       })
-      .then((response) => {
-        if (response.status == '200') {
-          let token = response.data;
-          localStorage.setItem('user-token', token);
-          this.$token = token;
-          this.$http.defaults.headers.common['Authorization'] =
-            'Bearer ' + token;
-          document.getElementById('closeRegisterModal').click();
-          console.log('Login success');
-          window.location.href = 'http://localhost:8081/#/welcome';
-          location.reload();
-        }
-      });
-  });
+      .catch(error => {
+        this.registerFailed = true;
+      })
+  ;
 };
 
 export default {
   name: 'RegisterModal',
   methods: {
     register,
+    closeModal
   },
   props: {
     msg: String,
@@ -190,6 +197,7 @@ export default {
       password: '',
       email: '',
       passwordrepeat: '',
+      registerFailed: false
     };
   },
 };
