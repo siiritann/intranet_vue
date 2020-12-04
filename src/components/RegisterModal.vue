@@ -137,7 +137,7 @@ let register = function(username, email, password, passwordrepeat) {
   if (invalid) {
     return console.log('Inavlid');
   }
-  let url = 'http://localhost:8080/user/create';
+  let url = this.$server + '/user/create';
   let body = {
     username,
     email,
@@ -155,7 +155,7 @@ let register = function(username, email, password, passwordrepeat) {
     const id = response.data;
 
     this.$http
-      .post('http://localhost:8080/user/login', {
+      .post(this.$server + '/user/login', {
         username,
         password,
       })
@@ -168,8 +168,8 @@ let register = function(username, email, password, passwordrepeat) {
             'Bearer ' + token;
           document.getElementById('closeRegisterModal').click();
           console.log('Login success');
-          // REDIRECT TO USER PAGE (NEED TO RETRIEVE USER DATA ALONG WITH THE TOKEN FROM THE SERVER)
-          router.push({ name: 'Welcome', params: { id } });
+          window.location.href = this.$host + '/#/welcome';
+          location.reload();
         }
       });
   });

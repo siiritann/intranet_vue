@@ -61,7 +61,7 @@
 import router from "@/router";
 
 let login = function(username, password) {
-  let url = 'http://localhost:8080/user/login';
+  let url = this.$server + '/user/login';
   let body = {
     username,
     password,
@@ -75,7 +75,7 @@ let login = function(username, password) {
       this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
       console.log(this.$http.defaults.headers.common['Authorization']);
       document.getElementById('closeLoginModal').click();
-      window.location.href = 'http://localhost:8081/#/welcome';
+      window.location.href = this.$host + '/#/welcome';
       location.reload();
     }
   });
