@@ -18,14 +18,16 @@
       data-toggle="modal"
       data-target="#loginmodal"
       class="nav-login d-none d-sm-block"
-      >Login</a
+      v-on:click="clearModal()"
+    >Login</a
     >
     <a
       v-if="this.$token == null"
       data-toggle="modal"
       data-target="#registermodal"
       class="nav-register d-none d-sm-block"
-      >Register</a
+      v-on:click="clearModal()"
+    >Register</a
     >
     <a
       v-on:click="logout()"
@@ -49,13 +51,13 @@
         <a class="brand-side">intraNet</a>
       </div>
       <div v-if="this.$token == null">
-        <a data-toggle="modal" data-target="#loginmodal" class="nav-login-side"
-          >Register</a
+        <a data-toggle="modal" data-target="#loginmodal" class="nav-login-side" v-on:click="clearModal()"
+        >Register</a
         >
       </div>
       <div v-if="this.$token == null">
-        <a data-toggle="modal" data-target="#loginmodal" class="nav-login-side"
-          >Login</a
+        <a v-on:click="clearModal()" data-toggle="modal" data-target="#loginmodal" class="nav-login-side"
+        >Login</a
         >
       </div>
       <div v-if="this.$token != null">
@@ -78,6 +80,19 @@
 <script>
 import router from '@/router';
 
+const clearModal = () => {
+  // For LoginModal
+  document.querySelector("#usernameinput").value = '';
+  document.querySelector("#passwordinput").value = '';
+
+  // For RegisterModal
+  document.querySelector("#usernameInputReg").value = '';
+  document.querySelector("#passwordInputReg").value = '';
+  document.querySelector("#passwordInputRepeatReg").value = '';
+  document.querySelector("#emailInputReg").value = '';
+
+}
+
 let token = localStorage.getItem('user-token');
 const toggleSideNav = () => {
   document.querySelector('#side-nav').classList.toggle('side-nav-open');
@@ -93,11 +108,12 @@ export default {
   methods: {
     toggleSideNav,
     logout,
+    clearModal,
   },
   props: {
     token,
   },
-  data: function() {
+  data: function () {
     return {};
   },
   mounted() {

@@ -48,9 +48,13 @@
             id="closeLoginModal"
             class="btn moda-close-btn btn-secondary"
             data-dismiss="modal"
+            v-on:click="closeModal()"
           >
             Close
           </button>
+        </div>
+        <div id="loginFailedMessage" v-if="loginFailed" class="mx-1 py-2 alert alert-danger">
+          Login failed
         </div>
       </div>
     </div>
@@ -60,36 +64,48 @@
 <script>
 import router from "@/router";
 
-let login = function(username, password) {
+let closeModal = function(){
+  this.loginFailed = false;
+  this.username = "";
+  this.password = "";
+}
+
+let login = function (username, password) {
   let url = this.$server + '/user/login';
   let body = {
     username,
     password,
   };
 
-  this.$http.post(url, body).then((response) => {
-    if (response.status == '200') {
-      let token = response.data;
-      localStorage.setItem('user-token', token);
-      this.$token = token;
-      this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-      console.log(this.$http.defaults.headers.common['Authorization']);
-      document.getElementById('closeLoginModal').click();
-      window.location.href = this.$host + '/#/welcome';
-      location.reload();
-    }
-  });
+  this.$http.post(url, body)
+      .then((response) => {
+        if (response.status == '200') {
+          let token = response.data;
+          localStorage.setItem('user-token', token);
+          this.$token = token;
+          this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+          console.log(this.$http.defaults.headers.common['Authorization']);
+          document.getElementById('closeLoginModal').click();
+          window.location.href = this.$host + '/#/welcome';
+          location.reload();
+        }
+      })
+      .catch(error => {
+        this.loginFailed = true;
+      });
 };
 
 export default {
   name: 'LoginModal',
   methods: {
     login,
+    closeModal
   },
   data: function() {
     return {
       username: '',
       password: '',
+      loginFailed: false
     };
   },
 };
