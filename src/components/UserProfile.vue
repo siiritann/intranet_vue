@@ -187,7 +187,7 @@
 import router from "@/router";
 
 function getUserInfo() {
-  let url = 'http://localhost:8080/user/view';
+  let url = this.$server + '/user/view';
   this.$http.get(url)
       .then((response) => {
         this.userdata = response.data;
@@ -196,14 +196,14 @@ function getUserInfo() {
 
 
 let updateUser = function () {
-  let url = 'http://localhost:8080/user/update';
+  let url = this.$server + '/user/update';
   this.userdata.id = parseInt(document.querySelector("#userId").innerHTML.trim());
   this.$http.put(url, this.userdata)
       .then(this.result)
 }
 
 let updatePassword = function (currentPassword, newPassword) {
-  let url = 'http://localhost:8080/user/update/password';
+  let url = this.$server + '/user/update/password';
   let id = parseInt(document.querySelector("#userId").innerHTML.trim());
   let body = {
     currentPassword,
@@ -215,7 +215,7 @@ let updatePassword = function (currentPassword, newPassword) {
 
 let deleteUser = function () {
   let id = parseInt(document.querySelector("#userId").innerHTML.trim());
-  let url = 'http://localhost:8080/user/delete/' + id;
+  let url = this.$server + '/user/delete/' + id;
   this.$http.delete(url)
       .then(result => {
         localStorage.removeItem('user-token');
