@@ -133,7 +133,7 @@
 
 function getUsername() {
   console.log("inside get username")
-  let url = 'http://localhost:8080/user/view/basic';
+  let url = this.$server + '/user/view/basic';
   this.$http.get(url).then(result => {
     if(result.status === 200){
       this.user = result.data
@@ -145,7 +145,7 @@ function getUsername() {
 
 function getAllUsers(){
   console.log("in get all users")
-  let url = 'http://localhost:8080/user/list/usernames';
+  let url = this.$server + '/user/list/usernames';
   this.$http.get(url)
       .then(this.showUsers)
 }
@@ -175,7 +175,7 @@ function setUser(user){
 
 function getListOfPosts() {
   console.log("in get posts")
-  let url = 'http://localhost:8080/posting/list';
+  let url = this.$server + '/posting/list';
   this.$http.get(url)
       .then(this.showResponse)
 }
@@ -191,7 +191,7 @@ function getUserPosts() {
   if(username === ""){
     this.getListOfPosts()
   } else {
-    let url = 'http://localhost:8080/posting/user/' + username;
+    let url = this.$server + '/posting/user/' + username;
     this.$http.get(url)
         .then(this.showResponse)
   }
@@ -204,7 +204,7 @@ let createPost = function(){
   this.posting.username = this.user.username
   console.log(this.posting.username)
 
-  let url = 'http://localhost:8080/posting/create';
+  let url = this.$server + '/posting/create';
   this.$http.post(url, this.posting)
       .then(() => {this.result
         this.getListOfPosts()})
@@ -212,7 +212,7 @@ let createPost = function(){
 };
 
 function setEditModal(id){
-  let url = 'http://localhost:8080/posting/view/' + id;
+  let url = this.$server + '/posting/view/' + id;
   this.$http.get(url)
     .then(result => {
       this.oldPost = result.data
@@ -228,7 +228,7 @@ function editPost(){
   console.log(JSON.stringify(this.editPosting))
   console.log(this.editPosting.id)
   console.log("inside edit post")
-  let url1 = 'http://localhost:8080/posting/update';
+  let url1 = this.$server + '/posting/update';
   this.$http.put(url1, this.editPosting)
       .then(() => {this.result
         this.getListOfPosts()})
@@ -236,7 +236,7 @@ function editPost(){
 
 function deletePost(id){
   console.log("in delete")
-  let url = 'http://localhost:8080/posting/delete/' + id;
+  let url = this.$server + '/posting/delete/' + id;
   this.$http.delete(url)
       .then(() => {this.result
         this.getListOfPosts()})
