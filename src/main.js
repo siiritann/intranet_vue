@@ -5,6 +5,7 @@ import axios from 'axios'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
+Vue.prototype.$host = "http://localhost:8080/"
 
 const token = localStorage.getItem('user-token')
 Vue.prototype.$token = token;

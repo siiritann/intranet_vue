@@ -2,6 +2,10 @@
   <div class="about">
     <h1>Intranet test</h1>
     <FileUploader/>
+
+    <div id="sample-image-container">
+      <img src=/>
+    </div>
   </div>
 </template>
 <script>
