@@ -43,14 +43,24 @@
         </div>
       </div>
         <div class="col-lg-4 col-md-4 col-sm-6 p-3 order-1 order-md-2" style="text-align: left">
+          <div>
+            <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
+                    data-target="#create_post">Create a post</button>
+
+          </div>
           <div class="input-group mb-3">
-            <div class="input-group-prepend">
+
+<!--            I might yet need this -->
+<!--            <div class="input-group-prepend">-->
+<!--              -->
 <!--              <button class="btn btn-outline-secondary" type="button" v-on:click="getAllUsers()"-->
 <!--                      id="button-addon1">Get posts by</button>-->
-            </div>
+<!--            </div>-->
+
+            <!--TODO There are 2 cliches - if input is erased, the list stays. Also some lag with post reload after choosing a name. -->
             <input type="text"
                    class="form-control"
-                   placeholder="Enter username"
+                   placeholder="Enter username to search user posts"
                    id="get_user_posts"
                    v-model="get_posts_input"
                    aria-label="Example text with button addon"
@@ -60,26 +70,11 @@
                    @focus="modal = true"
                    >
           </div>
-          <!--<input type="text"
-                 class="form-control"
-                 placeholder="Tryout input"
-                 v-model="get_posts_input"
-                 aria-label="Example text with button addon"
-                 aria-describedby="button-addon1"
-                 autocomplete="off"
-                 @input="filterUsers"
-                 @focus="modal = true"
-                   >-->
           <div v-if="filteredUsers && modal">
             <ul class="w-48 bg-gray-800 text-black">
               <li v-for="filteredUser in filteredUsers" class="py-2 border-b cursor-pointer" @click="setUser(filteredUser)">{{filteredUser}}</li>
             </ul>
           </div>
-          <div>
-            <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
-                    data-target="#create_post">Create a post</button>
-          </div>
-
         </div>
     </div>
 
@@ -173,6 +168,7 @@ function filterUsers(){
 function setUser(user){
   this.get_posts_input = user;
   this.modal = false;
+  this.getUserPosts()
 }
 
 function getListOfPosts() {
