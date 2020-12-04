@@ -47,27 +47,31 @@
             <div class="input-group-prepend">
 <!--              <button class="btn btn-outline-secondary" type="button" v-on:click="getAllUsers()"-->
 <!--                      id="button-addon1">Get posts by</button>-->
-              {{usersList}}
             </div>
             <input type="text"
                    class="form-control"
                    placeholder="Enter username"
                    id="get_user_posts"
-                   aria-label="Example text with button addon"
-                   aria-describedby="button-addon1"
-                   >
-          </div>
-          <input type="text"
-                   class="form-control"
-                   placeholder="Tryout input"
                    v-model="get_posts_input"
                    aria-label="Example text with button addon"
                    aria-describedby="button-addon1"
                    autocomplete="off"
-                 @input="filterUsers"
+                   @input="filterUsers"
+                   @focus="modal = true"
                    >
-          <div v-if="filteredUsers">
-            <ul class="w-48 bg-gray-200 text-black">
+          </div>
+          <!--<input type="text"
+                 class="form-control"
+                 placeholder="Tryout input"
+                 v-model="get_posts_input"
+                 aria-label="Example text with button addon"
+                 aria-describedby="button-addon1"
+                 autocomplete="off"
+                 @input="filterUsers"
+                 @focus="modal = true"
+                   >-->
+          <div v-if="filteredUsers && modal">
+            <ul class="w-48 bg-gray-800 text-black">
               <li v-for="filteredUser in filteredUsers" class="py-2 border-b cursor-pointer" @click="setUser(filteredUser)">{{filteredUser}}</li>
             </ul>
           </div>
@@ -155,6 +159,9 @@ let showUsers = function(response) {
 }
 
 function filterUsers(){
+  // if(this.get_posts_input.length == 0){
+  //   this.filteredUsers = this.usersList;
+  // }
   this.filteredUsers = this.usersList.filter(get_posts_input => {
     return get_posts_input.toLowerCase().startsWith(this.get_posts_input.toLowerCase());
   })
@@ -164,7 +171,8 @@ function filterUsers(){
 
 }
 function setUser(user){
-  this.get_posts_input = user
+  this.get_posts_input = user;
+  this.modal = false;
 }
 
 function getListOfPosts() {
@@ -291,7 +299,7 @@ export default {
       oldPost: {},
       get_posts_input: "",
       filteredUsers: [],
-
+      modal: false,
     }
   },
   mounted: function (){
@@ -299,6 +307,7 @@ export default {
     this.getListOfPosts();
     this.initPostsQuery();
     this.getAllUsers();
+    this.filterUsers();
 
   },
   };
