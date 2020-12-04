@@ -86,7 +86,7 @@ let login = function (username, password) {
           this.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
           console.log(this.$http.defaults.headers.common['Authorization']);
           document.getElementById('closeLoginModal').click();
-          window.location.href = 'http://localhost:8081/#/welcome';
+          window.location.href = this.$host + '/#/welcome';
           location.reload();
         }
       })

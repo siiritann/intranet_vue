@@ -139,7 +139,7 @@ let register = function(username, email, password, passwordrepeat) {
     invalidate('passwordInputRepeatReg');
     invalid = true;
   }
-  let url = 'http://localhost:8080/user/create';
+  let url = this.$server + '/user/create';
   let body = {
     username,
     email,
@@ -156,29 +156,28 @@ let register = function(username, email, password, passwordrepeat) {
     ]);
     const id = response.data;
 
-        this.$http
-            .post('http://localhost:8080/user/login', {
-              username,
-              password,
-            })
-            .then((response) => {
-              if (response.status == '200') {
-                let token = response.data;
-                localStorage.setItem('user-token', token);
-                this.$token = token;
-                this.$http.defaults.headers.common['Authorization'] =
-                    'Bearer ' + token;
-                document.getElementById('closeRegisterModal').click();
-                console.log('Login success');
-                window.location.href = 'http://localhost:8081/#/welcome';
-                location.reload();
-              }
-            });
+    this.$http
+        .post(this.$server + '/user/login', {
+        username,
+        password,
       })
+      .then((response) => {
+        if (response.status == '200') {
+          let token = response.data;
+          localStorage.setItem('user-token', token);
+          this.$token = token;
+          this.$http.defaults.headers.common['Authorization'] =
+            'Bearer ' + token;
+          document.getElementById('closeRegisterModal').click();
+          console.log('Login success');
+          window.location.href = this.$host + '/#/welcome';
+          location.reload();
+        }
+      });
+  })
       .catch(error => {
         this.registerFailed = true;
-      })
-  ;
+      });
 };
 
 export default {
