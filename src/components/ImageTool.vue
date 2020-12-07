@@ -4,11 +4,11 @@
       <div class="row justify-content-center">
         <!--UPLOAD-->
         <div class="col-8 col-sm-6 col-md-5 col-lg-4 text-center">
-          <div id="image-container" class="text-center">
-            <img v-auth-image="this.$server + '/user/image'" class="img-fluid">
+          <div :id="imageContainer" id="imageContainer" class="text-center">
+            <img :id="userImage" id="userImage" v-auth-image="this.$server + '/user/image'" class="img-fluid">
           </div>
-          <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-            <div class="dropbox mt-1">
+          <form enctype="multipart/form-data" novalidate>
+            <div class="dropbox mt-2">
               <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="filesChange($event.target.name, $event.target.files);"
                 accept="image/*" class="input-file">
                 <p v-if="isInitial">
@@ -17,8 +17,17 @@
                 <p v-if="isSaving">
                   Uploading files...
                 </p>
+                <p v-if="isSuccess">
+                  Upload image
+                </p>
+                <p v-if="isFailed">
+                  Upload image
+                </p>
             </div>
           </form>
+          <div class="mt-2 d-grid">
+            <button id="removeImageButton" v-on:click="removeImage()" class="btn btn-lg btn-danger">Remove image</button>
+          </div>
         </div>
       </div>
     </div>
@@ -26,7 +35,28 @@
 </template>
 
 <script>
-import { upload } from '../js/file-upload.service';
+import spinner from "@/js/spinner.js"
+let upload = function(formData) {
+    let url = this.$server + '/user/image/post';
+
+    const headers = {
+        'Content-Type': 'application/json'
+    }
+    
+    return this.$http.post(url, formData, {
+        headers
+        })// get data
+        .then(x => {
+          console.log('nii')
+          location.reload();
+        })
+}
+
+
+document.getElementsByTagName("body")[0].addEventListener("change", function (event){
+  console.log(event)
+  console.log('change')
+})
 
 const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
 
@@ -37,7 +67,9 @@ export default {
         uploadedFiles: [],
         uploadError: null,
         currentStatus: null,
-        uploadFieldName: 'photos'
+        uploadFieldName: 'photos',
+        imageContainer: '',
+        userImage: '',
       }
     },
     computed: {
@@ -55,6 +87,8 @@ export default {
       }
     },
     methods: {
+      spinner,
+      upload,
       reset() {
         // reset form to initial state
         this.currentStatus = STATUS_INITIAL;
@@ -65,7 +99,7 @@ export default {
         // upload data to the server
         this.currentStatus = STATUS_SAVING;
 
-        upload(formData)
+        this.upload(formData)
           .then(x => {
             this.uploadedFiles = [].concat(x);
             this.currentStatus = STATUS_SUCCESS;
@@ -90,6 +124,18 @@ export default {
 
         // save it
         this.save(formData);
+      },
+      removeImage: function (){
+        console.log('click')
+        let url = this.$server + '/user/image/delete';
+        spinner(removeImageButton)
+        
+        this.$http.delete(url).then(res => {
+          console.log(res)
+          spinner(removeImageButton, 'Remove image')
+          let imgPath = require('../assets/avatar.jpg')
+          imageContainer.innerHTML = "<img src='" + imgPath +"' class='img-fluid'>"
+        })
       }
     },
     mounted() {
@@ -102,45 +148,53 @@ export default {
     background: lightcyan;
     color: dimgray;
     padding: 0;
-    height: 50px; /* minimum height */
+    height: 50px;
     position: relative;
     cursor: pointer;
     border-radius: 5px;
     -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5); 
     box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5);
+    transition: 0.2s;
   }
 
   .input-file {
-    opacity: 0; /* invisible but it's there! */
+    opacity: 0;
     width: 100%;
     height: 50px;
     top: 0;
     left: 0;
     position: absolute;
     cursor: pointer;
+    transition: 0.2s;
   }
   .input-file:hover {
     cursor: pointer;
+    transition: 0.2s;
   }
     input[type=file]::-webkit-file-upload-button {
     cursor: pointer;
+    transition: 0.2s;
   }
 
   input[type=file]::file-selector-button {
     cursor: pointer;
+    transition: 0.2s;
   }
 
   input[type=file]::-webkit-file-upload-button:hover {
     cursor: pointer;
+    transition: 0.2s;
   }
   
   input[type=file]::file-selector-button:hover {
     cursor: pointer;
+    transition: 0.2s;
   }
 
   .dropbox:hover {
-    background: lightblue; /* when mouse over to the drop zone, change color */
+    background: lightblue;
     cursor: pointer;
+    transition: 0.2s;
   }
 
   .dropbox p {
@@ -148,15 +202,23 @@ export default {
     text-align: center;
     padding: 0;
     padding-top: 10px;
+    transition: 0.2s;
   }
 
   .dropbox-p:hover {
     cursor: pointer;
+    transition: 0.2s;
   }
 
-  #image-container img{
+  #removeImage{
+    -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5); 
+    box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5);
+  }
+
+  #imageContainer img{
     border-radius: 5px;
     -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5); 
     box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5);
+    min-height: 300px;
   }
 </style>
