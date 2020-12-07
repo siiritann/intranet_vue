@@ -50,7 +50,7 @@
                     data-target="#create_post">Create a post</button>
 
           </div>
-          <div class="input-group mb-3">
+          <div id="filterParent" class="input-group mb-3">
             <input type="text"
                    class="form-control"
                    placeholder="Enter username to search user posts"
@@ -62,13 +62,14 @@
                    @input="filterUsers"
                    @focus="modal = true"
                    >
+            <div id="filterContainer" v-if="filteredUsers && modal" class="">
+              <ul class="m-0 p-0">
+                <li v-for="filteredUser in filteredUsers" class="px-3 py-2 border-b cursor-pointer"
+                    @click="setUser(filteredUser) && clearFilter()">{{filteredUser}}</li>
+              </ul>
+            </div>
           </div>
-          <div v-if="filteredUsers && modal" class="bg-gray-800">
-            <ul class="">
-              <li v-for="filteredUser in filteredUsers" class="py-2 border-b cursor-pointer"
-                  @click="setUser(filteredUser) && clearFilter()">{{filteredUser}}</li>
-            </ul>
-          </div>
+
         </div>
     </div>
 
@@ -308,4 +309,31 @@ export default {
   };
 </script>
 <style>
+#filterParent{
+  position: relative;
+}
+#filterContainer{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  border-left: 1px solid #cfcfcf;
+  border-right: 1px solid #cfcfcf;
+  border-bottom: 1px solid #cfcfcf;
+  border-radius: 5px;
+  background-color: #fff;
+  max-height: 300px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+#filterContainer ul li{
+list-style: none;
+  transition: 0.1s;
+}
+#filterContainer ul li:hover{
+  cursor: pointer;
+  background-color: #00a2ff;
+  transition: 0.1s;
+}
 </style>
