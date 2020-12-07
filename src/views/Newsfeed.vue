@@ -168,6 +168,7 @@ function clearFilter(){
 }
 
 function setUser(user){
+  console.log("setting user")
   this.get_posts_input = user;
   this.modal = false;
   this.getUserPosts()
@@ -188,6 +189,7 @@ function getUserPosts() {
 
   let username = document.getElementById("get_user_posts").value
   console.log(username)
+  console.log("get user posts")
   if(username === ""){
     this.getListOfPosts()
   } else {
@@ -299,6 +301,7 @@ export default {
       get_posts_input: "",
       filteredUsers: [],
       modal: false,
+      filteredUser: ""
     }
   },
   mounted: function (){
