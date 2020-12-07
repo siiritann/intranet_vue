@@ -150,15 +150,15 @@ let showUsers = function(response) {
 
 function filterUsers(){
   //I might yet need this
-  // if(this.get_posts_input.length == 0){
-  //   this.filteredUsers = this.usersList;
-  // }
+  if(document.querySelector('#get_user_posts').value.length === 0){
+    this.filteredUsers = [];
+  }
   this.filteredUsers = this.usersList.filter(get_posts_input => {
     return get_posts_input.toLowerCase().startsWith(this.get_posts_input.toLowerCase());
   })
 }
 function clearFilter(){
-  this.fileredUsers = []
+  this.fileredUsers = [];
 }
 
 function setUser(user){
@@ -181,7 +181,7 @@ let showResponse = function(response) {
 
 function getUserPosts() {
 
-  let username = document.getElementById("get_user_posts").value
+  let username = document.querySelector('#get_user_posts').value
   console.log(username)
   console.log("get user posts")
   if(username === ""){
@@ -248,9 +248,9 @@ let startTimer = function() {
 }
 
 // Event listener for get user posts input
-console.log(document.getElementById("get_user_posts"))
+console.log(document.querySelector('#get_user_posts'));
 let initPostsQuery = function(){
-  document.getElementById("get_user_posts").addEventListener("input", () => {
+  document.querySelector('#get_user_posts').addEventListener("input", () => {
     clearTimeout(typeTimeout)
     this.startTimer()
   })
@@ -295,7 +295,7 @@ export default {
       get_posts_input: "",
       filteredUsers: [],
       modal: false,
-      filteredUser: ""
+      filteredUser: "",
     }
   },
   mounted: function (){
