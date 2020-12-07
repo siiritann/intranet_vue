@@ -72,7 +72,8 @@
           </div>
           <div v-if="filteredUsers && modal">
             <ul class="w-48 bg-gray-800 text-black">
-              <li v-for="filteredUser in filteredUsers" class="py-2 border-b cursor-pointer" @click="setUser(filteredUser)">{{filteredUser}}</li>
+              <li v-for="filteredUser in filteredUsers" class="py-2 border-b cursor-pointer"
+                  @click="setUser(filteredUser) && clearFilter()">{{filteredUser}}</li>
             </ul>
           </div>
         </div>
@@ -161,10 +162,9 @@ function filterUsers(){
   this.filteredUsers = this.usersList.filter(get_posts_input => {
     return get_posts_input.toLowerCase().startsWith(this.get_posts_input.toLowerCase());
   })
-  console.log(this.get_posts_input)
-  console.log(this.usersList)
-  console.log(this.filteredUsers)
-
+}
+function clearFilter(){
+  this.fileredUsers = []
 }
 
 function setUser(user){
@@ -282,7 +282,8 @@ export default {
     getAllUsers,
     filterUsers,
     showUsers,
-    setUser
+    setUser,
+    clearFilter,
   },
   data: function () {
     return {
