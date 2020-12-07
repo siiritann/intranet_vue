@@ -18,7 +18,7 @@
               <div id="all_posts" class="userpost">
                 <div class="row">
                   <div class="col-sm">
-                {{list.username}} {{list.date}}
+                {{list.username}} {{ (new Date(list.date)).toLocaleString('et-EE') }}
                   </div>
                   <div class="btn-group-sm" role="group"  v-if="list.username === user.username" style="text-align: right">
                     <button id=""
