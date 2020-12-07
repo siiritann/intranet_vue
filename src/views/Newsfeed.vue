@@ -51,15 +51,6 @@
 
           </div>
           <div class="input-group mb-3">
-
-<!--            I might yet need this -->
-<!--            <div class="input-group-prepend">-->
-<!--              -->
-<!--              <button class="btn btn-outline-secondary" type="button" v-on:click="getAllUsers()"-->
-<!--                      id="button-addon1">Get posts by</button>-->
-<!--            </div>-->
-
-            <!--TODO There are 2 cliches - if input is erased, the list stays. Also some lag with post reload after choosing a name. -->
             <input type="text"
                    class="form-control"
                    placeholder="Enter username to search user posts"
@@ -72,8 +63,8 @@
                    @focus="modal = true"
                    >
           </div>
-          <div v-if="filteredUsers && modal">
-            <ul class="w-48 bg-gray-800 text-black">
+          <div v-if="filteredUsers && modal" class="bg-gray-800">
+            <ul class="">
               <li v-for="filteredUser in filteredUsers" class="py-2 border-b cursor-pointer"
                   @click="setUser(filteredUser) && clearFilter()">{{filteredUser}}</li>
             </ul>
