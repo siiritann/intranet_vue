@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Welcome from '../views/Welcome.vue'
 import Newsfeed from '../views/Newsfeed.vue'
+import ForgotPassword from "@/views/ForgotPassword";
 
 
 Vue.use(VueRouter)
@@ -32,7 +33,12 @@ const routes = [
     path: '/newsfeed',
     name: 'Newsfeed',
     component: Newsfeed
-  }
+  },
+  {
+    path: '/forgotpw',
+    name: 'ForgotPassword',
+    component: ForgotPassword
+  },
 ]
 
 const router = new VueRouter({

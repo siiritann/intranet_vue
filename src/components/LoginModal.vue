@@ -8,7 +8,7 @@
             Login
           </h5>
         </div>
-        <div class="modal-body">
+        <div class="modal-body px-2">
           <div class="form-group">
             <label for="usernameinput">Username</label>
             <input
@@ -41,17 +41,34 @@
               Login
             </button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            id="closeLoginModal"
-            class="btn moda-close-btn btn-secondary"
-            data-dismiss="modal"
-            v-on:click="closeModal()"
-          >
-            Close
-          </button>
+          <hr/>
+          <div class="justify-content-around row px-4">
+            <span>
+
+            </span>
+            <div class="col-12 col-sm-6">
+              <button
+                  type="button"
+                  id="resetpwcloseLoginModal"
+                  class="btn modal-close-btn btn-outline-info"
+                  data-dismiss="modal"
+                  v-on:click="$router.push('forgotpw')"
+              >
+                Forgot password?
+              </button>
+            </div>
+            <div class="col-12 col-sm-6 ">
+              <button
+                  type="button"
+                  id="closeLoginModal"
+                  class="btn modal-close-btn btn-secondary float-right"
+                  data-dismiss="modal"
+                  v-on:click="closeModal()"
+              >
+                Close
+              </button>
+            </div>
+          </div>
         </div>
         <div id="loginFailedMessage" v-if="loginFailed" class="mx-1 py-2 alert alert-danger">
           Login failed
