@@ -35,7 +35,9 @@
                 </div>
               <br>
                 <h5>{{list.heading}}</h5>
+                <div class="text-break">
                 <p :id="'body-' + list.id">{{list.body}}</p>
+                </div>
                 <br>
                 <br>
               </div>
