@@ -262,7 +262,7 @@ let initPostsQuery = function(){
 
 import Navbar from '@/components/Navbar.vue';
 import RegisterModal from "@/components/RegisterModal";
-import LoginModal from "@/views/LoginModal";
+import LoginModal from "@/components/LoginModal";
 import Brand from "@/components/Brand";
 
 export default {
