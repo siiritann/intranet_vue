@@ -1,7 +1,10 @@
 <template>
   <div class="home">
   <div >
-    <Navbar />
+    <Brand/>
+    <Navbar/>
+    <LoginModal/>
+    <RegisterModal/>
   </div>
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ "Newsfeed" }}</h1>
@@ -125,7 +128,6 @@
 
 <script>
 
-
 function getUsername() {
   console.log("inside get username")
   let url = this.$server + '/user/view/basic';
@@ -164,6 +166,7 @@ function clearFilter(){
 function setUser(user){
   console.log("setting user")
   this.get_posts_input = user;
+  document.querySelector('#get_user_posts').value = user;
   this.modal = false;
   this.getUserPosts()
 }
@@ -258,11 +261,17 @@ let initPostsQuery = function(){
 
 
 import Navbar from '@/components/Navbar.vue';
+import RegisterModal from "@/components/RegisterModal";
+import LoginModal from "@/views/LoginModal";
+import Brand from "@/components/Brand";
 
 export default {
   name: 'Newsfeed',
   components: {
-    Navbar
+    RegisterModal,
+    LoginModal,
+    Navbar,
+    Brand
   },
   methods: {
     getListOfPosts,
