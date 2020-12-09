@@ -1,7 +1,10 @@
 <template>
   <div class="home">
   <div >
-    <Navbar />
+    <Brand/>
+    <Navbar/>
+    <LoginModal/>
+    <RegisterModal/>
   </div>
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ "Newsfeed" }}</h1>
@@ -18,7 +21,7 @@
               <div id="all_posts" class="userpost">
                 <div class="row">
                   <div class="col-sm">
-                {{list.username}} {{ (new Date(list.date)).toLocaleString('et-EE') }}
+                {{list.username}} {{(new Date(list.date)).toLocaleString('et-EE')}}
                   </div>
                   <div class="btn-group-sm" role="group"  v-if="list.username === user.username" style="text-align: right">
                     <button id=""
@@ -35,7 +38,9 @@
                 </div>
               <br>
                 <h5>{{list.heading}}</h5>
+                <div class="text-break">
                 <p :id="'body-' + list.id">{{list.body}}</p>
+                </div>
                 <br>
                 <br>
               </div>
@@ -48,16 +53,7 @@
                     data-target="#create_post">Create a post</button>
 
           </div>
-          <div class="input-group mb-3">
-
-<!--            I might yet need this -->
-<!--            <div class="input-group-prepend">-->
-<!--              -->
-<!--              <button class="btn btn-outline-secondary" type="button" v-on:click="getAllUsers()"-->
-<!--                      id="button-addon1">Get posts by</button>-->
-<!--            </div>-->
-
-            <!--TODO There are 2 cliches - if input is erased, the list stays. Also some lag with post reload after choosing a name. -->
+          <div id="filterParent" class="input-group mb-3">
             <input type="text"
                    class="form-control"
                    placeholder="Enter username to search user posts"
@@ -69,12 +65,14 @@
                    @input="filterUsers"
                    @focus="modal = true"
                    >
+            <div id="filterContainer" v-if="filteredUsers && modal" class="">
+              <ul class="m-0 p-0">
+                <li v-for="filteredUser in filteredUsers" class="px-3 py-2 border-b cursor-pointer"
+                    @click="setUser(filteredUser) && clearFilter()">{{filteredUser}}</li>
+              </ul>
+            </div>
           </div>
-          <div v-if="filteredUsers && modal">
-            <ul class="w-48 bg-gray-800 text-black">
-              <li v-for="filteredUser in filteredUsers" class="py-2 border-b cursor-pointer" @click="setUser(filteredUser)">{{filteredUser}}</li>
-            </ul>
-          </div>
+
         </div>
     </div>
 
@@ -130,7 +128,6 @@
 
 <script>
 
-
 function getUsername() {
   console.log("inside get username")
   let url = this.$server + '/user/view/basic';
@@ -155,20 +152,21 @@ let showUsers = function(response) {
 
 function filterUsers(){
   //I might yet need this
-  // if(this.get_posts_input.length == 0){
-  //   this.filteredUsers = this.usersList;
-  // }
+  if(document.querySelector('#get_user_posts').value.length === 0){
+    this.filteredUsers = [];
+  }
   this.filteredUsers = this.usersList.filter(get_posts_input => {
     return get_posts_input.toLowerCase().startsWith(this.get_posts_input.toLowerCase());
   })
-  console.log(this.get_posts_input)
-  console.log(this.usersList)
-  console.log(this.filteredUsers)
-
+}
+function clearFilter(){
+  this.fileredUsers = [];
 }
 
 function setUser(user){
+  console.log("setting user")
   this.get_posts_input = user;
+  document.querySelector('#get_user_posts').value = user;
   this.modal = false;
   this.getUserPosts()
 }
@@ -186,8 +184,9 @@ let showResponse = function(response) {
 
 function getUserPosts() {
 
-  let username = document.getElementById("get_user_posts").value
+  let username = document.querySelector('#get_user_posts').value
   console.log(username)
+  console.log("get user posts")
   if(username === ""){
     this.getListOfPosts()
   } else {
@@ -252,9 +251,9 @@ let startTimer = function() {
 }
 
 // Event listener for get user posts input
-console.log(document.getElementById("get_user_posts"))
+console.log(document.querySelector('#get_user_posts'));
 let initPostsQuery = function(){
-  document.getElementById("get_user_posts").addEventListener("input", () => {
+  document.querySelector('#get_user_posts').addEventListener("input", () => {
     clearTimeout(typeTimeout)
     this.startTimer()
   })
@@ -262,11 +261,17 @@ let initPostsQuery = function(){
 
 
 import Navbar from '@/components/Navbar.vue';
+import RegisterModal from "@/components/RegisterModal";
+import LoginModal from "@/components/LoginModal";
+import Brand from "@/components/Brand";
 
 export default {
   name: 'Newsfeed',
   components: {
-    Navbar
+    RegisterModal,
+    LoginModal,
+    Navbar,
+    Brand
   },
   methods: {
     getListOfPosts,
@@ -282,7 +287,8 @@ export default {
     getAllUsers,
     filterUsers,
     showUsers,
-    setUser
+    setUser,
+    clearFilter,
   },
   data: function () {
     return {
@@ -298,6 +304,7 @@ export default {
       get_posts_input: "",
       filteredUsers: [],
       modal: false,
+      filteredUser: "",
     }
   },
   mounted: function (){
@@ -311,4 +318,31 @@ export default {
   };
 </script>
 <style>
+#filterParent{
+  position: relative;
+}
+#filterContainer{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  border-left: 1px solid #cfcfcf;
+  border-right: 1px solid #cfcfcf;
+  border-bottom: 1px solid #cfcfcf;
+  border-radius: 5px;
+  background-color: #fff;
+  max-height: 300px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+#filterContainer ul li{
+list-style: none;
+  transition: 0.1s;
+}
+#filterContainer ul li:hover{
+  cursor: pointer;
+  background-color: #00a2ff;
+  transition: 0.1s;
+}
 </style>
