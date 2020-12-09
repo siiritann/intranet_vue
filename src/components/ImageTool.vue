@@ -3,7 +3,7 @@
     <div class="container image-tool mb-3">
       <div class="row justify-content-center">
         <!--UPLOAD-->
-        <div class="col-8 col-sm-6 col-md-5 col-lg-4 text-center">
+        <div class="text-center">
           <div :id="imageContainer" id="imageContainer" class="text-center">
             <img :id="userImage" id="userImage" v-auth-image="this.$server + '/user/image'" class="img-fluid">
           </div>

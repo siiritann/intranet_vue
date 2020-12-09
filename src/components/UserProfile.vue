@@ -1,74 +1,61 @@
 <template>
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ msg }}</h1>
-    <div class="create-user-div row justify-content-center mx-3">
-      <div class="col-lg-6 col-md-8 col-sm-10 user-creation-card p-3">
+    <div class="row justify-content-center mx-3">
+      <div class="col-lg-6 col-md-8 col-sm-10 user-creation-card px-3 py-5">
         <div>
-          <div class="py-2" hidden>
-            <h5>Your clientId is <span id="userId">{{ userdata.id }}</span></h5>
-          </div>
-          <div>
-          </div>
+          <h5 hidden>Your clientId is <span id="userId">{{ userdata.id }}</span></h5>
           <div class="row">
+            <div class="col-12 col-sm-6">
+              <div>
+                <ImageTool/>
+              </div>
+            </div>
             <div class="col-12 col-sm-6">
               <p><strong>Username</strong></p>
               <p>{{ userdata.username }}</p>
-            </div>
-            <div class="col-12 col-sm-6">
               <p><strong> E-mail</strong></p>
               <p>{{ userdata.email }}</p>
-            </div>
-            <div class="col-12 col-sm-6">
               <p><strong> First name </strong></p>
               <p>{{ userdata.firstName }}</p>
-            </div>
-            <div class="col-12 col-sm-6">
               <p><strong> Last name </strong></p>
               <p>{{ userdata.lastName }}</p>
-            </div>
-            <div class="col-12 col-sm-6">
               <p><strong> Birthday </strong></p>
               <p>{{ userdata.birthDate }}</p>
-            </div>
-            <div class="col-12 col-sm-6">
               <p><strong>Phone </strong></p>
               <p>{{ userdata.phone }}</p>
-            </div>
-          </div>
-          <div class="py-2 row">
-            <div class="col-12 col-sm-6 mb-3">
-              <button
-                  type="button"
-                  data-toggle="modal"
-                  data-target="#change_pw"
-                  class="btn btn-outline-primary shadow-sm btn-lg btn-outline-warning">
-                Change password
-              </button>
-            </div>
-            <div class="col-12 col-sm-6">
-              <button
-                  type="button"
-                  data-toggle="modal"
-                  data-target="#update_user"
-                  class="btn btn-outline-primary shadow-sm btn-lg btn-lg">
-                Modify
-              </button>
-            </div>
-          </div>
-          <div class="py-2 row">
-            <div class="col-12 col-sm-6 text-right">
-            </div>
-            <div class="col-12 col-sm-6">
-              <button
-                  type="button"
-                  data-toggle="modal"
-                  data-target="#delete_user"
-                  class="btn btn-danger shadow-sm btn-lg btn-lg ">
-                Delete account
-              </button>
-            </div>
-          </div>
+              <div class="mt-2">
+                <button
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#update_user"
+                    id="modifyButton"
+                    class="btn btn-outline-primary shadow-sm btn-lg btn-lg">
 
+                  Modify
+                </button>
+              </div>
+              <div class="mt-2">
+                <button
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#change_pw"
+                    class="btn btn-outline-primary shadow-sm btn-lg btn-outline-warning"
+                    id="changePwButton">
+                  Change password
+                </button>
+              </div>
+              <div class="mt-2">
+                <button
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#delete_user"
+                    class="btn btn-danger shadow-sm btn-lg btn-lg ">
+                  Delete account
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -185,6 +172,7 @@
 </template>
 <script>
 import router from "@/router";
+import ImageTool from "@/components/ImageTool";
 
 function getUserInfo() {
   let url = this.$server + '/user/view';
@@ -226,6 +214,9 @@ let deleteUser = function () {
 
 export default {
   name: 'UserProfile',
+  components: {
+    ImageTool
+  },
   methods: {
     getUserInfo,
     updateUser,
@@ -252,5 +243,31 @@ export default {
   },
 };
 </script>
+<style>
+
+#modifyButton {
+  background-color: lightcyan;
+  color: dimgray;
+  border-color: lightgray;
+  border-radius: 5px;
+  box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.5) !important;
+  transition: 0.2s;
+}
+
+#modifyButton:hover {
+  background: lightblue;
+}
+
+#changePwButton {
+  background-color: #f9fabb;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5) !important;
+  transition: 0.2s;
+}
+
+#changePwButton:hover {
+  background-color: #f0ef9c;
+  color: dimgray;
+}
+</style>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
