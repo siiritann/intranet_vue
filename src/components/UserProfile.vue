@@ -4,7 +4,7 @@
     <div class="create-user-div row justify-content-center mx-3">
       <div class="col-lg-6 col-md-8 col-sm-10 user-creation-card p-3">
         <div>
-          <div class="py-2">
+          <div class="py-2" hidden>
             <h5>Your clientId is <span id="userId">{{ userdata.id }}</span></h5>
           </div>
           <div>

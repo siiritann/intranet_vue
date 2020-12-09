@@ -6,7 +6,7 @@ import Newsfeed from '../views/Newsfeed.vue'
 import About from '../views/About.vue'
 import ForgotPassword from "@/views/ForgotPassword";
 import ResetPassword from "@/views/ResetPassword";
-
+import Users from "@/views/Users";
 
 Vue.use(VueRouter)
 
@@ -43,6 +43,11 @@ const routes = [
     path: '/resetpw',
     name: 'ResetPassword',
     component: ResetPassword
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: Users
   }
 ]
 

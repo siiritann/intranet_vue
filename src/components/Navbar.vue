@@ -13,6 +13,12 @@
       class="nav-link d-none d-sm-inline-block"
       >Newsfeed</router-link
     >
+    <router-link
+        to="/users"
+        v-if="this.$token != null"
+        class="nav-link d-none d-sm-inline-block"
+    >Admin center</router-link
+    >
     <a
       v-if="this.$token == null"
       data-toggle="modal"
@@ -68,6 +74,11 @@
       <div v-if="this.$token != null">
         <router-link to="/newsfeed" class="nav-link mt-1 py-0"
           >Newsfeed</router-link
+        >
+      </div>
+      <div v-if="this.$token != null">
+        <router-link to="/users" class="nav-link mt-1 py-0"
+        >Admin center</router-link
         >
       </div>
       <div v-on:click="logout()" v-if="this.$token != null" class="mt-1">
