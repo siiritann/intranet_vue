@@ -5,6 +5,7 @@ import Welcome from '../views/Welcome.vue'
 import Newsfeed from '../views/Newsfeed.vue'
 import About from '../views/About.vue'
 import ForgotPassword from "@/views/ForgotPassword";
+import ResetPassword from "@/views/ResetPassword";
 
 
 Vue.use(VueRouter)
@@ -38,6 +39,11 @@ const routes = [
     name: 'ForgotPassword',
     component: ForgotPassword
   },
+  {
+    path: '/resetpw',
+    name: 'ResetPassword',
+    component: ResetPassword
+  }
 ]
 
 const router = new VueRouter({

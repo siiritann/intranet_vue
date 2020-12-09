@@ -8,12 +8,11 @@
     </div>
     <div class="home">
       <div class="registerhello text-center">
-        <h1 class="main-heading display-3 pt-5 mb-5">Reset password</h1>
+        <h1 class="main-heading display-3 pt-5 mb-5">Forgot your password?</h1>
         <div class="create-user-div row justify-content-center mx-3">
           <div class="col-lg-6 col-md-8 col-sm-10 user-creation-card p-3 mx-0 px-5">
             <div>
               <div class="py-2">
-                <p>Seems like you have forgotten your password.</p>
                 <p>
                   Don't worry.
                   Happens to the best. Just insert your e-mail to the following
@@ -73,7 +72,7 @@ import RegisterModal from "@/components/RegisterModal";
 import Brand from "@/components/Brand";
 
 export default {
-  name: 'Welcome',
+  name: 'ForgotPassword',
   components: {
     Brand,
     Navbar,
@@ -86,7 +85,8 @@ export default {
   data: function () {
     return {
       successMessage: false,
-      errorMessage: false
+      errorMessage: false,
+      email: ''
     }
   }
 };
