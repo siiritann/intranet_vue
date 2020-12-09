@@ -15,7 +15,7 @@
     >
     <router-link
         to="/users"
-        v-if="this.$token != null"
+        v-if="this.$token != null && isAdmin"
         class="nav-link d-none d-sm-inline-block"
     >Admin center</router-link
     >
@@ -76,7 +76,7 @@
           >Newsfeed</router-link
         >
       </div>
-      <div v-if="this.$token != null">
+      <div v-if="this.$token != null && isAdmin">
         <router-link to="/users" class="nav-link mt-1 py-0"
         >Admin center</router-link
         >
@@ -90,6 +90,7 @@
 
 <script>
 import router from '@/router';
+import jwt_decode from "jwt-decode";
 
 const clearModal = () => {
   // For LoginModal
@@ -105,6 +106,13 @@ const clearModal = () => {
 }
 
 let token = localStorage.getItem('user-token');
+
+function checkIfAdmin () {
+  if (token != null) {
+    this.isAdmin = jwt_decode(token).isAdmin;
+  }
+}
+
 const toggleSideNav = () => {
   document.querySelector('#side-nav').classList.toggle('side-nav-open');
 };
@@ -120,15 +128,19 @@ export default {
     toggleSideNav,
     logout,
     clearModal,
+    checkIfAdmin
   },
   props: {
     token,
   },
   data: function () {
-    return {};
+    return {
+      isAdmin: false
+    };
   },
   mounted() {
     console.log('token', this.$token);
+    this.checkIfAdmin()
   },
 };
 </script>

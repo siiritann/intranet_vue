@@ -3,18 +3,19 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import VueAuthImage from 'vue-auth-image'
+import jwt_decode from "jwt-decode";
 
 Vue.use(VueAuthImage)
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.prototype.$server = "http://localhost:8080"
 Vue.prototype.$host = "http://localhost:8081"
+Vue.prototype.jwt_decode = jwt_decode
 
 const token = localStorage.getItem('user-token')
 Vue.prototype.$token = token;
 if (token) {
   axios.defaults.headers.common['Authorization'] = "Bearer " + token
-  console.log(axios.defaults.headers.common['Authorization']);
 }
 
 new Vue({
