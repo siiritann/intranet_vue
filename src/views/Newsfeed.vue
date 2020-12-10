@@ -9,7 +9,7 @@
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ "Newsfeed" }}</h1>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center footer-saver">
       <div class="col-lg-3 col-md-3 col-sm-4 p-3 d-none d-md-block" style="text-align: left">
       </div>
         <div class="col-lg-5 col-md-5 col-sm-8 p-3 order-2 order-md-1" style="text-align: left">
@@ -367,5 +367,8 @@ list-style: none;
   cursor: pointer;
   background-color: #00a2ff;
   transition: 0.1s;
+}
+.footer-saver{
+  margin-bottom: 30vh;
 }
 </style>

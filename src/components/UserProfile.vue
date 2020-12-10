@@ -2,7 +2,7 @@
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ msg }}</h1>
     <div class="row justify-content-center mx-3">
-      <div class="col-lg-6 col-md-8 col-sm-10 user-creation-card px-3 py-5">
+      <div class="col-lg-6 col-md-8 col-sm-10 user-creation-card px-3 py-5 mb-5">
         <div>
           <h5 hidden>Your clientId is <span id="userId">{{ userdata.id }}</span></h5>
           <div class="row">
@@ -114,7 +114,7 @@
                 <label class="mt-2" for="email">E-mail </label>
               </div>
               <div class="col-sm-7">
-                <input class="form-control" id="email" v-model="userdata.email">
+                <input class="form-control" autocomplete="off" id="email" v-model="userdata.email">
               </div>
             </div>
             <div class="row mt-1">
@@ -122,7 +122,7 @@
                 <label class="mt-2" for="firstName">First name</label>
               </div>
               <div class="col-sm-7">
-                <input class="form-control" id="firstName" v-model="userdata.firstName">
+                <input class="form-control" autocomplete="off" id="firstName" v-model="userdata.firstName">
               </div>
             </div>
             <div class="row mt-1">
@@ -130,7 +130,7 @@
                 <label class="mt-2" for="lastName">Last name</label>
               </div>
               <div class="col-sm-7">
-                <input class="form-control" id="lastName" v-model="userdata.lastName">
+                <input class="form-control" autocomplete="off" id="lastName" v-model="userdata.lastName">
               </div>
             </div>
             <div class="row mt-1">
@@ -138,7 +138,7 @@
                 <label class="mt-2" for="birthday">Birthday</label>
               </div>
               <div class="col-sm-7">
-                <input class="form-control" id="birthday" v-model="userdata.birthDate">
+                <input class="form-control" autocomplete="off" id="birthday" v-model="userdata.birthDate">
               </div>
             </div>
             <div class="row mt-1">
@@ -146,7 +146,7 @@
                 <label class="mt-2" for="phone">Phone</label>
               </div>
               <div class="col-sm-7">
-                <input class="form-control" id="phone" v-model="userdata.phone">
+                <input class="form-control" name="phone" autocomplete="off" id="phone" v-model="userdata.phone">
               </div>
             </div>
 
@@ -180,9 +180,9 @@
             <div class="col-sm-2"></div>
             <div class="col-sm-8">
             <label for="currentPw">Enter your current password </label>
-            <input class="form-control mt-2" id="currentPw" v-model="currentPassword" type="password">
+            <input class="form-control mt-2" autocomplete="off" id="currentPw" v-model="currentPassword" type="password">
             <label class="mt-2" for="newPw">Enter new password </label>
-            <input class="form-control mt-2" id="newPw" v-model="newPassword" type="password">
+            <input class="form-control mt-2" autocomplete="off" id="newPw" v-model="newPassword" type="password">
             </div>
             <div class="col-sm-2"></div>
             </div>
