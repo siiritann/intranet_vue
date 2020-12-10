@@ -1,6 +1,17 @@
 <template>
   <div id="navbar-top" class="fixed-top navbar-theme">
-    <a class="brand d-none d-sm-block">intraNet</a>
+    <router-link
+      to="/welcome"
+      v-if="this.$token != null"
+      class="brand d-none d-sm-block"
+      >intraNet</router-link
+    >
+    <router-link
+      to="/"
+      v-if="this.$token == null"
+      class="brand d-none d-sm-block"
+      >intraNet</router-link
+    >
     <router-link
       to="/welcome"
       v-if="this.$token != null"
@@ -14,10 +25,10 @@
       >Newsfeed</router-link
     >
     <router-link
-        to="/users"
-        v-if="this.$token != null && isAdmin"
-        class="nav-link d-none d-sm-inline-block"
-    >Admin center</router-link
+      to="/users"
+      v-if="this.$token != null && isAdmin"
+      class="nav-link d-none d-sm-inline-block"
+      >Admin center</router-link
     >
     <a
       v-if="this.$token == null"
@@ -25,7 +36,7 @@
       data-target="#loginmodal"
       class="nav-login d-none d-sm-block"
       v-on:click="clearModal()"
-    >Login</a
+      >Login</a
     >
     <a
       v-if="this.$token == null"
@@ -33,7 +44,7 @@
       data-target="#registermodal"
       class="nav-register d-none d-sm-block"
       v-on:click="clearModal()"
-    >Register</a
+      >Register</a
     >
     <a
       v-on:click="logout()"
@@ -57,13 +68,21 @@
         <a class="brand-side">intraNet</a>
       </div>
       <div v-if="this.$token == null">
-        <a data-toggle="modal" data-target="#loginmodal" class="nav-login-side" v-on:click="clearModal()"
-        >Register</a
+        <a
+          data-toggle="modal"
+          data-target="#loginmodal"
+          class="nav-login-side"
+          v-on:click="clearModal()"
+          >Register</a
         >
       </div>
       <div v-if="this.$token == null">
-        <a v-on:click="clearModal()" data-toggle="modal" data-target="#loginmodal" class="nav-login-side"
-        >Login</a
+        <a
+          v-on:click="clearModal()"
+          data-toggle="modal"
+          data-target="#loginmodal"
+          class="nav-login-side"
+          >Login</a
         >
       </div>
       <div v-if="this.$token != null">
@@ -78,7 +97,7 @@
       </div>
       <div v-if="this.$token != null && isAdmin">
         <router-link to="/users" class="nav-link mt-1 py-0"
-        >Admin center</router-link
+          >Admin center</router-link
         >
       </div>
       <div v-on:click="logout()" v-if="this.$token != null" class="mt-1">
@@ -90,24 +109,23 @@
 
 <script>
 import router from '@/router';
-import jwt_decode from "jwt-decode";
+import jwt_decode from 'jwt-decode';
 
 const clearModal = () => {
   // For LoginModal
-  document.querySelector("#usernameinput").value = '';
-  document.querySelector("#passwordinput").value = '';
+  document.querySelector('#usernameinput').value = '';
+  document.querySelector('#passwordinput').value = '';
 
   // For RegisterModal
-  document.querySelector("#usernameInputReg").value = '';
-  document.querySelector("#passwordInputReg").value = '';
-  document.querySelector("#passwordInputRepeatReg").value = '';
-  document.querySelector("#emailInputReg").value = '';
-
-}
+  document.querySelector('#usernameInputReg').value = '';
+  document.querySelector('#passwordInputReg').value = '';
+  document.querySelector('#passwordInputRepeatReg').value = '';
+  document.querySelector('#emailInputReg').value = '';
+};
 
 let token = localStorage.getItem('user-token');
 
-function checkIfAdmin () {
+function checkIfAdmin() {
   if (token != null) {
     this.isAdmin = jwt_decode(token).isAdmin;
   }
@@ -128,19 +146,19 @@ export default {
     toggleSideNav,
     logout,
     clearModal,
-    checkIfAdmin
+    checkIfAdmin,
   },
   props: {
     token,
   },
-  data: function () {
+  data: function() {
     return {
-      isAdmin: false
+      isAdmin: false,
     };
   },
   mounted() {
     console.log('token', this.$token);
-    this.checkIfAdmin()
+    this.checkIfAdmin();
   },
 };
 </script>

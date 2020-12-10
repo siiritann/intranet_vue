@@ -191,13 +191,18 @@
             <button
                 type="button"
                 data-dismiss="modal"
-                class="btn btn-light shadow-sm btn-sm float-left">Cancel
+                class="btn btn-light shadow-sm btn-sm float-left"
+                v-on:click="closeModal()"
+            >Cancel
             </button>
             <button
-                v-on:click="updatePassword(currentPassword, newPassword), reloadPage()"
+                v-on:click="updatePassword(currentPassword, newPassword)"
                 type="button"
                 class="blueButton btn shadow-sm btn-sm float-left">Save
             </button>
+          </div>
+          <div id="emailErrorMessage" v-if="errorMessage" class="mx-1 py-2 alert alert-danger">
+            Wrong password.
           </div>
         </div>
       </div>
@@ -254,6 +259,12 @@ function getUserInfo() {
 }
 
 
+let closeModal = function () {
+  this.currentPassword = '';
+  this.newPassword = '';
+  this.errorMessage = false;
+}
+
 let updateUser = function () {
   let url = this.$server + '/user/update';
   this.userdata.id = parseInt(document.querySelector("#userId").innerHTML.trim());
@@ -269,7 +280,14 @@ let updatePassword = function (currentPassword, newPassword) {
     newPassword,
     id
   };
-  this.$http.put(url, body);
+  this.$http.put(url, body)
+      .then(result => {
+        window.location.href = this.$host + '/#/welcome';
+        location.reload();
+      })
+      .catch(error => {
+        this.errorMessage = true;
+      });
 }
 
 let deleteUser = function () {
@@ -291,6 +309,7 @@ export default {
   methods: {
     getUserInfo,
     updateUser,
+    closeModal,
     reloadPage() {
       window.location.reload()
     },
@@ -307,6 +326,7 @@ export default {
       currentPassword: '',
       newPassword: '',
       userdata: {},
+      errorMessage: false
     };
   },
   mounted: function () {
