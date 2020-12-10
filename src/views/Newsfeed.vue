@@ -335,9 +335,7 @@ function getUserPosts() {
 }
 
 let createPost = function() {
-  console.log("in create")
   this.posting.username = this.user.username;
-
   let url = this.$server + '/posting/create';
   this.$http.post(url, this.posting).then(() => {
     this.result;
