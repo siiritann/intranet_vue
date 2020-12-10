@@ -205,7 +205,6 @@ let createPost = function(){
   this.$http.post(url, this.posting)
       .then(() => {this.result
         this.getListOfPosts()})
-
 };
 
 function setEditModal(id){
