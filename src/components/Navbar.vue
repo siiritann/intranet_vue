@@ -142,7 +142,7 @@ export default {
     toggleSideNav,
     logout: function (){
       localStorage.removeItem('user-token');
-      window.location.href = this.$host + '/#/welcome';
+      window.location.href = this.$host + '/#/';
     },
     clearModal,
     checkIfAdmin,
