@@ -137,7 +137,7 @@ const toggleSideNav = () => {
 
 const logout = () => {
   localStorage.removeItem('user-token');
-  window.location.href = 'http://localhost:8081/';
+  window.location.href = this.$host;
 };
 
 export default {
