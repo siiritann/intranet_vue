@@ -24,7 +24,7 @@
                 {{list.username}} {{(new Date(list.date)).toLocaleString('et-EE')}}
                   </div>
                   <div class="btn-group-sm" role="group" style="text-align: right">
-                    <button v-if="list.username === user.username" id=""
+                    <button v-if="list.username === user.username"
                             class="blueButton btn btn-outline-secondary button-sm mr-1"
                             data-toggle="modal"
                             data-target="#start_editing"
@@ -127,7 +127,6 @@
 
 <script>
 let token = localStorage.getItem('user-token');
-// TODO clich with login!
 function checkIfAdmin(){
   if(token != null){
     this.isAdmin = jwt_decode(token).isAdmin;
