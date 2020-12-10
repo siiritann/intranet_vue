@@ -5,6 +5,7 @@
     <LoginModal />
     <RegisterModal />
     <Introduction msg="Welcome to intraNet" />
+    <Footer />
   </div>
 </template>
 
@@ -15,6 +16,7 @@ import Brand from '@/components/Brand.vue';
 import Navbar from '@/components/Navbar.vue';
 import LoginModal from '@/components/LoginModal.vue';
 import RegisterModal from '@/components/RegisterModal.vue';
+import Footer from '@/components/Footer.vue';
 
 export default {
   name: 'Login',
@@ -24,6 +26,7 @@ export default {
     Navbar,
     LoginModal,
     RegisterModal,
+    Footer,
   },
 };
 </script>
