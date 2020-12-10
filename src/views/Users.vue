@@ -60,8 +60,11 @@
             <div v-if="errorMessage" class="mx-1 py-2 alert alert-danger">
               Something went wrong.
             </div>
-            <div v-if="successMessage" class="mx-1 py-2 alert alert-success">
+            <div v-if="adminSuccessMessage" class="mx-1 py-2 alert alert-success">
               User successfully marked as admin.
+            </div>
+            <div v-if="deleteSuccessMessage" class="mx-1 py-2 alert alert-success">
+              User successfully deleted.
             </div>
           </div>
         </div>
@@ -93,9 +96,16 @@ function deleteUser(index) {
   let url = this.$server + '/user/delete/' + id;
   this.$http.delete(url)
       .then(result => {
+        this.adminSuccessMessage = false;
+        this.deleteSuccessMessage = true;
+        this.errorMessage = false;
         localStorage.removeItem('user-token');
       })
-      .catch(error => "");
+      .catch(error => {
+        this.adminSuccessMessage = false;
+        this.deleteSuccessMessage = false;
+        this.errorMessage = true;
+      });
   this.usersList.splice(index, 1);
 }
 
@@ -107,11 +117,13 @@ function makeAdmin(index) {
   let url = this.$server + '/user/updaterole/' + adminId + '/' + userId;
   this.$http.post(url)
       .then(result => {
-        this.successMessage = true;
+        this.adminSuccessMessage = true;
+        this.deleteSuccessMessage = false;
         this.errorMessage = false;
       })
       .catch(error => {
-        this.successMessage = false;
+        this.adminSuccessMessage = false;
+        this.deleteSuccessMessage = false;
         this.errorMessage = true;
       });
 }
@@ -127,7 +139,8 @@ export default {
   data: function () {
     return {
       usersList: [],
-      successMessage: false,
+      adminSuccessMessage: false,
+      deleteSuccessMessage: false,
       errorMessage: false,
     }
   },
