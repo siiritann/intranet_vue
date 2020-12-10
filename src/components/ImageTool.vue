@@ -165,18 +165,18 @@ export default {
 };
 </script>
 <style>
-.dropbox {
-  background: lightcyan;
-  color: dimgray;
-  padding: 0;
-  height: 50px;
-  position: relative;
-  cursor: pointer;
-  border-radius: 5px;
-  -webkit-box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.5);
-  transition: 0.2s;
-}
+  .dropbox {
+    background-color: #dbf4ff;
+    color: dimgray;
+    padding: 0;
+    height: 50px;
+    position: relative;
+    cursor: pointer;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5); 
+    box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.5);
+    transition: 0.2s;
+  }
 
 .input-file {
   opacity: 0;

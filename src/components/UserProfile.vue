@@ -2,7 +2,7 @@
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ msg }}</h1>
     <div class="row justify-content-center mx-3">
-      <div class="col-lg-6 col-md-8 col-sm-10 user-creation-card px-3 py-5">
+      <div class="col-lg-6 col-md-8 col-sm-10 user-creation-card px-3 py-5 mb-5">
         <div>
           <h5 hidden>Your clientId is <span id="userId">{{ userdata.id }}</span></h5>
           <div class="row">
@@ -12,25 +12,64 @@
               </div>
             </div>
             <div class="col-12 col-sm-6">
-              <p><strong>Username</strong></p>
-              <p>{{ userdata.username }}</p>
-              <p><strong> E-mail</strong></p>
-              <p>{{ userdata.email }}</p>
-              <p><strong> First name </strong></p>
-              <p>{{ userdata.firstName }}</p>
-              <p><strong> Last name </strong></p>
-              <p>{{ userdata.lastName }}</p>
-              <p><strong> Birthday </strong></p>
-              <p>{{ userdata.birthDate }}</p>
-              <p><strong>Phone </strong></p>
-              <p>{{ userdata.phone }}</p>
+              <div class="row p-5">
+              <div class="row">
+                <div class="col-sm-5">
+                  <p><strong>Username</strong></p>
+                </div>
+                <div class="col-sm-7">
+                  <p>{{ userdata.username }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5">
+                  <p><strong> E-mail</strong></p>
+                </div>
+                <div class="col-sm-7">
+                  <p>{{ userdata.email }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5">
+                  <p><strong> First name </strong></p>
+                </div>
+                <div class="col-sm-7">
+                  <p>{{ userdata.firstName }}</p>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-sm-5">
+                <p><strong> Last name </strong></p>
+              </div>
+              <div class="col-sm-7">
+                <p>{{ userdata.lastName }}</p>
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-sm-5">
+                  <p><strong> Birthday </strong></p>
+                </div>
+                <div class="col-sm-7">
+                  <p>{{ userdata.birthDate }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5">
+                  <p><strong>Phone </strong></p>
+                </div>
+                <div class="col-sm-7">
+                  <p>{{ userdata.phone }}</p>
+                </div>
+              </div>
+              </div>
+              <div class="row">
               <div class="mt-2">
                 <button
                     type="button"
                     data-toggle="modal"
                     data-target="#update_user"
                     id="modifyButton"
-                    class="btn btn-outline-primary shadow-sm btn-lg btn-lg">
+                    class="w-75 btn btn-outline-primary shadow-sm btn-lg btn-lg">
                   Modify
                 </button>
               </div>
@@ -39,7 +78,7 @@
                     type="button"
                     data-toggle="modal"
                     data-target="#change_pw"
-                    class="btn btn-outline-primary shadow-sm btn-lg btn-outline-warning"
+                    class="w-75 btn btn-outline-primary shadow-sm btn-lg"
                     id="changePwButton">
                   Change password
                 </button>
@@ -49,10 +88,11 @@
                     type="button"
                     data-toggle="modal"
                     data-target="#delete_user"
-                    class="btn btn-danger shadow-sm btn-lg btn-lg ">
+                    class="w-75 btn btn-danger shadow-sm btn-lg btn-lg ">
                   Delete account
                 </button>
               </div>
+            </div>
             </div>
           </div>
         </div>
@@ -65,22 +105,51 @@
          aria-labelledby="update_user_label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color: #fffcc4">
             <h5 class="modal-title" id="update_user_label">Update your profile</h5>
           </div>
           <div class="modal-body">
-            <label for="email">E-mail </label>
-            <input id="email" v-model="userdata.email"><br><br>
-            <label for="firstName">First name </label>
-            <input id="firstName" v-model="userdata.firstName"><br><br>
-            <label for="lastName">Last name </label>
-            <input id="lastName" v-model="userdata.lastName"><br><br>
-            <label for="birthday">Birthday </label>
-            <input id="birthday" v-model="userdata.birthDate"><br><br>
-            <label for="phone">Phone </label>
-            <input id="phone" v-model="userdata.phone"><br><br>
-            <br>
-            <br>
+            <div class="row">
+              <div class="col-sm-5">
+                <label class="mt-2" for="email">E-mail </label>
+              </div>
+              <div class="col-sm-7">
+                <input class="form-control" autocomplete="off" id="email" v-model="userdata.email">
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-sm-5">
+                <label class="mt-2" for="firstName">First name</label>
+              </div>
+              <div class="col-sm-7">
+                <input class="form-control" autocomplete="off" id="firstName" v-model="userdata.firstName">
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-sm-5">
+                <label class="mt-2" for="lastName">Last name</label>
+              </div>
+              <div class="col-sm-7">
+                <input class="form-control" autocomplete="off" id="lastName" v-model="userdata.lastName">
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-sm-5">
+                <label class="mt-2" for="birthday">Birthday</label>
+              </div>
+              <div class="col-sm-7">
+                <input class="form-control" autocomplete="off" id="birthday" v-model="userdata.birthDate">
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-sm-5">
+                <label class="mt-2" for="phone">Phone</label>
+              </div>
+              <div class="col-sm-7">
+                <input class="form-control" name="phone" autocomplete="off" id="phone" v-model="userdata.phone">
+              </div>
+            </div>
+
           </div>
           <div class="modal-footer">
             <button
@@ -91,7 +160,7 @@
             <button
                 v-on:click="updateUser(userdata), reloadPage()"
                 type="button"
-                class="btn btn-danger shadow-sm btn-sm float-left">Save
+                class="blueButton btn shadow-sm btn-sm float-left">Save
             </button>
           </div>
         </div>
@@ -103,17 +172,20 @@
          aria-labelledby="update_user_label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color: #fffcc4">
             <h5 class="modal-title" id="update_pw_label">Change password</h5>
           </div>
           <div class="modal-body">
+            <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
             <label for="currentPw">Enter your current password </label>
-            <input id="currentPw" v-model="currentPassword" type="password"><br><br>
-
-            <label for="newPw">Enter new password </label>
-            <input id="newPw" v-model="newPassword" type="password"><br><br>
-            <br>
-            <br>
+            <input class="form-control mt-2" autocomplete="off" id="currentPw" v-model="currentPassword" type="password">
+            <label class="mt-2" for="newPw">Enter new password </label>
+            <input class="form-control mt-2" autocomplete="off" id="newPw" v-model="newPassword" type="password">
+            </div>
+            <div class="col-sm-2"></div>
+            </div>
           </div>
           <div class="modal-footer">
             <button
@@ -126,7 +198,7 @@
             <button
                 v-on:click="updatePassword(currentPassword, newPassword)"
                 type="button"
-                class="btn btn-danger shadow-sm btn-sm float-left">Save
+                class="blueButton btn shadow-sm btn-sm float-left">Save
             </button>
           </div>
           <div id="emailErrorMessage" v-if="errorMessage" class="mx-1 py-2 alert alert-danger">
@@ -141,7 +213,7 @@
          aria-labelledby="delete_user_label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color: #fffcc4">
             <h5 class="modal-title" id="delete_label">Delete account</h5>
           </div>
           <div class="modal-body">
@@ -162,7 +234,7 @@
                     v-on:click="deleteUser()"
                     data-dismiss="modal"
                     type="button"
-                    class="btn btn-danger shadow-sm btn-lg ">Yes
+                    class="blueButton btn shadow-sm btn-lg ">Yes
                 </button>
               </div>
             </div>
@@ -265,11 +337,11 @@ export default {
 <style>
 
 #modifyButton {
-  background-color: lightcyan;
+  background-color: #dbf4ff;
   color: dimgray;
   border-color: lightgray;
   border-radius: 5px;
-  box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5) !important;
   transition: 0.2s;
 }
 
@@ -278,14 +350,29 @@ export default {
 }
 
 #changePwButton {
-  background-color: #f9fabb;
+  background-color: #dbf4ff;
+  color: dimgray;
+  border-color: lightgray;
+  border-radius: 5px;
   box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5) !important;
   transition: 0.2s;
 }
 
 #changePwButton:hover {
-  background-color: #f0ef9c;
+  color: lightblue;
+}
+
+.blueButton {
+  background-color: #dbf4ff;
   color: dimgray;
+  border-color: lightgray;
+  border-radius: 5px;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5) !important;
+  transition: 0.2s;
+}
+
+.blueButton:hover {
+  background: lightblue;
 }
 </style>
 

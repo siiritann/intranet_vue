@@ -9,7 +9,7 @@
   <div class="registerhello text-center">
     <h1 class="main-heading display-3 pt-5 mb-5">{{ "Newsfeed" }}</h1>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center footer-saver">
       <div class="col-lg-3 col-md-3 col-sm-4 p-3 d-none d-md-block" style="text-align: left">
       </div>
         <div class="col-lg-5 col-md-5 col-sm-8 p-3 order-2 order-md-1" style="text-align: left">
@@ -25,13 +25,13 @@
                   </div>
                   <div class="btn-group-sm" role="group"  v-if="list.username === user.username" style="text-align: right">
                     <button id=""
-                            class="btn btn-outline-secondary button-sm"
+                            class="blueButton btn btn-outline-secondary button-sm mr-1"
                             data-toggle="modal"
                             data-target="#start_editing"
                             v-on:click="setEditModal(list.id)"
                             >Edit</button>
                     <button id="delete_button"
-                            class="btn btn-outline-secondary"
+                            class="blueButton btn btn-outline-secondary"
                             v-on:click="deletePost(list.id); getListOfPosts()">
                             Delete</button>
                   </div>
@@ -49,7 +49,7 @@
       </div>
         <div class="col-lg-4 col-md-4 col-sm-6 p-3 order-1 order-md-2" style="text-align: left">
           <div>
-            <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
+            <button class="yellowButton btn btn-outline-secondary mb-1" type="button" data-toggle="modal"
                     data-target="#create_post">Create a post</button>
 
           </div>
@@ -82,18 +82,17 @@
          aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color: #fffcc4">
             <h5 class="modal-title" id="start_editing_label">Post editing</h5>
           </div>
           <div class="modal-body">
-            <input id="old_heading" v-model="editPosting.heading" placeholder="Insert heading">
+            <input class="form-control w-50" id="old_heading" v-model="editPosting.heading" placeholder="Insert heading">
             <br>
-            <br>
-            <textarea id="old_body" v-model="editPosting.body" placeholder="Insert text"></textarea>
+            <textarea class="form-control" id="old_body" v-model="editPosting.body" placeholder="Insert text"></textarea>
           </div>
           <div class="modal-footer">
-            <button type="button" data-dismiss="modal">Disregard</button>
-            <button v-on:click="editPost()" data-dismiss="modal" id="edit_post" type="button">Post</button>
+            <button class="btn btn-light shadow-sm btn-sm"  type="button" data-dismiss="modal">Disregard</button>
+            <button class="blueButton btn btn-outline-secondary" v-on:click="editPost()" data-dismiss="modal" id="edit_post" type="button">Post</button>
           </div>
         </div>
       </div>
@@ -104,18 +103,17 @@
          tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color: #fffcc4">
             <h5 class="modal-title" id="create_post_label">Post creation</h5>
           </div>
           <div class="modal-body">
-           <input v-model="posting.heading" placeholder="Insert heading">
+           <input class="form-control w-50" v-model="posting.heading" placeholder="Insert heading">
             <br>
-            <br>
-            <textarea v-model="posting.body" placeholder="Insert text"></textarea>
+            <textarea class="form-control" v-model="posting.body" placeholder="Insert text"></textarea>
           </div>
           <div class="modal-footer">
-            <button type="button" data-dismiss="modal">Disregard</button>
-            <button v-on:click="createPost()" data-dismiss="modal" id="posting_post" type="button">Post</button>
+            <button class="btn btn-light shadow-sm btn-sm" type="button" data-dismiss="modal">Disregard</button>
+            <button class="blueButton btn btn-outline-secondary" v-on:click="createPost()" data-dismiss="modal" id="posting_post" type="button">Post</button>
           </div>
         </div>
       </div>
@@ -207,7 +205,6 @@ let createPost = function(){
   this.$http.post(url, this.posting)
       .then(() => {this.result
         this.getListOfPosts()})
-
 };
 
 function setEditModal(id){
@@ -318,6 +315,31 @@ export default {
   };
 </script>
 <style>
+.blueButton {
+  background-color: #dbf4ff;
+  color: dimgray;
+  border-color: lightgray;
+  border-radius: 5px;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5) !important;
+  transition: 0.2s;
+}
+
+.blueButton:hover {
+  background: lightblue;
+}
+
+.yellowButton {
+  background-color: #fffcc4;
+  color: dimgray;
+  border-color: lightgray;
+  border-radius: 5px;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5) !important;
+  transition: 0.2s;
+}
+
+.yellowButton:hover {
+  background: #fcefa2;
+}
 #filterParent{
   position: relative;
 }
@@ -344,5 +366,8 @@ list-style: none;
   cursor: pointer;
   background-color: #00a2ff;
   transition: 0.1s;
+}
+.footer-saver{
+  margin-bottom: 30vh;
 }
 </style>
