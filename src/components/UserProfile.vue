@@ -359,7 +359,7 @@ export default {
 }
 
 #changePwButton:hover {
-  color: lightblue;
+  background: lightblue;
 }
 
 .blueButton {
