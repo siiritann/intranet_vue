@@ -14,7 +14,7 @@
           <button
             class="btn btn-outline-primary"
             data-toggle="modal"
-            data-target="#loginmodal"
+            data-target="#registermodal"
           >
             Get started
           </button>
@@ -31,7 +31,7 @@
           <button
             class="btn btn-outline-primary"
             data-toggle="modal"
-            data-target="#loginmodal"
+            data-target="#registermodal"
           >
             Join now
           </button>
@@ -54,7 +54,7 @@
           <button
             class="btn btn-outline-primary"
             data-toggle="modal"
-            data-target="#loginmodal"
+            data-target="#registermodal"
           >
             Find out more
           </button>
@@ -71,7 +71,7 @@
           <button
             class="btn btn-outline-primary"
             data-toggle="modal"
-            data-target="#loginmodal"
+            data-target="#registermodal"
           >
             Sign up
           </button>
