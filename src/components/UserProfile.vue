@@ -308,6 +308,27 @@ function getUserInfo() {
   let url = this.$server + '/user/view';
   this.$http.get(url).then((response) => {
     this.userdata = response.data;
+    if (
+      this.userdata.firstName === undefined ||
+      this.userdata.firstName === null
+    ) {
+      this.userdata.firstName = '';
+    }
+    if (
+      this.userdata.lastName === undefined ||
+      this.userdata.lastName === null
+    ) {
+      this.userdata.lastName = '';
+    }
+    if (
+      this.userdata.birthDate === undefined ||
+      this.userdata.birthDate == null
+    ) {
+      this.userdata.birthDate = '';
+    }
+    if (this.userdata.phone === undefined || this.userdata.phone == null) {
+      this.userdata.phone = '';
+    }
   });
 }
 
