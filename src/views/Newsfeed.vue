@@ -49,10 +49,9 @@
                       id="delete_button"
                       class="blueButton btn btn-outline-secondary"
                       v-if="list.username === user.username || isAdmin"
-                      v-on:click="
-                        deletePost(list.id);
-                        getListOfPosts();
-                      "
+                      data-toggle="modal"
+                      data-target="#delete_post"
+                      v-on:click=rememberId(list.id)
                     >
                       Delete
                     </button>
@@ -110,7 +109,56 @@
           </div>
         </div>
       </div>
-
+      <!-- Modal delete account -->
+      <div
+          class="modal fade"
+          id="delete_post"
+          data-backdrop="static"
+          data-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="delete_post_label"
+          aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #fffcc4">
+              <h5 class="modal-title" id="delete_label">Delete post</h5>
+            </div>
+            <div class="modal-body">
+              <h5 class="py-3 px-3">
+                You are about to delete the post.
+              </h5>
+              <h5 class="px-2">Are you sure you wish continue?</h5>
+              <br />
+              <div class="py-2 row">
+                <div class="col-12 col-sm-6 mb-3">
+                  <button
+                      type="button"
+                      data-dismiss="modal"
+                      class="btn btn-light shadow-sm btn-lg "
+                  >
+                    No
+                  </button>
+                </div>
+                <div class="col-12 col-sm-6 mb-3">
+                  <button
+                      v-on:click="
+                        deletePost(deleteId);
+                        getListOfPosts();
+                      "
+                      data-dismiss="modal"
+                      type="button"
+                      class="blueButton btn shadow-sm btn-lg "
+                  >
+                    Yes
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer"></div>
+          </div>
+        </div>
+        </div>
       <!-- Modal for edit post -->
       <div
         class="modal fade"
@@ -240,6 +288,7 @@ function getAllUsers() {
   let url = this.$server + '/user/list/usernames';
   this.$http.get(url).then(this.showUsers);
 }
+
 let showUsers = function(response) {
   this.usersList = response.data;
 };
@@ -287,7 +336,6 @@ function getUserPosts() {
 
 let createPost = function() {
   this.posting.username = this.user.username;
-
   let url = this.$server + '/posting/create';
   this.$http.post(url, this.posting).then(() => {
     this.result;
@@ -321,7 +369,12 @@ function deletePost(id) {
   this.$http.delete(url).then(() => {
     this.result;
     this.getListOfPosts();
+    this.deleteId = null
   });
+}
+
+function rememberId(id){
+  this.deleteId = id;
 }
 
 // Timer for 'get user posts'
@@ -377,6 +430,7 @@ export default {
     setUser,
     clearFilter,
     checkIfAdmin,
+    rememberId
   },
   data: function() {
     return {
@@ -394,6 +448,7 @@ export default {
       modal: false,
       filteredUser: '',
       isAdmin: false,
+      deleteId: null,
     };
   },
   mounted: function() {
