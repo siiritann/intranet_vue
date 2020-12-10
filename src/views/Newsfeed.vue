@@ -23,8 +23,8 @@
                   <div class="col-sm">
                 {{list.username}} {{(new Date(list.date)).toLocaleString('et-EE')}}
                   </div>
-                  <div class="btn-group-sm" role="group"  v-if="list.username === user.username" style="text-align: right">
-                    <button id=""
+                  <div class="btn-group-sm" role="group" style="text-align: right">
+                    <button v-if="list.username === user.username" id=""
                             class="blueButton btn btn-outline-secondary button-sm mr-1"
                             data-toggle="modal"
                             data-target="#start_editing"
@@ -32,6 +32,7 @@
                             >Edit</button>
                     <button id="delete_button"
                             class="blueButton btn btn-outline-secondary"
+                            v-if="list.username === user.username || isAdmin"
                             v-on:click="deletePost(list.id); getListOfPosts()">
                             Delete</button>
                   </div>
@@ -125,6 +126,9 @@
 </template>
 
 <script>
+let token = localStorage.getItem('user-token');
+// TODO clich with login!
+let isAdmin = jwt_decode(token).isAdmin;
 
 function getUsername() {
   console.log("inside get username")
@@ -261,6 +265,7 @@ import Navbar from '@/components/Navbar.vue';
 import RegisterModal from "@/components/RegisterModal";
 import LoginModal from "@/components/LoginModal";
 import Brand from "@/components/Brand";
+import jwt_decode from "jwt-decode";
 
 export default {
   name: 'Newsfeed',
@@ -302,6 +307,8 @@ export default {
       filteredUsers: [],
       modal: false,
       filteredUser: "",
+      token,
+      isAdmin,
     }
   },
   mounted: function (){
