@@ -288,6 +288,7 @@ function getAllUsers() {
   let url = this.$server + '/user/list/usernames';
   this.$http.get(url).then(this.showUsers);
 }
+
 let showUsers = function(response) {
   this.usersList = response.data;
 };
@@ -366,17 +367,14 @@ function editPost() {
 }
 
 function deletePost(id) {
-  console.log("in delete")
-  console.log(this.deleteId)
   let url = this.$server + '/posting/delete/' + id;
   this.$http.delete(url).then(() => {
     this.result;
     this.getListOfPosts();
-    console.log(this.deleteId)
     this.deleteId = null
-    console.log(this.deleteId)
   });
 }
+
 function rememberId(id){
   this.deleteId = id;
 }
