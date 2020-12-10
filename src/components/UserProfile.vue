@@ -12,18 +12,57 @@
               </div>
             </div>
             <div class="col-12 col-sm-6">
-              <p><strong>Username</strong></p>
-              <p>{{ userdata.username }}</p>
-              <p><strong> E-mail</strong></p>
-              <p>{{ userdata.email }}</p>
-              <p><strong> First name </strong></p>
-              <p>{{ userdata.firstName }}</p>
-              <p><strong> Last name </strong></p>
-              <p>{{ userdata.lastName }}</p>
-              <p><strong> Birthday </strong></p>
-              <p>{{ userdata.birthDate }}</p>
-              <p><strong>Phone </strong></p>
-              <p>{{ userdata.phone }}</p>
+              <div class="row p-5">
+              <div class="row">
+                <div class="col-sm-5">
+                  <p><strong>Username</strong></p>
+                </div>
+                <div class="col-sm-7">
+                  <p>{{ userdata.username }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5">
+                  <p><strong> E-mail</strong></p>
+                </div>
+                <div class="col-sm-7">
+                  <p>{{ userdata.email }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5">
+                  <p><strong> First name </strong></p>
+                </div>
+                <div class="col-sm-7">
+                  <p>{{ userdata.firstName }}</p>
+                </div>
+              </div>
+              <div class="row">
+              <div class="col-sm-5">
+                <p><strong> Last name </strong></p>
+              </div>
+              <div class="col-sm-7">
+                <p>{{ userdata.lastName }}</p>
+              </div>
+            </div>
+              <div class="row">
+                <div class="col-sm-5">
+                  <p><strong> Birthday </strong></p>
+                </div>
+                <div class="col-sm-7">
+                  <p>{{ userdata.birthDate }}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5">
+                  <p><strong>Phone </strong></p>
+                </div>
+                <div class="col-sm-7">
+                  <p>{{ userdata.phone }}</p>
+                </div>
+              </div>
+              </div>
+              <div class="row">
               <div class="mt-2">
                 <button
                     type="button"
@@ -31,7 +70,6 @@
                     data-target="#update_user"
                     id="modifyButton"
                     class="w-75 btn btn-outline-primary shadow-sm btn-lg btn-lg">
-
                   Modify
                 </button>
               </div>
@@ -54,6 +92,7 @@
                   Delete account
                 </button>
               </div>
+            </div>
             </div>
           </div>
         </div>
@@ -137,13 +176,16 @@
             <h5 class="modal-title" id="update_pw_label">Change password</h5>
           </div>
           <div class="modal-body">
+            <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
             <label for="currentPw">Enter your current password </label>
-            <input id="currentPw" v-model="currentPassword" type="password"><br><br>
-
-            <label for="newPw">Enter new password </label>
-            <input id="newPw" v-model="newPassword" type="password"><br><br>
-            <br>
-            <br>
+            <input class="form-control mt-2" id="currentPw" v-model="currentPassword" type="password">
+            <label class="mt-2" for="newPw">Enter new password </label>
+            <input class="form-control mt-2" id="newPw" v-model="newPassword" type="password">
+            </div>
+            <div class="col-sm-2"></div>
+            </div>
           </div>
           <div class="modal-footer">
             <button
