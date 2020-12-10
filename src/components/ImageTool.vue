@@ -65,17 +65,10 @@ let upload = function(formData) {
       headers,
     }) // get data
     .then((x) => {
-      console.log('nii');
       location.reload();
     });
 };
 
-document
-  .getElementsByTagName('body')[0]
-  .addEventListener('change', function(event) {
-    console.log(event);
-    console.log('change');
-  });
 
 const STATUS_INITIAL = 0,
   STATUS_SAVING = 1,

@@ -143,6 +143,7 @@ export default {
     logout: function (){
       localStorage.removeItem('user-token');
       window.location.href = this.$host + '/#/';
+      location.reload();
     },
     clearModal,
     checkIfAdmin,
