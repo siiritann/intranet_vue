@@ -37,7 +37,7 @@
                     <button
                         v-on:click="deleteUser(index)"
                         type="button"
-                        class="btn btn-outline-secondary btn-sm">
+                        class="redButton btn btn-outline-secondary btn-danger text-white btn-sm mt-1">
                       Delete
                     </button>
                   </div>
@@ -47,7 +47,7 @@
                     <button
                         v-on:click="makeAdmin(index)"
                         type="button"
-                        class="btn btn-outline-warning btn-sm">
+                        class="btn btn-outline-warning btn-sm yellowButton mt-1">
                       Make admin
                     </button>
                   </div>
@@ -147,5 +147,30 @@ export default {
 <style>
 .userslist {
   margin-bottom: 80vh;
+}
+.redButton {
+  background-color: #d90707;
+  color: dimgray;
+  border-color: lightgray;
+  border-radius: 5px;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5) !important;
+  transition: 0.2s;
+}
+
+.redButton:hover {
+  background: #c90000;
+}
+
+.yellowButton {
+  background-color: #fffcc4;
+  color: dimgray;
+  border-color: lightgray;
+  border-radius: 5px;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5) !important;
+  transition: 0.2s;
+}
+
+.yellowButton:hover {
+  background: #fcefa2;
 }
 </style>
