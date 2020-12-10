@@ -70,18 +70,47 @@
             <h5 class="modal-title" id="update_user_label">Update your profile</h5>
           </div>
           <div class="modal-body">
-            <label for="email">E-mail </label>
-            <input id="email" v-model="userdata.email"><br><br>
-            <label for="firstName">First name </label>
-            <input id="firstName" v-model="userdata.firstName"><br><br>
-            <label for="lastName">Last name </label>
-            <input id="lastName" v-model="userdata.lastName"><br><br>
-            <label for="birthday">Birthday </label>
-            <input id="birthday" v-model="userdata.birthDate"><br><br>
-            <label for="phone">Phone </label>
-            <input id="phone" v-model="userdata.phone"><br><br>
-            <br>
-            <br>
+            <div class="row">
+              <div class="col-sm-5">
+                <label class="mt-2" for="email">E-mail </label>
+              </div>
+              <div class="col-sm-7">
+                <input class="form-control" id="email" v-model="userdata.email">
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-sm-5">
+                <label class="mt-2" for="firstName">First name</label>
+              </div>
+              <div class="col-sm-7">
+                <input class="form-control" id="firstName" v-model="userdata.firstName">
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-sm-5">
+                <label class="mt-2" for="lastName">Last name</label>
+              </div>
+              <div class="col-sm-7">
+                <input class="form-control" id="lastName" v-model="userdata.lastName">
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-sm-5">
+                <label class="mt-2" for="birthday">Birthday</label>
+              </div>
+              <div class="col-sm-7">
+                <input class="form-control" id="birthday" v-model="userdata.birthDate">
+              </div>
+            </div>
+            <div class="row mt-1">
+              <div class="col-sm-5">
+                <label class="mt-2" for="phone">Phone</label>
+              </div>
+              <div class="col-sm-7">
+                <input class="form-control" id="phone" v-model="userdata.phone">
+              </div>
+            </div>
+
           </div>
           <div class="modal-footer">
             <button
