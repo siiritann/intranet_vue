@@ -135,16 +135,15 @@ const toggleSideNav = () => {
   document.querySelector('#side-nav').classList.toggle('side-nav-open');
 };
 
-const logout = () => {
-  localStorage.removeItem('user-token');
-  window.location.href = this.$host + '/#/welcome';
-};
 
 export default {
   name: 'Navbar',
   methods: {
     toggleSideNav,
-    logout,
+    logout: function (){
+      localStorage.removeItem('user-token');
+      window.location.href = this.$host + '/#/welcome';
+    },
     clearModal,
     checkIfAdmin,
   },
