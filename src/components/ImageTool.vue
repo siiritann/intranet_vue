@@ -145,7 +145,7 @@ export default {
 </script>
 <style>
   .dropbox {
-    background: lightcyan;
+    background-color: #dbf4ff;
     color: dimgray;
     padding: 0;
     height: 50px;

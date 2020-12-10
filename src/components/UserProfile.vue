@@ -30,7 +30,7 @@
                     data-toggle="modal"
                     data-target="#update_user"
                     id="modifyButton"
-                    class="btn btn-outline-primary shadow-sm btn-lg btn-lg">
+                    class="w-75 btn btn-outline-primary shadow-sm btn-lg btn-lg">
 
                   Modify
                 </button>
@@ -40,7 +40,7 @@
                     type="button"
                     data-toggle="modal"
                     data-target="#change_pw"
-                    class="btn btn-outline-primary shadow-sm btn-lg btn-outline-warning"
+                    class="w-75 btn btn-outline-primary shadow-sm btn-lg"
                     id="changePwButton">
                   Change password
                 </button>
@@ -50,7 +50,7 @@
                     type="button"
                     data-toggle="modal"
                     data-target="#delete_user"
-                    class="btn btn-danger shadow-sm btn-lg btn-lg ">
+                    class="w-75 btn btn-danger shadow-sm btn-lg btn-lg ">
                   Delete account
                 </button>
               </div>
@@ -66,7 +66,7 @@
          aria-labelledby="update_user_label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color: #fffcc4">
             <h5 class="modal-title" id="update_user_label">Update your profile</h5>
           </div>
           <div class="modal-body">
@@ -92,7 +92,7 @@
             <button
                 v-on:click="updateUser(userdata), reloadPage()"
                 type="button"
-                class="btn btn-danger shadow-sm btn-sm float-left">Save
+                class="blueButton btn shadow-sm btn-sm float-left">Save
             </button>
           </div>
         </div>
@@ -104,7 +104,7 @@
          aria-labelledby="update_user_label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color: #fffcc4">
             <h5 class="modal-title" id="update_pw_label">Change password</h5>
           </div>
           <div class="modal-body">
@@ -125,7 +125,7 @@
             <button
                 v-on:click="updatePassword(currentPassword, newPassword), reloadPage()"
                 type="button"
-                class="btn btn-danger shadow-sm btn-sm float-left">Save
+                class="blueButton btn shadow-sm btn-sm float-left">Save
             </button>
           </div>
         </div>
@@ -137,7 +137,7 @@
          aria-labelledby="delete_user_label" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
+          <div class="modal-header" style="background-color: #fffcc4">
             <h5 class="modal-title" id="delete_label">Delete account</h5>
           </div>
           <div class="modal-body">
@@ -158,7 +158,7 @@
                     v-on:click="deleteUser()"
                     data-dismiss="modal"
                     type="button"
-                    class="btn btn-danger shadow-sm btn-lg ">Yes
+                    class="blueButton btn shadow-sm btn-lg ">Yes
                 </button>
               </div>
             </div>
@@ -246,11 +246,11 @@ export default {
 <style>
 
 #modifyButton {
-  background-color: lightcyan;
+  background-color: #dbf4ff;
   color: dimgray;
   border-color: lightgray;
   border-radius: 5px;
-  box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5) !important;
   transition: 0.2s;
 }
 
@@ -259,14 +259,29 @@ export default {
 }
 
 #changePwButton {
-  background-color: #f9fabb;
+  background-color: #dbf4ff;
+  color: dimgray;
+  border-color: lightgray;
+  border-radius: 5px;
   box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5) !important;
   transition: 0.2s;
 }
 
 #changePwButton:hover {
-  background-color: #f0ef9c;
+  color: lightblue;
+}
+
+.blueButton {
+  background-color: #dbf4ff;
   color: dimgray;
+  border-color: lightgray;
+  border-radius: 5px;
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5) !important;
+  transition: 0.2s;
+}
+
+.blueButton:hover {
+  background: lightblue;
 }
 </style>
 
