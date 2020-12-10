@@ -329,9 +329,6 @@ function getUserInfo() {
     if (this.userdata.phone === undefined || this.userdata.phone == null) {
       this.userdata.phone = '';
     }
-    if (this.userdata.phone === null || this.userdata.phone == null) {
-      this.userdata.phone = '';
-    }
   });
 }
 
