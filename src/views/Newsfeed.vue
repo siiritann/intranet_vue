@@ -1,275 +1,352 @@
 <template>
   <div class="home">
-  <div >
-    <Brand/>
-    <Navbar/>
-    <LoginModal/>
-    <RegisterModal/>
-  </div>
-  <div class="registerhello text-center">
-    <h1 class="main-heading display-3 pt-5 mb-5">{{ "Newsfeed" }}</h1>
+    <div>
+      <Brand />
+      <Navbar />
+      <LoginModal />
+      <RegisterModal />
+    </div>
+    <div class="registerhello text-center">
+      <h1 class="main-heading display-3 pt-5 mb-5">{{ 'Newsfeed' }}</h1>
 
-    <div class="row justify-content-center footer-saver">
-      <div class="col-lg-3 col-md-3 col-sm-4 p-3 d-none d-md-block" style="text-align: left">
-      </div>
-        <div class="col-lg-5 col-md-5 col-sm-8 p-3 order-2 order-md-1" style="text-align: left">
+      <div class="row justify-content-center footer-saver">
+        <div
+          class="col-lg-3 col-md-3 col-sm-4 p-3 d-none d-md-block"
+          style="text-align: left"
+        ></div>
+        <div
+          class="col-lg-5 col-md-5 col-sm-8 p-3 order-2 order-md-1"
+          style="text-align: left"
+        >
           <h2>Latest posts:</h2>
-          <br>
-          <div class="newsfeed-div justify-content-center mx-3" v-for="list in resultList">
-          <div class="user-creation-card p-3 mb-3" style="text-align: left">
-
+          <br />
+          <div
+            class="newsfeed-div justify-content-center mx-3"
+            v-for="list in resultList"
+          >
+            <div class="user-creation-card p-3 mb-3" style="text-align: left">
               <div id="all_posts" class="userpost">
                 <div class="row">
                   <div class="col-sm">
-                {{list.username}} {{(new Date(list.date)).toLocaleString('et-EE')}}
+                    {{ list.username }}
+                    {{ new Date(list.date).toLocaleString('et-EE') }}
                   </div>
-                  <div class="btn-group-sm" role="group" style="text-align: right">
-                    <button v-if="list.username === user.username"
-                            class="blueButton btn btn-outline-secondary button-sm mr-1"
-                            data-toggle="modal"
-                            data-target="#start_editing"
-                            v-on:click="setEditModal(list.id)"
-                            >Edit</button>
-                    <button id="delete_button"
-                            class="blueButton btn btn-outline-secondary"
-                            v-if="list.username === user.username || isAdmin"
-                            v-on:click="deletePost(list.id); getListOfPosts()">
-                            Delete</button>
+                  <div
+                    class="btn-group-sm"
+                    role="group"
+                    style="text-align: right"
+                  >
+                    <button
+                      v-if="list.username === user.username"
+                      class="blueButton btn btn-outline-secondary button-sm mr-1"
+                      data-toggle="modal"
+                      data-target="#start_editing"
+                      v-on:click="setEditModal(list.id)"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      id="delete_button"
+                      class="blueButton btn btn-outline-secondary"
+                      v-if="list.username === user.username || isAdmin"
+                      v-on:click="
+                        deletePost(list.id);
+                        getListOfPosts();
+                      "
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
-              <br>
-                <h5>{{list.heading}}</h5>
+                <br />
+                <h5>{{ list.heading }}</h5>
                 <div class="text-break">
-                <p :id="'body-' + list.id">{{list.body}}</p>
+                  <p :id="'body-' + list.id">{{ list.body }}</p>
                 </div>
-                <br>
-                <br>
+                <br />
+                <br />
               </div>
+            </div>
+          </div>
         </div>
-        </div>
-      </div>
-        <div class="col-lg-4 col-md-4 col-sm-6 p-3 order-1 order-md-2" style="text-align: left">
+        <div
+          class="col-lg-4 col-md-4 col-sm-6 p-3 order-1 order-md-2"
+          style="text-align: left"
+        >
           <div>
-            <button class="yellowButton btn btn-outline-secondary mb-1" type="button" data-toggle="modal"
-                    data-target="#create_post">Create a post</button>
-
+            <button
+              class="yellowButton btn btn-outline-secondary mb-1"
+              type="button"
+              data-toggle="modal"
+              data-target="#create_post"
+            >
+              Create a post
+            </button>
           </div>
           <div id="filterParent" class="input-group mb-3">
-            <input type="text"
-                   class="form-control"
-                   placeholder="Enter username to search user posts"
-                   id="get_user_posts"
-                   v-model="get_posts_input"
-                   aria-label="Example text with button addon"
-                   aria-describedby="button-addon1"
-                   autocomplete="off"
-                   @input="filterUsers"
-                   @focus="modal = true"
-                   >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter username to search user posts"
+              id="get_user_posts"
+              v-model="get_posts_input"
+              aria-label="Example text with button addon"
+              aria-describedby="button-addon1"
+              autocomplete="off"
+              @input="filterUsers"
+              @focus="modal = true"
+            />
             <div id="filterContainer" v-if="filteredUsers && modal" class="">
               <ul class="m-0 p-0">
-                <li v-for="filteredUser in filteredUsers" class="px-3 py-2 border-b cursor-pointer"
-                    @click="setUser(filteredUser) && clearFilter()">{{filteredUser}}</li>
+                <li
+                  v-for="filteredUser in filteredUsers"
+                  class="px-3 py-2 border-b cursor-pointer"
+                  @click="setUser(filteredUser) && clearFilter()"
+                >
+                  {{ filteredUser }}
+                </li>
               </ul>
             </div>
           </div>
-
         </div>
-    </div>
+      </div>
 
-    <!-- Modal for edit post -->
-    <div class="modal fade" id="start_editing" data-backdrop="static"
-         data-keyboard="false" tabindex="-1" aria-labelledby="create_post_label"
-         aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header" style="background-color: #fffcc4">
-            <h5 class="modal-title" id="start_editing_label">Post editing</h5>
+      <!-- Modal for edit post -->
+      <div
+        class="modal fade"
+        id="start_editing"
+        data-backdrop="static"
+        data-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="create_post_label"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #fffcc4">
+              <h5 class="modal-title" id="start_editing_label">Post editing</h5>
+            </div>
+            <div class="modal-body">
+              <input
+                class="form-control w-50"
+                id="old_heading"
+                v-model="editPosting.heading"
+                placeholder="Insert heading"
+              />
+              <br />
+              <textarea
+                class="form-control"
+                id="old_body"
+                v-model="editPosting.body"
+                placeholder="Insert text"
+              ></textarea>
+            </div>
+            <div class="modal-footer">
+              <button
+                class="btn btn-light shadow-sm btn-sm"
+                type="button"
+                data-dismiss="modal"
+              >
+                Disregard
+              </button>
+              <button
+                class="blueButton btn btn-outline-secondary"
+                v-on:click="editPost()"
+                data-dismiss="modal"
+                id="edit_post"
+                type="button"
+              >
+                Post
+              </button>
+            </div>
           </div>
-          <div class="modal-body">
-            <input class="form-control w-50" id="old_heading" v-model="editPosting.heading" placeholder="Insert heading">
-            <br>
-            <textarea class="form-control" id="old_body" v-model="editPosting.body" placeholder="Insert text"></textarea>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-light shadow-sm btn-sm"  type="button" data-dismiss="modal">Disregard</button>
-            <button class="blueButton btn btn-outline-secondary" v-on:click="editPost()" data-dismiss="modal" id="edit_post" type="button">Post</button>
+        </div>
+      </div>
+
+      <!-- Modal for create post -->
+      <div
+        class="modal fade"
+        id="create_post"
+        data-backdrop="static"
+        data-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="create_post_label"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" style="background-color: #fffcc4">
+              <h5 class="modal-title" id="create_post_label">Post creation</h5>
+            </div>
+            <div class="modal-body">
+              <input
+                class="form-control w-50"
+                v-model="posting.heading"
+                placeholder="Insert heading"
+              />
+              <br />
+              <textarea
+                class="form-control"
+                v-model="posting.body"
+                placeholder="Insert text"
+              ></textarea>
+            </div>
+            <div class="modal-footer">
+              <button
+                class="btn btn-light shadow-sm btn-sm"
+                type="button"
+                data-dismiss="modal"
+              >
+                Disregard
+              </button>
+              <button
+                class="blueButton btn btn-outline-secondary"
+                v-on:click="createPost()"
+                data-dismiss="modal"
+                id="posting_post"
+                type="button"
+              >
+                Post
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Modal for create post -->
-    <div class="modal fade" id="create_post" data-backdrop="static" data-keyboard="false"
-         tabindex="-1" aria-labelledby="create_post_label" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header" style="background-color: #fffcc4">
-            <h5 class="modal-title" id="create_post_label">Post creation</h5>
-          </div>
-          <div class="modal-body">
-           <input class="form-control w-50" v-model="posting.heading" placeholder="Insert heading">
-            <br>
-            <textarea class="form-control" v-model="posting.body" placeholder="Insert text"></textarea>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-light shadow-sm btn-sm" type="button" data-dismiss="modal">Disregard</button>
-            <button class="blueButton btn btn-outline-secondary" v-on:click="createPost()" data-dismiss="modal" id="posting_post" type="button">Post</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    <Footer />
   </div>
-  </div>
-
 </template>
 
 <script>
 let token = localStorage.getItem('user-token');
-function checkIfAdmin(){
-  if(token != null){
+function checkIfAdmin() {
+  if (token != null) {
     this.isAdmin = jwt_decode(token).isAdmin;
   }
 }
 
-
 function getUsername() {
-  console.log("inside get username")
   let url = this.$server + '/user/view/basic';
-  this.$http.get(url).then(result => {
-    if(result.status === 200){
-      this.user = result.data
+  this.$http.get(url).then((result) => {
+    if (result.status === 200) {
+      this.user = result.data;
     } else {
-      alert("Server Error")
+      alert('Server Error');
     }
-  })
+  });
 }
 
-function getAllUsers(){
-  console.log("in get all users")
+function getAllUsers() {
   let url = this.$server + '/user/list/usernames';
-  this.$http.get(url)
-      .then(this.showUsers)
+  this.$http.get(url).then(this.showUsers);
 }
 let showUsers = function(response) {
   this.usersList = response.data;
-}
+};
 
-function filterUsers(){
+function filterUsers() {
   //I might yet need this
-  if(document.querySelector('#get_user_posts').value.length === 0){
+  if (document.querySelector('#get_user_posts').value.length === 0) {
     this.filteredUsers = [];
   }
-  this.filteredUsers = this.usersList.filter(get_posts_input => {
-    return get_posts_input.toLowerCase().startsWith(this.get_posts_input.toLowerCase());
-  })
+  this.filteredUsers = this.usersList.filter((get_posts_input) => {
+    return get_posts_input
+      .toLowerCase()
+      .startsWith(this.get_posts_input.toLowerCase());
+  });
 }
-function clearFilter(){
+function clearFilter() {
   this.fileredUsers = [];
 }
 
-function setUser(user){
-  console.log("setting user")
+function setUser(user) {
   this.get_posts_input = user;
   document.querySelector('#get_user_posts').value = user;
   this.modal = false;
-  this.getUserPosts()
+  this.getUserPosts();
 }
 
 function getListOfPosts() {
-  console.log("in get posts")
   let url = this.$server + '/posting/list';
-  this.$http.get(url)
-      .then(this.showResponse)
+  this.$http.get(url).then(this.showResponse);
 }
 
 let showResponse = function(response) {
   this.resultList = response.data;
-}
+};
 
 function getUserPosts() {
-
-  let username = document.querySelector('#get_user_posts').value
-  console.log(username)
-  console.log("get user posts")
-  if(username === ""){
-    this.getListOfPosts()
+  let username = document.querySelector('#get_user_posts').value;
+  if (username === '') {
+    this.getListOfPosts();
   } else {
     let url = this.$server + '/posting/user/' + username;
-    this.$http.get(url)
-        .then(this.showResponse)
+    this.$http.get(url).then(this.showResponse);
   }
 }
 
-let createPost = function(){
-
-  console.log("in create")
-  console.log(this.posting.username)
-  this.posting.username = this.user.username
-  console.log(this.posting.username)
+let createPost = function() {
+  this.posting.username = this.user.username;
 
   let url = this.$server + '/posting/create';
-  this.$http.post(url, this.posting)
-      .then(() => {this.result
-        this.getListOfPosts()})
+  this.$http.post(url, this.posting).then(() => {
+    this.result;
+    this.posting.heading = '';
+    this.posting.body = '';
+    this.getListOfPosts();
+  });
 };
 
-function setEditModal(id){
+function setEditModal(id) {
   let url = this.$server + '/posting/view/' + id;
-  this.$http.get(url)
-    .then(result => {
-      this.oldPost = result.data
-      this.editPosting.id = this.oldPost.id
-      this.editPosting.username = this.oldPost.username
-      this.editPosting.heading = this.oldPost.heading
-      this.editPosting.body = this.oldPost.body
-    })
+  this.$http.get(url).then((result) => {
+    this.oldPost = result.data;
+    this.editPosting.id = this.oldPost.id;
+    this.editPosting.username = this.oldPost.username;
+    this.editPosting.heading = this.oldPost.heading;
+    this.editPosting.body = this.oldPost.body;
+  });
 }
 
-function editPost(){
-
-  console.log(JSON.stringify(this.editPosting))
-  console.log(this.editPosting.id)
-  console.log("inside edit post")
+function editPost() {
   let url1 = this.$server + '/posting/update';
-  this.$http.put(url1, this.editPosting)
-      .then(() => {this.result
-        this.getListOfPosts()})
+  this.$http.put(url1, this.editPosting).then(() => {
+    this.result;
+    this.getListOfPosts();
+  });
 }
 
-function deletePost(id){
-  console.log("in delete")
+function deletePost(id) {
   let url = this.$server + '/posting/delete/' + id;
-  this.$http.delete(url)
-      .then(() => {this.result
-        this.getListOfPosts()})
+  this.$http.delete(url).then(() => {
+    this.result;
+    this.getListOfPosts();
+  });
 }
-
 
 // Timer for 'get user posts'
 let typeTimeout = null;
 let startTimer = function() {
   typeTimeout = window.setTimeout(() => {
-    this.getUserPosts()
-  }, 1000)
-}
+    this.getUserPosts();
+  }, 1000);
+};
 
 // Event listener for get user posts input
 console.log(document.querySelector('#get_user_posts'));
-let initPostsQuery = function(){
-  document.querySelector('#get_user_posts').addEventListener("input", () => {
-    clearTimeout(typeTimeout)
-    this.startTimer()
-  })
-}
-
+let initPostsQuery = function() {
+  document.querySelector('#get_user_posts').addEventListener('input', () => {
+    clearTimeout(typeTimeout);
+    this.startTimer();
+  });
+};
 
 import Navbar from '@/components/Navbar.vue';
-import RegisterModal from "@/components/RegisterModal";
-import LoginModal from "@/components/LoginModal";
-import Brand from "@/components/Brand";
-import jwt_decode from "jwt-decode";
+import RegisterModal from '@/components/RegisterModal';
+import LoginModal from '@/components/LoginModal';
+import Brand from '@/components/Brand';
+import jwt_decode from 'jwt-decode';
+import Footer from '@/components/Footer';
 
 export default {
   name: 'Newsfeed',
@@ -277,9 +354,10 @@ export default {
     RegisterModal,
     LoginModal,
     Navbar,
-    Brand
+    Brand,
+    Footer,
   },
-  props:{
+  props: {
     token,
   },
   methods: {
@@ -298,36 +376,35 @@ export default {
     showUsers,
     setUser,
     clearFilter,
-    checkIfAdmin
+    checkIfAdmin,
   },
-  data: function () {
+  data: function() {
     return {
       resultList: {},
       usersList: [],
       user: {},
       posting: {},
-      editPosting: {heading: "", body: ""},
-      postUser: "",
+      editPosting: { heading: '', body: '' },
+      postUser: '',
       lists: {},
       result: [],
       oldPost: {},
-      get_posts_input: "",
+      get_posts_input: '',
       filteredUsers: [],
       modal: false,
-      filteredUser: "",
+      filteredUser: '',
       isAdmin: false,
-    }
+    };
   },
-  mounted: function (){
+  mounted: function() {
     this.getUsername();
     this.getListOfPosts();
     this.initPostsQuery();
     this.getAllUsers();
     this.filterUsers();
-    this.checkIfAdmin()
-
+    this.checkIfAdmin();
   },
-  };
+};
 </script>
 <style>
 .blueButton {
@@ -355,10 +432,10 @@ export default {
 .yellowButton:hover {
   background: #fcefa2;
 }
-#filterParent{
+#filterParent {
   position: relative;
 }
-#filterContainer{
+#filterContainer {
   position: absolute;
   top: 100%;
   left: 0;
@@ -373,16 +450,16 @@ export default {
   overflow: scroll;
   overflow-x: hidden;
 }
-#filterContainer ul li{
-list-style: none;
+#filterContainer ul li {
+  list-style: none;
   transition: 0.1s;
 }
-#filterContainer ul li:hover{
+#filterContainer ul li:hover {
   cursor: pointer;
   background-color: #00a2ff;
   transition: 0.1s;
 }
-.footer-saver{
-  margin-bottom: 30vh;
+.footer-saver {
+  margin-bottom: 60vh;
 }
 </style>
