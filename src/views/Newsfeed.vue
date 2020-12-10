@@ -128,7 +128,12 @@
 <script>
 let token = localStorage.getItem('user-token');
 // TODO clich with login!
-let isAdmin = jwt_decode(token).isAdmin;
+function checkIfAdmin(){
+  if(token != null){
+    this.isAdmin = jwt_decode(token).isAdmin;
+  }
+}
+
 
 function getUsername() {
   console.log("inside get username")
@@ -275,6 +280,9 @@ export default {
     Navbar,
     Brand
   },
+  props:{
+    token,
+  },
   methods: {
     getListOfPosts,
     createPost,
@@ -291,6 +299,7 @@ export default {
     showUsers,
     setUser,
     clearFilter,
+    checkIfAdmin
   },
   data: function () {
     return {
@@ -307,8 +316,7 @@ export default {
       filteredUsers: [],
       modal: false,
       filteredUser: "",
-      token,
-      isAdmin,
+      isAdmin: false,
     }
   },
   mounted: function (){
@@ -317,6 +325,7 @@ export default {
     this.initPostsQuery();
     this.getAllUsers();
     this.filterUsers();
+    this.checkIfAdmin()
 
   },
   };
